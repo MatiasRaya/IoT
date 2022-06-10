@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <!-- <h1>Hola</h1>
+    <h2>Bienvenidos</h2>
+    <p>{{ nombre }}, {{ apellido }}</p>
+    {% if num == 1%}
+    <p>SOL</p>
+    {% else %}
+    <p>AGUILA</p>
+    {% endif %}
+
+    {% for n in lista %}
+    <p>{{ n }}</p>
+    {% endfor %} -->
+
+    <form action="{{ url_for('contacto') }}" method="post">
+        <h1>Bienvenido</h1>
+        <input type="text" name="nombre" placeholder="Ingresa un nombre">
+        <button>Enviar</button>
+    </form>
+
+{% endblock %}
