@@ -1,1 +1,4 @@
 https://www.youtube.com/watch?v=MHJI5KqMcTE -> Video de urequest
+https://github.com/techiesms/ESP32-Micropython-Series-Codes/tree/main/Episode%204 -> Repositorio para ve lo de urequest
+
+https://content.breatheco.de/es/lesson/building-apis-with-python-flask -> API Request
