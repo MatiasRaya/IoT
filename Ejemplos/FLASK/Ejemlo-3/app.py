@@ -37,5 +37,16 @@ def errors():
     }
     return jsonify(contenido), 400
 
+@app.route("/data", methods=['POST'])
+def get_data():
+    print('Holaaaaa')
+    try:
+        json = request.get_json(force=True)
+        print(json)
+    except:
+        print('error handleado')
+    
+    return "Hola"
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',debug=True)
+    app.run(host='0.0.0.0',port=5000,debug=True)
