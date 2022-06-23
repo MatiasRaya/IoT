@@ -1,2 +1,5 @@
 #Capetas ignoradas
 /libraries/pyscan/
+..gitignore.swp
+.vscode
+__pycache__
