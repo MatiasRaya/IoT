@@ -5,3 +5,5 @@ https://content.breatheco.de/es/lesson/building-apis-with-python-flask -> API Re
 
 https://www.youtube.com/watch?v=MvVqjQqSdM4
 https://www.youtube.com/watch?v=RLbaB5nk-mM -> SQLAlchemy
+
+https://www.youtube.com/watch?v=BP3D03CYFHA -> Agregar formato y demás cosas a los archivos
