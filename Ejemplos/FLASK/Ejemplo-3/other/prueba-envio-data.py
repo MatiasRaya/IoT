@@ -49,16 +49,22 @@ def stored_data():
 
 count = 0
 while True:
+    time.sleep(1)
     try:
         response = post_method(SERVER_ADDRESS + ":" + SERVER_PORT + "/data", stored_data())
         # print(response.content)
         response.close()
         pycom.rgbled(0x007f00)
         count += 1
+        time.sleep(2)
+        pycom.rgbled(0x7f007f)
+        time.sleep(5)
     except Exception as e:
         print(e)
         response = ''
         print("POST attempet failed.")
         pycom.rgbled(0x00007f)
         time.sleep(2)
+    time.sleep(1)
+    pycom.rgbled(0x4a007f)
     print(count)
