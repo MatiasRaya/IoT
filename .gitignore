@@ -3,3 +3,4 @@
 ..gitignore.swp
 .vscode
 __pycache__
+*.pyc
