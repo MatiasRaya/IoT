@@ -45,6 +45,7 @@ def create_task():
 def get_tasks():
     all_tasks = Task.query.all()
     result = tasks_schema.dump(all_tasks)
+    print(request.json['title'])
     return jsonify(result)
 
 @app.route('/tasks/<id>', methods=['PUT'])
