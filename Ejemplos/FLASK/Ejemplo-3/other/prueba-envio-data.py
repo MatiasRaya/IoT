@@ -53,12 +53,12 @@ while True:
     try:
         response = post_method(SERVER_ADDRESS + ":" + SERVER_PORT + "/data", stored_data())
         # print(response.content)
-        response.close()
+        # response.close()
         pycom.rgbled(0x007f00)
         count += 1
         time.sleep(2)
         pycom.rgbled(0x7f007f)
-        time.sleep(5)
+        time.sleep(3)
     except Exception as e:
         print(e)
         response = ''
