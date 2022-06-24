@@ -10,3 +10,5 @@ https://www.youtube.com/watch?v=BP3D03CYFHA -> Agregar formato y demás cosas a 
 
 
 https://youtu.be/fxavwHPJ36o -> Subir página de Python a la web
+
+https://www.youtube.com/watch?v=HX-ChCQfJEo -> DB que se sobrescribe
