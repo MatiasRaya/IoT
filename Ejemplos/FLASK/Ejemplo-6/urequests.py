@@ -40,8 +40,7 @@ def request(method, url, data=None, json=None, headers={}, stream=None):
         proto, dummy, host = url.split("/", 2)
         path = ""
     if proto == "http:":
-        # port = 80
-        port = 5500
+        port = 80
     elif proto == "https:":
         import ussl
 
@@ -119,7 +118,6 @@ def get(url, **kw):
 
 
 def post(url, **kw):
-    print('1')
     return request("POST", url, **kw)
 
 

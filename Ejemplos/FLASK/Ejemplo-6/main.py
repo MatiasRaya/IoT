@@ -9,8 +9,11 @@ import ujson
 
 
 # SERVER_ADDRESS = "http://192.168.1.142"
-SERVER_ADDRESS = "http://127.0.0.1"
-SERVER_PORT = "5500"
+# SERVER_ADDRESS = "http://127.0.0.1"
+SERVER_ADDRESS = "http://192.168.0.13" #Buscar la segun address porque con la primera hay problema
+SERVER_PORT = "5000"
+
+count = 0
 
 wlan = WLAN(mode=WLAN.STA)
 
@@ -22,6 +25,7 @@ for net in nets:
         while not wlan.isconnected():
             machine.idle() # save power while waiting
         print('WLAN connection succeeded!')
+        pycom.rgbled(0x7a007c)
         break
 
     if net.ssid == 'LCD3':
@@ -35,40 +39,29 @@ for net in nets:
         break
 
 def post_method(address, raw_data):
-    print('hola1')
     response = urequests.post(address, data=raw_data)
-    print('hola3')
     return response
 
 def stored_data():
     store_data = {
         "name" : "Matias",
-        "age" : 25,
+        "age" : count,
         "university" : "UNC"
     }
-    print('hola14')
     json_store_data = ujson.dumps(store_data)
-    print('hola12')
     return json_store_data
 
-count = 0
 while True:
     # time.sleep(1)
     try:
-        response = post_method(SERVER_ADDRESS + ":" + SERVER_PORT + "/tasks/", {
-        "id" : 1,
-        "name" : "Matias",
-        "age" : 25,
-        "university" : "UNC"
-    })
-        print('hola2')
+        response = post_method(SERVER_ADDRESS + ":" + SERVER_PORT + "/tasks/", stored_data())
         # print(response.content)
-        # response.close()
+        response.close()
         pycom.rgbled(0x007f00)
         count += 1
-        time.sleep(2)
+        # time.sleep(2)
         pycom.rgbled(0x7f007f)
-        time.sleep(3)
+        # time.sleep(3)
     except Exception as e:
         print(e)
         response = ''

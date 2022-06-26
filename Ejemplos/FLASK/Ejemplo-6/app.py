@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/localadmin/Escritorio/IoT-PS/Ejemplos/FLASK/Ejemplo-6/prueba.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///prueba.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -33,19 +33,17 @@ tasks_schema = TaskSchema(many=True)
 
 @app.route('/tasks/', methods=['POST'])
 def create_task():
-    print('START')
-    name = request.json['name']
-    age = request.json['age']
-    university = request.json['university']
-    print('TASK')
+    information = request.get_json(force=True)
+    name = information['name']
+    age = information['age']
+    university = information['university']
 
     new_task = Task(name, age, university)
-    print('END TASK')
 
     db.session.add(new_task)
     db.session.commit()
 
-    print(request.json)
+    # print(request.json)
     return jsonify({'key' : 'value'})
 
 @app.route('/tasks', methods=['GET'])
@@ -79,4 +77,4 @@ def delete_task(id):
     return task_schema.jsonify(task)
 
 if __name__ == "__main__":
-    app.run(port=5500,debug=True)
+    app.run(host='0.0.0.0',port=5000,debug=True)
