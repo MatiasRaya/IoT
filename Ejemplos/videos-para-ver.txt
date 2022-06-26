@@ -12,3 +12,10 @@ https://www.youtube.com/watch?v=BP3D03CYFHA -> Agregar formato y demás cosas a 
 https://youtu.be/fxavwHPJ36o -> Subir página de Python a la web
 
 https://www.youtube.com/watch?v=HX-ChCQfJEo -> DB que se sobrescribe
+
+
+https://www.digitalocean.com/community/tutorials/processing-incoming-request-data-in-flask-es
+
+https://linuxhint.com/install-sqlite-browser-ubuntu/ -> DB browaer for sqlite (app para ver base de dato)
+
+https://linuxize.com/post/how-to-install-postman-on-ubuntu-20-04/ -> postman (app para mandar solicitudes GET, POST, PUT, DELETE)
