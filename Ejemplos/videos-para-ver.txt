@@ -19,3 +19,6 @@ https://www.digitalocean.com/community/tutorials/processing-incoming-request-dat
 https://linuxhint.com/install-sqlite-browser-ubuntu/ -> DB browaer for sqlite (app para ver base de dato)
 
 https://linuxize.com/post/how-to-install-postman-on-ubuntu-20-04/ -> postman (app para mandar solicitudes GET, POST, PUT, DELETE)
+
+
+https://www.youtube.com/watch?v=-av6EAlIEnU
