@@ -8,9 +8,8 @@ import urequests
 import ujson
 
 
-# SERVER_ADDRESS = "http://192.168.1.142"
-# SERVER_ADDRESS = "http://127.0.0.1"
-SERVER_ADDRESS = "http://192.168.0.13" #Buscar la segun address porque con la primera hay problema
+SERVER_ADDRESS = "http://192.168.1.142" # LCD
+# SERVER_ADDRESS = "http://192.168.0.13" # Casa
 SERVER_PORT = "5000"
 
 count = 0
@@ -56,7 +55,7 @@ while True:
     try:
         response = post_method(SERVER_ADDRESS + ":" + SERVER_PORT + "/tasks/", stored_data())
         # print(response.content)
-        response.close()
+        # response.close()
         pycom.rgbled(0x007f00)
         count += 1
         # time.sleep(2)
