@@ -6,13 +6,17 @@ from MPL3115A2 import MPL3115A2,ALTITUDE,PRESSURE
 class Sensors:
     sensors = {}
     def __init__(self, pysense):
-        self.sensors["light"]=LTR329ALS01(pysense)
+        self.sensors["lightB"]=LTR329ALS01(pysense)
+        self.sensors["lightR"]=LTR329ALS01(pysense)
         self.sensors["humidity"]=SI7006A20(pysense)
         self.sensors["temperature"]=SI7006A20(pysense)
         self.sensors["altitude"]=MPL3115A2(pysense, mode=ALTITUDE)
 
-    def get_light(self):
-        return self.sensors["light"].light()
+    def get_lightB(self):
+        return self.sensors["lightB"].lightB()
+
+    def get_lightR(self):
+        return self.sensors["lightR"].lightR()
     
     def get_humidity(self):
         return self.sensors["humidity"].humidity()
