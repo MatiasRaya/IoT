@@ -26,3 +26,5 @@ https://www.youtube.com/watch?v=-av6EAlIEnU
 https://docs.pycom.io/firmwareapi/pycom/machine/timer/ -> Explicación del funcionamiento de Timer (Chron y Alarm)
 
 https://www.digitalocean.com/community/tutorials/how-to-use-flask-sqlalchemy-to-interact-with-databases-in-a-flask-application -> Como hacer para traer datos de un determinado nodo
+
+https://www.youtube.com/watch?v=2pbbUMmsWL0 -> filtro de varias columnas a la vez
