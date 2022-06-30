@@ -68,13 +68,16 @@ class LTR329ALS01:
     def _getWord(self, high, low):
         return ((high & 0xFF) << 8) + (low & 0xFF)
 
-    def light(self):
+    def lightR(self):
         ch1low = self.i2c.readfrom_mem(ALS_I2CADDR , ALS_DATA_CH1_LOW, 1)
         ch1high = self.i2c.readfrom_mem(ALS_I2CADDR , ALS_DATA_CH1_HIGH, 1)
         data1 = int(self._getWord(ch1high[0], ch1low[0]))
 
+        return data1
+
+    def lightB(self):
         ch0low = self.i2c.readfrom_mem(ALS_I2CADDR , ALS_DATA_CH0_LOW, 1)
         ch0high = self.i2c.readfrom_mem(ALS_I2CADDR , ALS_DATA_CH0_HIGH, 1)
         data0 = int(self._getWord(ch0high[0], ch0low[0]))
 
-        return (data0, data1)
+        return data0
