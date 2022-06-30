@@ -122,24 +122,38 @@ def stored_data(interval):
 def post_method(address, raw_data):
     response = urequests.post(address, data=raw_data)
     return response
-
+aux = {}
 def get_method(address):
     response = urequests.get(address)
-    return response
+    global aux
+    aux = response.json()
+    return aux
 
 def delete_table():
     try:
-        response = get_method(SERVER_ADDRESS + ":" + SERVER_PORT + "/delete/" + data_sensor['nodo'])
+        get_method(SERVER_ADDRESS + ":" + SERVER_PORT + "/delete/" + str(data_sensor['nodo']))
+        print("Delete node " + str(data_sensor['nodo']) + " in the table")
         pycom.rgbled(CIAN)
         time.sleep(1)
         pycom.rgbled(NO_COLOUR)
     except Exception as e:
         print(e)
 
-delete_table()
+# delete_table()
 
-for i in range(12):
+for i in range(4):
+    try:
+        response = get_method(SERVER_ADDRESS + ":" + SERVER_PORT + "/iteration/" + str(data_sensor['nodo']))
+    except Exception as e:
+        print(e)
+    # if aux[0]['iteration'] < data_sensor['iteration']:
+    #     data_sensor['iteration'] = aux[0]['iteration']
+    #     print("Actulizado")
+    print()
+    # print(data_sensor['iteration'])
+
     store_data = stored_data(5)
+
     try:
         response = post_method(SERVER_ADDRESS + ":" + SERVER_PORT + "/data", store_data)
         pycom.rgbled(GREEN)
