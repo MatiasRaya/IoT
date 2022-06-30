@@ -1,5 +1,6 @@
 from crypt import methods
 import json
+from re import search
 from sqlalchemy import or_
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -62,12 +63,17 @@ def create_data():
 def create_consult(id):
     all_tasks = Task.query.filter_by(nodo=id).all()
     result = tasks_schema.dump(all_tasks)
+    return jsonify(result)
+
+@app.route('/iteration/<id>', methods=['GET'])
+def itertaio(id):
+    all_tasks = Task.query.filter_by(nodo=id).all()
+    result = tasks_schema.dump(all_tasks)
     size = len(result)
     all = Task.query.filter(Task.nodo==id, Task.iteration==size-1)
     resul = tasks_schema.dump(all)
-    print(resul)
-    print(size)
-    return jsonify(resul)
+    resul1 = resul[0]['iteration']
+    return jsonify({'iteration' : resul1})
 
 @app.route('/delete/<id>', methods=['GET'])
 def delte_table(id):
