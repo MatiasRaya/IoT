@@ -103,6 +103,7 @@ def request(method, url, data=None, json=None, headers={}, stream=None):
         raise
 
     resp = Response(s)
+    resp._cached=resp.raw.read()
     resp.status_code = status
     resp.reason = reason
     s.close()

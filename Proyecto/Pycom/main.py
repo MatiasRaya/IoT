@@ -122,50 +122,63 @@ def stored_data(interval):
 def post_method(address, raw_data):
     response = urequests.post(address, data=raw_data)
     return response
+
 aux = {}
+aux1 = {}
+
 def get_method(address):
+    global aux, iteration
     response = urequests.get(address)
-    global aux
     aux = response.json()
-    return aux
+    iteration = aux['iteration']
+    return response
+
+def get_method1(address):
+    response = urequests.get(address)
+    return response
 
 def delete_table():
     try:
-        get_method(SERVER_ADDRESS + ":" + SERVER_PORT + "/delete/" + str(data_sensor['nodo']))
+        get_method1(SERVER_ADDRESS + ":" + SERVER_PORT + "/delete/" + str(data_sensor['nodo']))
         print("Delete node " + str(data_sensor['nodo']) + " in the table")
-        pycom.rgbled(CIAN)
-        time.sleep(1)
-        pycom.rgbled(NO_COLOUR)
     except Exception as e:
         print(e)
+        pycom.rgbled(PINK)
+        time.sleep(1)
+        pycom.rgbled(NO_COLOUR)
 
 # delete_table()
 
-for i in range(4):
-    try:
-        response = get_method(SERVER_ADDRESS + ":" + SERVER_PORT + "/iteration/" + str(data_sensor['nodo']))
-    except Exception as e:
-        print(e)
+for i in range(10):
+
+    if i == 0:
+        try:
+            response = get_method(SERVER_ADDRESS + ":" + SERVER_PORT + "/iteration/" + str(data_sensor['nodo']))
+            print(data_sensor['iteration'])
+        except Exception as e:
+            print(e)
+            pycom.rgbled(BLUE)
+            time.sleep(1)
+            pycom.rgbled(NO_COLOUR)
+    print(data_sensor)
     # if aux[0]['iteration'] < data_sensor['iteration']:
     #     data_sensor['iteration'] = aux[0]['iteration']
     #     print("Actulizado")
-    print()
     # print(data_sensor['iteration'])
 
-    store_data = stored_data(5)
+    store_data = stored_data(2)
 
     try:
         response = post_method(SERVER_ADDRESS + ":" + SERVER_PORT + "/data", store_data)
-        pycom.rgbled(GREEN)
-        time.sleep(1)
-        pycom.rgbled(NO_COLOUR)
         iteration += 1
     except Exception as e:
         print(e)
-        response = ''
         print("POST attempet failed.")
         pycom.rgbled(RED)
         time.sleep(1)
         pycom.rgbled(NO_COLOUR)
+    
+    if i == 9:
+        print(data_sensor['iteration'])
 
-    print(iteration)
+    print(i)
