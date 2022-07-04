@@ -12,6 +12,10 @@ from urequests import Response
 
 # Global variable
 iteration = 0
+verification = 1
+year = 0
+month = 0
+day = 0
 
 # Colors indicator led
 RED = 0x7f0000
@@ -52,6 +56,9 @@ pySensor = Sensors(py)
 data_sensor = {
     'nodo' : 1,
     'iteration' : iteration,
+    'year' : year,
+    'month' : month,
+    'day' : day,
     'lightB' : pySensor.get_lightB(),
     'lightR' : pySensor.get_lightR(),
     'humidity' : pySensor.get_humidity(),
@@ -115,22 +122,32 @@ def stored_data(interval):
     store_data = {}
     time.sleep(interval)
     data_sensor['iteration'] = iteration
+    data_sensor['year'] = year
+    data_sensor['month'] = month
+    data_sensor['day'] = day
     store_data = data_sensor
     json_store_data = ujson.dumps(store_data)
     return json_store_data
 
-def post_method(address, raw_data):
+def post_data(address, raw_data):
     response = urequests.post(address, data=raw_data)
     return response
 
-aux = {}
-aux1 = {}
-
-def get_method(address):
-    global aux, iteration
+def get_iteration(address):
+    global iteration
     response = urequests.get(address)
     aux = response.json()
-    iteration = aux['iteration']
+    if iteration <= aux['iteration']:
+        iteration = aux['iteration'] + 1
+    return response
+
+def get_time(address):
+    global year, month, day
+    response = urequests.get(address)
+    aux = response.json()
+    year = aux['year']
+    month = aux['month']
+    day = aux['day']
     return response
 
 def get_method1(address):
@@ -147,29 +164,29 @@ def delete_table():
         time.sleep(1)
         pycom.rgbled(NO_COLOUR)
 
-# delete_table()
-
 for i in range(10):
-
-    if i == 0:
+    if verification == 1:
         try:
-            response = get_method(SERVER_ADDRESS + ":" + SERVER_PORT + "/iteration/" + str(data_sensor['nodo']))
-            print(data_sensor['iteration'])
+            response = get_iteration(SERVER_ADDRESS + ":" + SERVER_PORT + "/iteration/" + str(data_sensor['nodo']))
         except Exception as e:
             print(e)
             pycom.rgbled(BLUE)
             time.sleep(1)
             pycom.rgbled(NO_COLOUR)
-    print(data_sensor)
-    # if aux[0]['iteration'] < data_sensor['iteration']:
-    #     data_sensor['iteration'] = aux[0]['iteration']
-    #     print("Actulizado")
-    # print(data_sensor['iteration'])
+        verification = verification - 1
 
     store_data = stored_data(2)
 
     try:
-        response = post_method(SERVER_ADDRESS + ":" + SERVER_PORT + "/data", store_data)
+        response = get_time(SERVER_ADDRESS + ":" + SERVER_PORT + "/time")
+    except Exception as e:
+        print(e)
+        pycom.rgbled(PINK)
+        time.sleep(1)
+        pycom.rgbled(NO_COLOUR)
+
+    try:
+        response = post_data(SERVER_ADDRESS + ":" + SERVER_PORT + "/data", store_data)
         iteration += 1
     except Exception as e:
         print(e)
@@ -177,8 +194,6 @@ for i in range(10):
         pycom.rgbled(RED)
         time.sleep(1)
         pycom.rgbled(NO_COLOUR)
-    
-    if i == 9:
-        print(data_sensor['iteration'])
 
+    print("Number of iteration " + str(iteration - 1))
     print(i)
