@@ -1,9 +1,11 @@
 from calendar import month
 import datetime
+import requests
 
 from crypt import methods
 from re import M
-from flask import Flask, request, jsonify
+from urllib import response
+from flask import Flask, request, jsonify, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
@@ -13,6 +15,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
+
+SERVER_ADDRESS = '127.0.0.1:5000'
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -26,8 +30,9 @@ class Task(db.Model):
     humidity = db.Column(db.Integer)
     temperature = db.Column(db.Integer)
     altitude = db.Column(db.Integer)
+    pressure = db.Column(db.Integer)
 
-    def __init__(self, nodo, iteration, year, month, day, lightB, lightR, humidity, temperature, altitude):
+    def __init__(self, nodo, iteration, year, month, day, lightB, lightR, humidity, temperature, altitude, pressure):
         self.nodo = nodo
         self.iteration = iteration
         self.year = year
@@ -38,15 +43,34 @@ class Task(db.Model):
         self.humidity = humidity
         self.temperature = temperature
         self.altitude = altitude
+        self.pressure = pressure
 
 db.create_all()
 
 class TaskSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'nodo', 'iteration', 'year', 'month', 'day', 'lightB', 'lightR', 'humidity', 'temperature', 'altitude')
+        fields = ('id', 'nodo', 'iteration', 'year', 'month', 'day', 'lightB', 'lightR', 'humidity', 'temperature', 'altitude', 'pressure')
 
 task_schema = TaskSchema()
 tasks_schema = TaskSchema(many=True)
+
+@app.route('/')
+def home():
+    return render_template("index.html")
+
+@app.route("/aula_600", methods=['GET'])
+def aula_600():
+    redirect("/consultation-first/1")
+    todo = requests.get('http://' + SERVER_ADDRESS + '/consultation-last/1')
+    return render_template("aula_600.html", todos=todo.json())
+
+@app.route("/aula_601/2")
+def aula_601():
+    return render_template("aula_601.html")
+
+@app.route("/aula_602")
+def aula_602():
+    return render_template("aula_602.html")
 
 @app.route('/data', methods=['POST'])
 def create_data():
@@ -61,8 +85,9 @@ def create_data():
     humidity = information['humidity']
     temperature = information['temperature']
     altitude = information['altitude']
+    pressure = information['pressure']
 
-    new_task = Task(nodo, iteration, year, month, day, lightB, lightR, humidity, temperature, altitude)
+    new_task = Task(nodo, iteration, year, month, day, lightB, lightR, humidity, temperature, altitude, pressure)
 
     db.session.add(new_task)
     db.session.commit()
