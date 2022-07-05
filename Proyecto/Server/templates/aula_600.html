@@ -1,0 +1,15 @@
+{% extends "layout.html"%}
+
+{% block body %}
+<div class="muestra">
+    <ul>
+        {% for key, value in todos.items() recursive %}
+        <li>
+            <p> The {{ key }} is:</p>
+            <p>{{ value }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    <h1>{{todos|length}}</h1>
+</div>
+{% endblock %}

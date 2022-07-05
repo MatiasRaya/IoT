@@ -1,0 +1,22 @@
+.open-menu{
+    background: violet;
+}
+
+img{
+    width: 100px;
+    height: auto;
+}
+
+.close-menu{
+    background: turquoise;
+}
+
+a{
+    color: black;
+    text-decoration: none;
+}
+
+p{
+    color: pink;
+    font-size: xx-large;
+}

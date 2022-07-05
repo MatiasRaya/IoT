@@ -1,0 +1,50 @@
+{% extends "layout.html"%}
+
+{% block title %}
+    LCD
+{% endblock %}
+
+{% block body %}
+    <head class="navigation">
+        <div class="top-menu-nav">
+            <nav class="top-menu">
+                <a href="./">
+                    <!-- <img src="../static/Image/SVG/bars-solid.svg" alt=""> -->
+                    <!-- Logo LCD -->
+                </a>
+                <button class="open-menu">
+                    <img src="{{url_for('static', filename='/Image/SVG/bars-solid.svg')}}" alt="">
+                </button>
+                <ul class="nav-top">
+                    <button class="close-menu">
+                        <img src="{{url_for('static', filename='/Image/SVG/xmark-solid.svg')}}" alt="">
+                    </button>
+                    <li>
+                        <a href="./">AULAS</a>
+                    </li>
+                    <ul>
+                        <li>
+                            <a href="{{url_for('aula_600')}}">AULA 600</a>
+                        </li>
+                        <li>
+                            <a href="{{url_for('aula_601')}}">AULA 601</a>
+                        </li>
+                        <li>
+                            <a href="{{url_for('aula_602')}}">AULA 602</a>
+                        </li>
+                    </ul>
+                    <li>
+                        <a href="./">RATE</a>
+                    </li>
+                    <li>
+                        <a href="./">RESETEAR</a>
+                    </li>
+                    <ul>
+                        <li></li>
+                        <!--  -->
+                    </ul>
+                </ul>
+            </nav>
+        </div>
+    </head>
+{% endblock %}
