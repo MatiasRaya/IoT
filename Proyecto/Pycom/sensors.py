@@ -1,4 +1,3 @@
-from LIS2HH12 import LIS2HH12
 from SI7006A20 import SI7006A20
 from LTR329ALS01 import LTR329ALS01
 from MPL3115A2 import MPL3115A2,ALTITUDE,PRESSURE
@@ -11,6 +10,7 @@ class Sensors:
         self.sensors["humidity"]=SI7006A20(pysense)
         self.sensors["temperature"]=SI7006A20(pysense)
         self.sensors["altitude"]=MPL3115A2(pysense, mode=ALTITUDE)
+        self.sensors["pressure"]=MPL3115A2(pysense, mode=PRESSURE)
 
     def get_lightB(self):
         return self.sensors["lightB"].lightB()
@@ -26,6 +26,9 @@ class Sensors:
     
     def get_altitude(self):
         return self.sensors["altitude"].altitude()
+
+    def get_pressure(self):
+        return self.sensors["pressure"].pressure()
     
     def __del__(self):
         print("Object deleted")
