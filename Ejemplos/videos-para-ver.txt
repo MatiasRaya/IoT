@@ -31,3 +31,5 @@ https://www.youtube.com/watch?v=2pbbUMmsWL0 -> filtro de varias columnas a la ve
 
 
 https://www.geeksforgeeks.org/response-json-python-requests/ -> hacer un request de una url
+
+https://tedboy.github.io/jinja2/templ14.html?highlight=round#round -> documentacion de jinja2
