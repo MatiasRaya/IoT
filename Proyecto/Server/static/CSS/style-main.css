@@ -1,0 +1,25 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+section[id]{
+    scroll-margin-top: 80px;
+}
+
+body{
+    font-family: 'Open Sans', sans-serif;
+    padding-top: 80px;
+    color: white;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
+
+a:link{
+    color: white;
+}
