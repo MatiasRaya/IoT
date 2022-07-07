@@ -1,15 +1,40 @@
 {% extends "layout.html"%}
 
+{% block title %}
+    Aula 600
+{% endblock %}
+
 {% block body %}
-<div class="muestra">
-    <ul>
-        {% for key, value in todos.items() recursive %}
+<div class="data-information">
+    <!-- Datos actuales (temperatura, humedad, presion) -->
+    {% for key, value in actual_data.items()  %}
+    {% if key == 'humidity' %}
+    <h2 class="humidity"> La humedad actual es {{ value|round(2) }} %RH</h2>
+    {% endif %}
+    {% if key == 'pressure' %}
+    <h2 class="pressure"> La presion actual es {{ (value/1000)|round(2) }} kPa</h2>
+    {% endif %}
+    {% if key == 'temperature' %}
+    <h2 class="temperature"> La temperatura actual es {{ value|round(2) }} °C</h2>
+    {% endif %}
+    {% endfor %}
+    <canvas id="myChart" width="400" height="400"></canvas>
+    
+    <!-- <ul>
+        <li class="temperature">
+        </li>
+        {% if key == 'humidity' %}
         <li>
-            <p> The {{ key }} is:</p>
+            <p> The humidity is:</p>
+            <p>{{ value }}%</p>
+        </li>
+        {% endif %}
+        {% if key == 'pressure' %}
+        <li>
+            <p> The pressure is:</p>
             <p>{{ value }}</p>
         </li>
-        {% endfor %}
-    </ul>
-    <h1>{{todos|length}}</h1>
+        {% endif %}
+    </ul> -->
 </div>
 {% endblock %}
