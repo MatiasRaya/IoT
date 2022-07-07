@@ -10,13 +10,17 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///datos-ambientales.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///datos-ambientales.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
-SERVER_ADDRESS = '127.0.0.1:5000'
+DAY = 0
+MONTH = 0
+YEAR = 0
+
+SERVER_ADDRESS = '192.168.1.142:5000' #LCD
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -60,9 +64,17 @@ def home():
 
 @app.route("/aula_600", methods=['GET'])
 def aula_600():
-    redirect("/consultation-first/1")
-    todo = requests.get('http://' + SERVER_ADDRESS + '/consultation-last/1')
-    return render_template("aula_600.html", todos=todo.json())
+    temperature = []
+    actual_data = requests.get('http://' + SERVER_ADDRESS + '/consultation-last/1')
+    month_data = requests.get('http://' + SERVER_ADDRESS + '/consultation-month/1')
+    for dic in month_data.json():
+        for key, value in dic.items():
+                if key == 'temperature':
+                    temperature.append(value)
+                    print(temperature)
+                    print()
+    print(len(temperature))
+    return render_template("aula_600.html", actual_data=actual_data.json(),temperature=temperature)
 
 @app.route("/aula_601/2")
 def aula_601():
@@ -106,22 +118,25 @@ def consutation_last(id):
     resul = task_schema.dump(task)
     return jsonify(resul)
 
-@app.route('/consultation-first/<id>', methods=['GET'])
+@app.route('/consultation-month/<id>', methods=['GET'])
 def consutation_first(id):
-    task = Task.query.filter(Task.nodo==id).order_by(Task.id.asc()).first()
-    resul = task_schema.dump(task)
+    global MONTH
+    requests.get('http://' + SERVER_ADDRESS + '/time')
+    task = Task.query.filter(Task.nodo==id, Task.month==MONTH)
+    resul = tasks_schema.dump(task)
     return jsonify(resul)
 
 @app.route('/time', methods=['GET'])
 def time():
+    global DAY, MONTH, YEAR
     x = datetime.datetime.now()
-    year = x.year
-    month = x.month
-    day = x.day
+    YEAR = x.year
+    MONTH = x.month
+    DAY = x.day
     return jsonify({
-        'year' : year,
-        'month' : month,
-        'day' : day
+        'year' : YEAR,
+        'month' : MONTH,
+        'day' : DAY
     })
 
 @app.route('/iteration/<id>', methods=['GET'])
