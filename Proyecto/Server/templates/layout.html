@@ -4,13 +4,49 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{(url_for('static', filename='/CSS/style-navigation.css'))}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-main.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-navigation.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-aula-600.css')}}">
+
+    <script defer src="{{url_for('static', filename='/JS/top-nav-bar.js')}}"></script>
     <title>
         {% block title %}
         {% endblock %}
     </title>
 </head>
 <body>
+    <head class="navigation">
+        <div class="top-navigation">
+            <nav class="top-menu-nav">
+                <a href="./" class="logo-img">
+                    <img src="{{url_for('static', filename='/Image/JPG/komarov-egor-Utm4kF35GmY-unsplash.jpg')}}" alt="">
+                </a>
+                <button class="open-menu" aria-label="Abrir menú">
+                    <img src="{{url_for('static', filename='/Image/SVG/bars-solid.svg')}}" alt="abrir menu">
+                </button>
+                <ul class="nav-top" id="top-menu">
+                    <button class="close-menu" aria-label="Cerrar menú">
+                        <img src="{{url_for('static', filename='/Image/SVG/times-solid.svg')}}" alt="cerrar menu">
+                    </button>
+                    <li>
+                        <a href="{{url_for('aula_600')}}">AULA 600</a>
+                    </li>
+                    <li>
+                        <a href="{{url_for('aula_601')}}">AULA 601</a>
+                    </li>
+                    <li>
+                        <a href="{{url_for('aula_602')}}">AULA 602</a>
+                    </li>
+                    <li>
+                        <a href="./">RATE</a>
+                    </li>
+                    <li>
+                        <a href="./">RESETEAR</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </head>
     {% block body %}
     {% endblock %}
 </body>
