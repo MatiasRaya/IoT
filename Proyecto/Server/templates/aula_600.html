@@ -1,40 +1,75 @@
 {% extends "layout.html"%}
 
+{% block head %}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+{% endblock %}
+
 {% block title %}
     Aula 600
 {% endblock %}
 
 {% block body %}
 <div class="data-information">
-    <!-- Datos actuales (temperatura, humedad, presion) -->
-    {% for key, value in actual_data.items()  %}
-    {% if key == 'humidity' %}
-    <h2 class="humidity"> La humedad actual es {{ value|round(2) }} %RH</h2>
-    {% endif %}
-    {% if key == 'pressure' %}
-    <h2 class="pressure"> La presion actual es {{ (value/1000)|round(2) }} kPa</h2>
-    {% endif %}
-    {% if key == 'temperature' %}
-    <h2 class="temperature"> La temperatura actual es {{ value|round(2) }} °C</h2>
-    {% endif %}
-    {% endfor %}
-    <canvas id="myChart" width="400" height="400"></canvas>
     
-    <!-- <ul>
-        <li class="temperature">
-        </li>
-        {% if key == 'humidity' %}
-        <li>
-            <p> The humidity is:</p>
-            <p>{{ value }}%</p>
-        </li>
-        {% endif %}
-        {% if key == 'pressure' %}
-        <li>
-            <p> The pressure is:</p>
-            <p>{{ value }}</p>
-        </li>
-        {% endif %}
-    </ul> -->
+    <center>
+        <h1>{{ title }}</h1>
+    
+        <canvas id="chart" width="600" height="400"></canvas>
+        <script>
+    
+          // bar chart data
+          var barData = {
+            labels : [
+              {% for item in labels %}
+                "{{ item }}",
+              {% endfor %}
+            ],
+    
+            datasets : [{
+              fillColor: "rgba(151,187,205,0.2)",
+              strokeColor: "rgba(151,187,205,1)",
+              pointColor: "rgba(151,187,205,1)",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(151,187,205,1)",
+              bezierCurve : false,
+              data : [
+            {% for item in values %}
+                  {{ item }},
+                {% endfor %}]
+              }
+        ]
+          }
+    
+          Chart.defaults.global.animationSteps = 50;
+          Chart.defaults.global.tooltipYPadding = 16;
+          Chart.defaults.global.tooltipCornerRadius = 0;
+          Chart.defaults.global.tooltipTitleFontStyle = "normal";
+          Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+          Chart.defaults.global.animationEasing = "easeOutBounce";
+          Chart.defaults.global.responsive = false;
+          Chart.defaults.global.scaleLineColor = "black";
+          Chart.defaults.global.scaleFontSize = 16;
+    
+          // get bar chart canvas
+          var mychart = document.getElementById("chart").getContext("2d");
+    
+          steps = 10
+          max = {{ max }}
+          // draw bar chart
+          var LineChartDemo = new Chart(mychart).Line(barData, {
+            scaleOverride: true,
+            scaleSteps: steps,
+            scaleStepWidth: Math.ceil(max / steps),
+            scaleStartValue: 0,
+            scaleShowVerticalLines: true,
+            scaleShowGridLines : true,
+            barShowStroke : true,
+            scaleShowLabels: true,
+            bezierCurve: false,
+          });
+    
+        </script>
+      </center>
 </div>
 {% endblock %}
