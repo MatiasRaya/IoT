@@ -25,12 +25,11 @@ YELLOW = 0x7f7f00
 WHITE = 0x7f7f7f
 PINK = 0x7f007f
 CIAN = 0x007f7f
-ORANGE = 0xd35400
 NO_COLOUR = 0x000000
 
 pycom.heartbeat(False)
 
-pycom.rgbled(ORANGE)
+pycom.rgbled(GREEN)
 time.sleep(5)
 pycom.rgbled(NO_COLOUR)
 
