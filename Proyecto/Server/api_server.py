@@ -1,5 +1,7 @@
+from cProfile import label
 from calendar import month
 import datetime
+from optparse import Values
 import requests
 
 from crypt import methods
@@ -62,25 +64,86 @@ tasks_schema = TaskSchema(many=True)
 def home():
     return render_template("index.html")
 
-@app.route("/aula_600", methods=['GET'])
+# @app.route("/aula_600", methods=['GET'])
+# def aula_600():
+#     temp1 = []
+#     temp2 = []
+#     label_day = []
+#     data_day = []
+#     temperature_day = {}
+#     temperature_month = {}
+#     i = 0
+#     j = 0
+#     actual_data = requests.get('http://' + SERVER_ADDRESS + '/consultation-last/1')
+#     month_data = requests.get('http://' + SERVER_ADDRESS + '/consultation-month/1')
+#     day_data = requests.get('http://' + SERVER_ADDRESS + '/consultation-day/1')
+#     for dic in day_data.json():
+#         for key, value in dic.items():
+#                 if key == 'temperature':
+#                     temp1.append(value)
+#                     data_day.append(value)
+#                     label_day.append('temperature{:0}'.format(i))
+#                     temperature_day.update({'temperature{:0}'.format(i) : value})
+#                     i += 1
+#     for dic in month_data.json():
+#         for key, value in dic.items():
+#                 if key == 'temperature':
+#                     temp2.append(value)
+#                     temperature_month.update({'temperature{:0}'.format(j) : value})
+#                     labels.append('temperature{:0}'.format(j))
+#                     data.append(value)
+#                     j += 1
+#     print(len(temperature_day))
+#     print(len(temperature_month))
+#     print(len(temp1+temp2))
+#     print(label_day)
+#     print()
+#     print(data_day)
+#     return render_template("aula_600.html", actual_data=actual_data.json(), labels=label_day, values=data_day)
+
+labels = [
+    'JAN', 'FEB', 'MAR', 'APR',
+    'MAY', 'JUN', 'JUL', 'AUG',
+    'SEP', 'OCT', 'NOV', 'DEC'
+]
+
+values = [
+    967.67, 1190.89, 1079.75, 1349.19,
+    2328.91, 2504.28, 2873.83, 4764.87,
+    4349.29, 6458.30, 9907, 16297
+]
+
+@app.route('/aula_600')
 def aula_600():
-    temperature = []
+    line_labels=labels
+    line_values=values
+
+    temp1 = []
+    temp2 = []
+    label_day = []
+    data_day = []
+    temperature_day = {}
+    temperature_month = {}
+    i = 0
+    j = 0
     actual_data = requests.get('http://' + SERVER_ADDRESS + '/consultation-last/1')
     month_data = requests.get('http://' + SERVER_ADDRESS + '/consultation-month/1')
-    for dic in month_data.json():
+    day_data = requests.get('http://' + SERVER_ADDRESS + '/consultation-day/1')
+    for dic in day_data.json():
         for key, value in dic.items():
                 if key == 'temperature':
-                    temperature.append(value)
-                    print(temperature)
-                    print()
-    print(len(temperature))
-    return render_template("aula_600.html", actual_data=actual_data.json(),temperature=temperature)
+                    temp1.append(value)
+                    data_day.append(value)
+                    label_day.append('temperature{:0}'.format(i))
+                    temperature_day.update({'temperature{:0}'.format(i) : value})
+                    i += 1
+    return render_template('aula_600.html', title='Bitcoin Monthly Price in USD', max=17000, labels=line_labels, values=line_values)
 
-@app.route("/aula_601/2")
+@app.route("/aula_601", methods=['GET'])
 def aula_601():
     return render_template("aula_601.html")
 
-@app.route("/aula_602")
+@app.route("/aula_602", methods=['GET'])
 def aula_602():
     return render_template("aula_602.html")
 
@@ -118,8 +181,16 @@ def consutation_last(id):
     resul = task_schema.dump(task)
     return jsonify(resul)
 
+@app.route('/consultation-day/<id>', methods=['GET'])
+def consutation_day(id):
+    global DAY
+    requests.get('http://' + SERVER_ADDRESS + '/time')
+    task = Task.query.filter(Task.nodo==id, Task.day==DAY)
+    resul = tasks_schema.dump(task)
+    return jsonify(resul)
+
 @app.route('/consultation-month/<id>', methods=['GET'])
-def consutation_first(id):
+def consutation_month(id):
     global MONTH
     requests.get('http://' + SERVER_ADDRESS + '/time')
     task = Task.query.filter(Task.nodo==id, Task.month==MONTH)
