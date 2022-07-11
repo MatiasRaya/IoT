@@ -1,0 +1,674 @@
+    1  sudo apt-get install google
+    2  sudo apt-get update
+    3  sudo apt install firefox
+    4  exit
+    5  sudo apt install firefox
+    6  cat /etc/NetworkManager/system-connections/
+    7  ls /etc/NetworkManager/system-connections/
+    8  sudo cat /etc/NetworkManager/system-connections/LCD_Guests 
+    9  sudo cat /etc/NetworkManager/system-connections/LCD3
+   10  sudo cat /etc/NetworkManager/system-connections/LCD
+   11  clear
+   12  exit
+   13  lsb_release -a
+   14  exit
+   15  $wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+   16  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+   17  sudo dpkg -i google-chrome-stable_current_amd64.deb
+   18  sudo apt remove google-chrome-stable 
+   19  exit
+   20  git -version
+   21  sudo apt install git
+   22  clear
+   23  git clone git@github.com:MatiasRaya/IoT-PS.git
+   24  ssh-keygen -t ed25519 -C matias.raya@mi.unc.edu.ar
+   25  eval "$(ssh-agent -s)"
+   26  ssh-add ~/.ssh/id_ed25519
+   27  cd /home/localadmin/.ssh/
+   28  ls
+   29  car id_ed25519.pub 
+   30  cat id_ed25519.pub 
+   31  git clone git@github.com:MatiasRaya/IoT-PS.git
+   32  remove IoT-PS/
+   33  rm -rf IoT-PS/
+   34  ls
+   35  cd ~/
+   36  ls
+   37  cd Escritorio/
+   38  clear
+   39  git clone git@github.com:MatiasRaya/IoT-PS.git
+   40  cd IoT-PS/
+   41  ls
+   42  ll
+   43  cd ..
+   44  clear
+   45  sudo snap install --classic code
+   46  cd Escritorio/
+   47  git clone git@github.com:pycom/pycom-libraries.git
+   48  cd pycom-libraries/
+   49  cat Makefile 
+   50  make release 
+   51  ls
+   52  clear
+   53  cd ..
+   54  sudo apt install nodejs
+   55  node -version
+   56  sudo apt install npm
+   57  sudo apt-get update
+   58  sudo apt-get upgrade
+   59  sudo apt-get install python-software-properties
+   60  exit
+   61  sudo chmod 777 /dev/ttyACM0 
+   62  ll /dev/
+   63  exit
+   64  sudo usermod -a -G dialout $USER
+   65  sudo screen /dev/ttyACM0 115200
+   66  sud apt install screen
+   67  sudo apt install screen
+   68  sudo screen /dev/ttyACM0 115200
+   69  sudo reebot
+   70  sudo reboot
+   71  hstory
+   72  history
+   73  ls /etc/NetworkManager/system-connections/
+   74  exit
+   75  ifconfig
+   76  sudo apt install net-tools
+   77  ifconfig
+   78  sudo nmap 192.168.1.*
+   79  sudo nmap -sn 192.168.1.*
+   80  sudo yum istall nmap
+   81  sudo apt istall nmap -y
+   82  sudo apt install nmap -y
+   83  sudo nmap -sn 192.168.1.*
+   84  sudo nmap -sn 192.168.1.142/24
+   85  sudo apt install nast nmap
+   86  clear
+   87  sudo nast -m -i wlan0
+   88  sudo nast -g -i wlan0
+   89  exit
+   90  cd Escritorio/
+   91  ls
+   92  cd IoT-PS/
+   93  ls
+   94  git status
+   95  git add Ejemplos/wifi_search.py 
+   96  git commit-m "Se agregó red del LCD"
+   97  git commit -m "Se agregó red del LCD"
+   98  git config --global user.email matias.raya@mi.unc.edu.ar
+   99  git config --global user.name MatiasRaya
+  100  git commit -m "Se agregó red del LCD"
+  101  git status
+  102  git add Ejemplos/led_blink.py 
+  103  git commit -m "Se agregó un nuevo color a la prueba"
+  104  git status
+  105  git add Ejemplos/lib/
+  106  git commit -m "Se agregaron lirerias para usar con pysense"
+  107  git status 
+  108  git add Ejemplos/main.py 
+  109  git commit -m "Se creo archivo para probar los sensores"
+  110  git add Ejemplos/videos-para-ver.txt 
+  111  git commit -m "Se creo archivo para poner los videos a ver"
+  112  git add Ejemplos/videos-para-ver.txt 
+  113  git commit -m "Se creo archivo para poner los videos a ver"
+  114  git push
+  115  xit
+  116  exit
+  117  history
+  118  sudo screen /dev/ttyACM0 115200
+  119  exir
+  120  exit
+  121  cd Escritorio/
+  122  cd IoT-PS/
+  123  git status
+  124  git add Ejemplos/videos-para-ver.txt 
+  125  git commit -m "Se agregaron nuevas cosas por ver"
+  126  git add Ejemplos/wifi_conection.py 
+  127  git commit -m "Se modifico para que solo sea de conexión"
+  128  git status
+  129  git add Ejemplos/wifi_search.py 
+  130  git commit -m "Se modifico para que solo sea de búsqueda de redes wifi"
+  131  git status 
+  132  git add Ejemplos/wifi_create.py 
+  133  git commit -m "Se intenta crear una red wifi y a su vez conectarse a una red local existente"
+  134  git status
+  135  git push
+  136  sudo apt update
+  137  sudo apt upgrade
+  138  sudo apt install python3-pip
+  139  pip install Flask
+  140  source bin/activate
+  141  exit
+  142  cd Escritorio/IoT-PS/Ejemplos/FLASK/
+  143  cd Ejemlo-3/
+  144  clear
+  145  export FLASK_APP=hello
+  146  flask run
+  147  python3 app.py 
+  148  pip install flask
+  149  export FLASK_APP=app.py
+  150  flask run
+  151  clear
+  152  python3 app.py
+  153  exit
+  154  sudo -H pip3 install flask
+  155  cd Escritorio/IoT-PS/Ejemplos/FLASK/Ejemlo-3/
+  156  python3 app.py
+  157  clear
+  158  python3 app.py
+  159  clear
+  160  python3 app.py
+  161  clear
+  162  python3 app.py
+  163  clear
+  164  git status
+  165  cd ..
+  166  git status
+  167  git add Ejemplos/FLASK/Ejemlo-3/
+  168  git commit -m "Ejemplo de uso de jsonify"
+  169  git push
+  170  clea
+  171  clear
+  172  CD Ejemplos/FLASK/Ejemlo-3/
+  173  cd Ejemplos/FLASK/Ejemlo-3/
+  174  clear
+  175  python3 app.py
+  176  exit
+  177  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  178  sudo dpkg -i google-chrome-stable_current_amd64.deb
+  179  exit
+  180  cd Escritorio/IoT-PS/
+  181  git status
+  182  git push
+  183  git add Ejemplos/
+  184  git status
+  185  git commit -m "Se realizo un intento de envio de información por medio de un post"
+  186  git status 
+  187  git push 
+  188  close
+  189  exit
+  190  pip install -U Flask-SQLAlchemy
+  191  clear
+  192  cd Escritorio/IoT-PS/Ejemplos/FLASK/
+  193  git status
+  194  git add Ejemlo-3
+  195  gi status
+  196  git status
+  197  git add Ejemplo-3/
+  198  git commit -m "Se cambio nombre carpeta"
+  199  git push
+  200  clear
+  201  cd Ejemplo-3
+  202  ls
+  203  mkdir database
+  204  ls -l
+  205  git status 
+  206  xit
+  207  exit
+  208  cd Escritorio/IoT-PS/
+  209  git pull
+  210  clear
+  211  cd Ejemplos/FLASK/Ejemplo-3
+  212  python3 app.py 
+  213  exit
+  214  cd Escritorio/IoT-PS/
+  215  ls
+  216  cd Ejemplos/
+  217  ls
+  218  nano videos-para-ver.txt 
+  219  exit
+  220  cd Escritorio/IoT-PS/Ejemplos/FLASK/Ejemplo-3/database/
+  221  ls
+  222  ll
+  223  exit
+  224  pip3 install sqlalchemy
+  225  pip3 install flask-sqlalchemy
+  226  clar
+  227  clear
+  228  cd Escritorio/IoT-PS/Ejemplos/FLASK/Ejemplo-3/database/
+  229  ls
+  230  python3
+  231  clear
+  232  python3
+  233  CLEAR
+  234  clear
+  235  ll
+  236  python3
+  237  exit
+  238  sudo apt update
+  239  sudo apt upgrade
+  240  sudo apt-cache search sqlite
+  241  sudo apt install sqlite3
+  242  sqlite3 --version
+  243  sudo apt install sqlitebrowser
+  244  clear
+  245  python3
+  246  cd Escritorio/IoT-PS/Ejemplos/FLASK/Ejemplo-3/database/
+  247  clear
+  248  python3
+  249  cd ..
+  250  cd Descargas/
+  251  ll
+  252  sudo chmod 755 xampp-linux-x64-8.1.6-0-installer.run 
+  253  sudo ./xampp-linux-x64-8.1.6-0-installer.run
+  254  pip3 install flask flask-sqlalchemy flask-marshmallow marshmallow-sql-alchemy pymysql
+  255  pip3 install flask flask-sqlalchemy flask-marshmallow marshmallow-sqlalchemy pymysql
+  256  exit
+  257  pip3 install flask flask-sqlalchemy flask-marshmallow marshmallow-sqlalchemy pymysql
+  258  exit
+  259  grep XAMPP
+  260  cd Descargas/
+  261  ls
+  262  sudo ./xampp-linux-x64-8.1.6-0-installer.run 
+  263  cd ~/Escritorio/
+  264  ls
+  265  sudo 'arranco xamp'
+  266  sudo /opt/lampp/lampp start
+  267  cd Escritorio/
+  268  echo 'sudo /opt/lampp/lampp start' > 'arranco xampp'
+  269  ls
+  270  cd ..
+  271  ls /opt/lampp/
+  272  l
+  273  sudo snap install posman
+  274  sudo snap install postman
+  275  exit
+  276  ls Escritorio/IoT-PS/
+  277  ls Escritorio/IoT-PS/Ejemplos/
+  278  nano Escritorio/IoT-PS/Ejemplos/videos-para-ver.txt 
+  279  exit
+  280  cd Escritorio/IoT-PS/Ejemplos/FLASK/Ejemplo-3/database/
+  281  ls
+  282  rm __pycache__/ prueba.db 
+  283  sudo rm __pycache__/
+  284  clear
+  285  python3 app.py 
+  286  cd ~/Escritorio/IoT-PS/
+  287  clear
+  288  git status
+  289  git add Ejemplos/videos-para-ver.txt 
+  290  git commit -m "Se agregaron videos sobre SQLAlchemy"
+  291  git add Ejemplos/FLASK/Ejemplo-3/app.pyc 
+  292  git commit .
+  293  git commit -m "Se elimino archivo innecesario"
+  294  git status
+  295  git add Ejemplos/FLASK/Ejemplo-3/other/prueba-envio-data.py 
+  296  git commit-m "Se agregaron sleep para hacer controles en el envio"
+  297  git commit -m "Se agregaron sleep para hacer controles en el envio"
+  298  git status
+  299  git add Ejemplos/FLASK/Ejemplo-3/urequests.py 
+  300  git commit -m "Se agrego libreria para usar urequest en la fipy"
+  301  git status
+  302  git add Ejemplos/FLASK/Ejemplo-3/database/
+  303  git commit -m "Se creo un ejemplo sobre como usar una base de datos"
+  304  git push
+  305  ll
+  306  nano .gitignore 
+  307  git status
+  308  git add .gitignore 
+  309  git commit -m "Se incluyeron nuevos archivos"
+  310  git push
+  311  git status
+  312  git add .
+  313  git commit -m "Se incluyeron nuevos archivos"
+  314  git push
+  315  git status
+  316  cd Ejemplos/FLASK/Ejemplo-3/database/
+  317  python3 app.py 
+  318  clear
+  319  exit
+  320  python app.py 
+  321  git status 
+  322  git add Ejemplos/videos-para-ver.txt 
+  323  git commit -m "Se agregaron nuevos enlaces"
+  324  git add Ejemplos/FLASK/Ejemplo-3/database/
+  325  git add -m "Se agregaron mas funcionalidades"
+  326  git commit -m "Se agregaron mas funcionalidades"
+  327  git push
+  328  git status
+  329  cd Escritorio/IoT-PS/Ejemplos/FLASK/Ejemplo-3
+  330  python3 app.py 
+  331  clear
+  332  cd .. .. ..
+  333  cd ..
+  334  git status
+  335  git add Ejemplos/FLASK/Ejemplo-3/urequests.py 
+  336  git commit -m "Se soluciono problema de sockets que no se cierran"
+  337  cd Escritorio/IoT-PS/Ejemplos/FLASK/Ejemplo-4
+  338  python3 app.py 
+  339  cd ..
+  340  cd Ejemplo-5
+  341  clear
+  342  python3 app.py 
+  343  clear
+  344  python3 db.py 
+  345  python3 app.py 
+  346  exit
+  347  git push
+  348  git pull
+  349  git push
+  350  nano Ejemplos/videos-para-ver.txt 
+  351  git status
+  352  git add Ejemplos/videos-para-ver.txt 
+  353  git commit -m "Se agregaron nuevos enlaces"
+  354  git add Ejemplos/FLASK/Ejemplo-3/
+  355  git commit -m "Se pasaron archivos a Ejemplo-4/ y se saco el close()"
+  356  git status
+  357  git add Ejemplos/FLASK/Ejemplo-5/
+  358  git commit -m "Se creo ejemplo de db con sqlite3 y FLASK"
+  359  git push
+  360  git status
+  361  git add Ejemplos/FLASK/Ejemplo-4/
+  362  git commit -m "Se creo ejemplo con db"
+  363  git push
+  364  python3 app.py 
+  365  cd ..
+  366  cd Ejemplo-6
+  367  python3 app.py 
+  368  clear
+  369  python3 app.py 
+  370  cd ..
+  371  git status
+  372  git add Ejemplos/FLASK/Ejemplo-5
+  373  git commit-m "Base modificada"
+  374  git commit -m "Base modificada"
+  375  git add Ejemplos/FLASK/Ejemplo-6/
+  376  git commit -m "Ejemplo de conexion de placaa db"
+  377  git push
+  378  sudo shutdown -c 0
+  379  git pull
+  380  exit}
+  381  exit
+  382  dATE
+  383  date
+  384  timedatectl list-timezones
+  385  sudo timedatectl set-timezone America/Argentina/Cordoba
+  386  date
+  387  timedatectl
+  388  sudo timedatectl set-timezone
+  389  echo "America/Argentina" | sudo tee /etc/timezone
+  390  sudo dpkg-reconfigure --frontend noninteractive tzdata
+  391  timedatectl set-local-rtc 1
+  392  python3 app.py 
+  393  exit
+  394  wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+  395  sudo apt-get install gnupg
+  396  wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+  397  sudo apt update
+  398  sudo apt upgrade
+  399  echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+  400  sudo apt-get update
+  401  sudo apt-get install -y mongodb-org
+  402  echo "mongodb-org hold" | sudo dpkg --set-selections
+  403  echo "mongodb-org-database hold" | sudo dpkg --set-selections
+  404  echo "mongodb-org-server hold" | sudo dpkg --set-selections
+  405  echo "mongodb-org-shell hold" | sudo dpkg --set-selections
+  406  echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
+  407  echo "mongodb-org-tools hold" | sudo dpkg --set-selections
+  408  ps --no-headers -o comm 1
+  409  sudo systemctl start mongod
+  410  sudo systemctl daemon-reload
+  411  sudo systemctl status mongod
+  412  sudo systemctl daemon-reload
+  413  sudo systemctl status mongod
+  414  sudo systemctl start mongod
+  415  sudo systemctl status mongod
+  416  sudo systemctl start mongod
+  417  sudo systemctl status mongod
+  418  sudo systemctl enable mongod
+  419  sudo systemctl status mongod
+  420  sudo systemctl stop mongod
+  421  sudo systemctl status mongod
+  422  sudo systemctl restart mongod
+  423  clear
+  424  echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+  425  sudo apt-get update
+  426  sudo apt-get install -y mongodb-org
+  427  echo "mongodb-org hold" | sudo dpkg --set-selections
+  428  echo "mongodb-org-database hold" | sudo dpkg --set-selections
+  429  echo "mongodb-org-server hold" | sudo dpkg --set-selections
+  430  echo "mongodb-org-shell hold" | sudo dpkg --set-selections
+  431  echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
+  432  echo "mongodb-org-tools hold" | sudo dpkg --set-selections
+  433  ps --no-headers -o comm 1
+  434  sudo systemctl start mongod
+  435  sudo systemctl status mongod
+  436  clear
+  437  sudo apt install -y mongodb
+  438  sudo service mongod stop
+  439  sudo apt-get purge mongodb-org*
+  440  sudo rm -r /var/log/mongodb
+  441  sudo rm -r /var/lib/mongodb
+  442  sudo apt install -y mongodb
+  443  sudo systemctl status mongodb
+  444  mongo --eval'db.runCommand({connectionStatus:1})'
+  445  mongo --eval 'db.runCommand({connectionStatus:1})'
+  446  sudo systemctl start mongodb
+  447  sudo systemctl status mongodb
+  448  sudo apt remove -y mongodb
+  449  sudo systemctl status mongodb
+  450  sudo systemctl stop mongodb
+  451  sudo systemctl status mongodb
+  452  sudo systemctl start mongodb
+  453  sudo systemctl status mongodb
+  454  mongo
+  455  clear
+  456  cd Escritorio/IoT-PS/Proyecto/Server/
+  457  python3 api_server.py 
+  458  exit
+  459  git status
+  460  git add Ejemplos/LED/ Ejemplos/Pysense/ Ejemplos/WIFI/
+  461  git commit -m "Se crearon carpetas para separar los ejemplos"
+  462  git status
+  463  git add Ejemplos/FLASK/
+  464  git commit -m "Se hicieron modificaciones en el envio y recepcion"
+  465  git status
+  466  git add Ejemplos/videos-para-ver.txt 
+  467  git commit -m "Se agregaron videos nuevos para ver"
+  468  git status
+  469  git add Proyecto/Pycom/ Proyecto/Server/
+  470  git commit -m "Se sectorizo bien cada parte para no subir todo a la fipy"
+  471  git status
+  472  git add .
+  473  git status
+  474  git commit -m "Se borraron estos archivos porque se reubicaron o no eran necesarios"
+  475  git push
+  476  sudo shutdown -c 0
+  477  cd Escritorio/IoT-PS/Proyecto/Server/
+  478  python3 api_server.py 
+  479  cd Escritorio/IoT-PS/Proyecto/Server/
+  480  python3 api_server.py 
+  481  exit
+  482  cd Escritorio/IoT-PS/Proyecto/Server/
+  483  python3 api_server.py 
+  484  exit
+  485  git status
+  486  git add .gitignore 
+  487  git commit -m "Se ignora la base de datos"
+  488  git add Ejemplos/videos-para-ver.txt 
+  489  git commit -m "Se agregaron nuevos enlaces"
+  490  git add Proyecto/Pycom/lib/urequests.py 
+  491  git commit -m "Se modifico libreria para evitar errores de muchos sockets"
+  492  git add Proyecto/Pycom/main.py 
+  493  git commit -m "Se agrego el envio de datos"
+  494  git status
+  495  exit
+  496  cd Escritorio/IoT-PS/Proyecto/Server/
+  497  python3 api_server.py 
+  498  cd .. 
+  499  git status
+  500  git add Proyecto/Server/api_server.py
+  501  git commit -m "Se enlazo con la base de datos y se creo filtro para cada nodo"
+  502  git push
+  503  exit
+  504  python3
+  505  clear
+  506  cd Descargas/
+  507  python3 pru.py 
+  508  gi status
+  509  git status
+  510  git add Ejemplos/videos-para-ver.txt 
+  511  git commit -m "Se agregaron nuevos enlaces"
+  512  git add Proyecto/Pycom/lib/LTR329ALS01.py 
+  513  git commit -m "Se dividio en 2 la funcion que me entrega los valores"
+  514  git add Proyecto/Server/api_server.py 
+  515  git commit -m "Se agrego seccion de consulta y de borrado"
+  516  git add Proyecto/Pycom/sensors.py 
+  517  git commit -m "Se agrego funcion para diferenciar componentes de sensor LTR"
+  518  git add Proyecto/Pycom/main.py 
+  519  git commit -m "Se agrego funcion para realizar peticiones get y para borrar la tabla antes de comenzar a mandar los datos por primera vez"
+  520  git status
+  521  git push
+  522  cd Escritorio/IoT-PS/Proyecto/Server/
+  523  python3 api_server.py 
+  524  cd ..
+  525  git status
+  526  git add Proyecto/Server/api_server.py 
+  527  git commit -m "Se agrego funcion para recuperar iteracion"
+  528  git add Proyecto/Pycom/main.py 
+  529  git commit -m "Se agrego recuperacion de iteracion"
+  530  git push
+  531  cd Escritorio/IoT-PS/Proyecto/Server/
+  532  ls
+  533  python3 api_server.py 
+  534  cd ..
+  535  git status
+  536  git add Proyecto/Pycom/
+  537  git commit - m "Se modifico libreria y main para adaptarlo a la recpcion"
+  538  git add Proyecto/Server/api_server.py 
+  539  git commit -m "Se trabajo sobrela recuperacion de la iteracion"
+  540  git status 
+  541  git add .gitignore 
+  542  git commit -m "Se ignoran nuevos archivos"
+  543  git push
+  544  exit
+  545  sudo apt update
+  546  sudo apt upgrade
+  547  sudo apt-get update
+  548  sudo apt-get upgrade
+  549  sudo apt-get update
+  550  sudo apt-get upgrade
+  551  exit
+  552  npm install ntp-time
+  553  cd Escritorio/IoT-PS/Proyecto/Server/
+  554  python3 api_server.py 
+  555  cd Escritorio/IoT-PS/Proyecto/
+  556  cd Server/
+  557  python3 api_server.py 
+  558  rm datos-ambientales.db 
+  559  python3 api_server.py 
+  560  clear
+  561  cd ..
+  562  git status
+  563  git add Ejemplos/Time/
+  564  git commit -m "Se agrego intento de probar usar reloj"
+  565  git add Proyecto/Pycom/main.py 
+  566  git commit-m "Se soluciono problema de ontencion de ultima iteracion y se agrego la fecha en la que se realiza la carga del dato"
+  567  git commit -m "Se soluciono problema de ontencion de ultima iteracion y se agrego la fecha en la que se realiza la carga del dato"
+  568  git status
+  569  git add Proyecto/Server/api_server.py 
+  570  git commit -m "Se agrego envio de fecha actual y consulta del ultimo y primer dato cargado"
+  571  git push
+  572  ipconfig
+  573  ifconfig
+  574  cd Escritorio/IoT-PS/Ejemplos/FLASK/Ejemplo-1
+  575  python3 app.py 
+  576  cd Escritorio/IoT-PS/
+  577  git status
+  578  git add Ejemplos/FLASK/Ejemplo-1/
+  579  git commit -m "Se le agrego numero de puerto para evitar conflicto"
+  580  git add Ejemplos/videos-para-ver.txt 
+  581  git commit-m "Se agrego nuevo enlace con informacion"
+  582  git commit -m "Se agrego nuevo enlace con informacion"
+  583  git add Proyecto/Pycom/sensors.py 
+  584  git commit -m "Se elimino libreria que no se usa y se agrego presion"
+  585  git add Proyecto/Pycom/main.py 
+  586  git commit -m "Se agrego la obtencion y envio de la presion"
+  587  git status
+  588  git add Proyecto/Server/static/
+  589  git add Proyecto/Server/templates/
+  590  git commit -m "commit inicial"
+  591  git add Proyecto/Server/api_server.py 
+  592  git commit -m "Se agrego enlace a otras paginas"
+  593  git push
+  594  cd Escritorio/IoT-PS/Proyecto/Server/
+  595  python3 api_server.py 
+  596  exit
+  597  cd Escritorio/
+  598  git clone git@github.com:MatiasRaya/Pagina-POWELL.git
+  599  exit
+  600  cd Escritorio/IoT-PS/Proyecto/Server/
+  601  python3 api_server.py 
+  602  clear
+  603  cd ..
+  604  git status
+  605  git add .gitignore 
+  606  git commit -m "Se ignoran nuevos archivos"
+  607  git add Ejemplos/videos-para-ver.txt
+  608  git commit-m "Se agregaron nuevos enlaces"
+  609  git commit -m "Se agregaron nuevos enlaces"
+  610  git add Proyecto/Server/api_server.py 
+  611  git commit -m "Se trabajo sobre la ruta de las aulas"
+  612  git add Proyecto/Server/static/JS/top-nav-bar.js 
+  613  git commit -m "Se agrego funcionalidad para la navbar"
+  614  git status 
+  615  git add Proyecto/Server/static/Image/SVG/xmark-solid.svg 
+  616  git commit -m "Se elimino imagen innecesaria"
+  617  git add Proyecto/Server/static/Image/SVG/times-solid.svg Proyecto/Server/static/Image/SVG/bars-solid.svg 
+  618  git commit -m "Se agregaron nuevas imagenes"
+  619  git add Proyecto/Server/static/Image/JPG/komarov-egor-Utm4kF35GmY-unsplash.jpg 
+  620  git commit -m "Se agrego nueva imagen"
+  621  git status
+  622  git add Proyecto/Server/static/CSS/style-aula-600.css Proyecto/Server/static/CSS/style-main.css 
+  623  git commit -m "Se agregaron archivos de estilo"
+  624  git add Proyecto/Server/static/CSS/style-navigation.css 
+  625  git commit -m "Se modifico estilo de la barra de navegacion"
+  626  git add Proyecto/Server/templates/aula_600.html 
+  627  git commit -m "Se trabajo sobre la extraccion de los datos"
+  628  clear
+  629  gt status
+  630  git status
+  631  git add Proyecto/Server/templates/layout.html 
+  632  git commit -m "Se coloco barra de navegacion"
+  633  git add Proyecto/Server/templates/index.html 
+  634  git commit -m "Se elimino contenido que no corresponde a este archivo"
+  635  git status
+  636  git push
+  637  git status
+  638  printenv > /tmp/tmp-106682DcbF8rwGU8mtxt
+  639  cd Escritorio/IoT-PS/Proyecto/Server/
+  640  python3 api_server.py 
+  641  pip freeze > requirements.txt
+  642  cd Escritorio/IoT-PS/Proyecto/Server/
+  643  python3 api_server.py 
+  644  exit
+  645  cd Escritorio/IoT-PS/Ejemplos/FLASK/Ejemplo-7
+  646  python3 app.py 
+  647  flask run
+  648  cd Escritorio/IoT-PS/
+  649  git status
+  650  history
+  651  cd Escritorio/IoT-PS/Proyecto/Server/
+  652  python3 api_server.py 
+  653  clear
+  654  cd ..
+  655  git status
+  656  git add Ejemplos/FLASK/Ejemplo-7/
+  657  git commit -m "Se agrego ejemplo de flask con chart.js"
+  658  git add Proyecto/Server/static/Image/P
+  659  git add Proyecto/Server/static/Image/PNG/logo-circulo-lcd-con-fondo.png Proyecto/Server/static/Image/SVG/logo-circulo-lcd.svg 
+  660  git commit -m "Se agregaron imagenes"
+  661  git status
+  662  git add Proyecto/Pycom/main.py 
+  663  git commit -m "Se corrigieron errores en la transmision"
+  664  git add Proyecto/Server/api_server.py 
+  665  git comit -m "Se prueba como hacer uso de chart.js"
+  666  git commit -m "Se prueba como hacer uso de chart.js"
+  667  git add Proyecto/Server/static/
+  668  git commit -m "Se agregaron estilos"
+  669  git add Proyecto/Server/templates/
+  670  git commit -m "Se modificaron div y se agregaron script"
+  671  git push
+  672  git status
+  673  history
+
