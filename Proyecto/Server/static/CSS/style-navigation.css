@@ -15,12 +15,8 @@
 
 /* Logo */
 
-.logo-img{
-    padding-top: 10px;
-}
-
 .logo-img img{
-    width: 100px;
+    width: 50px;
     height: auto;
 }
 
