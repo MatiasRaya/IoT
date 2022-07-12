@@ -1,5 +1,36 @@
-.data-information{
-    /* background-color: blue; */
+.actual-information{
+    background-color: yellow;
     padding: 40px;
-    color: black;
+    text-align: center;
+}
+
+.title-actual-data{
+    background-color: yellowgreen;
+    font-size: 30px;
+}
+
+.information-actual-data{
+    background-color: wheat;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.humidity-actual{
+    background-color: violet;
+}
+
+.pressure-actual{
+    background-color: turquoise;
+}
+
+.temperature-actual{
+    background-color: tomato;
+}
+
+.title-data{
+    font-size: 20px;
+}
+
+.value-actual{
+    font-size: 15px;
 }
