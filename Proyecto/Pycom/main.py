@@ -62,7 +62,7 @@ data_sensor = {
     'lightR' : pySensor.get_lightR(),
     'humidity' : pySensor.get_humidity(),
     'temperature' : pySensor.get_temperature(),
-    'altitude' : pySensor.get_altitude(),
+    # 'altitude' : pySensor.get_altitude(),
     'pressure' :pySensor.get_pressure()
 }
 
@@ -71,7 +71,7 @@ rate = {
     'light_rate': 1,
     'humidity_rate': 1,
     'temperature_rate': 1,
-    'altitude_rate': 1,
+    # 'altitude_rate': 1,
     'pressure_rate': 1
 }
 
@@ -98,10 +98,10 @@ def temperature_handler(alarm):
     alarm = Timer.Alarm(temperature_handler, rate['temperature_rate'], periodic=True)
     data_sensor['temperature'] = pySensor.get_temperature()
 
-def altitude_handler(alarm):
-    alarm.cancel()
-    alarm = Timer.Alarm(altitude_handler, rate['altitude_rate'], periodic=True)
-    data_sensor['altitude'] = pySensor.get_altitude()
+# def altitude_handler(alarm):
+#     alarm.cancel()
+#     alarm = Timer.Alarm(altitude_handler, rate['altitude_rate'], periodic=True)
+#     data_sensor['altitude'] = pySensor.get_altitude()
 
 def pressure_handler(alarm):
     alarm.cancel()
@@ -114,7 +114,7 @@ chrono.start()
 light_rate = Timer.Alarm(light_handler, rate['light_rate'], periodic=True)
 humidity_rate = Timer.Alarm(humidity_handler, rate['humidity_rate'], periodic=True)
 temperature_rate = Timer.Alarm(temperature_handler, rate['temperature_rate'], periodic=True)
-altitude_rate = Timer.Alarm(altitude_handler, rate['altitude_rate'], periodic=True)
+# altitude_rate = Timer.Alarm(altitude_handler, rate['altitude_rate'], periodic=True)
 pressure_rate = Timer.Alarm(pressure_handler, rate['pressure_rate'], periodic=True)
 
 alarm_sets = []
@@ -123,7 +123,7 @@ alarm_sets = []
 alarm_sets.append([light_rate, light_handler, 'light_rate'])
 alarm_sets.append([humidity_rate, humidity_handler, 'humidity_rate'])
 alarm_sets.append([temperature_rate, temperature_handler, 'temperature_rate'])
-alarm_sets.append([altitude_rate, altitude_handler, 'altitude_rate'])
+# alarm_sets.append([altitude_rate, altitude_handler, 'altitude_rate'])
 alarm_sets.append([pressure_rate, pressure_handler, 'pressure_rate'])
 
 def stored_data(interval):
@@ -205,3 +205,5 @@ for i in range(10):
 
     print("Number of iteration " + str(iteration - 1))
     print(i)
+
+# Se decidió sacar la altitud a que esto se implementará en aulas, por lo tanto ese valor no es requerido
