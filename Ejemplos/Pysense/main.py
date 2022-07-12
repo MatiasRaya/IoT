@@ -21,7 +21,7 @@ if 'pybytes' in globals():
 
 mp = MPL3115A2(py,mode=ALTITUDE) # Returns height in meters. Mode may also be set to PRESSURE, returning a value in Pascals
 print("MPL3115A2 temperature: " + str(mp.temperature()))
-print("Altitude: " + str(mp.altitude()))
+print("Altitude: " + str(mp.altitude()) + "m")
 mpp = MPL3115A2(py,mode=PRESSURE) # Returns pressure in Pa. Mode may also be set to ALTITUDE, returning a value in meters
 print("Pressure: " + str(mpp.pressure()))
 
