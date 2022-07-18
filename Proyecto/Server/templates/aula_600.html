@@ -11,12 +11,12 @@
 {% block body %}
 <div class="actual-information">
     <div class="title-actual-data">
-        <h1>Valores actales</h1>
+        <h1>Valores actuales</h1>
     </div>
     <div class="information-actual-data">
         {% for key, value in actual_data.items()  %}
         {% if key == 'humidity' %}
-        <div class="humidity-actual">
+        <div class="humidity-actual conditions">
             <div class="title-data">
                 <h2>Humedad Relativa</h2>
             </div>
@@ -27,8 +27,32 @@
             </div>
         </div>
         {% endif %}
+        {% if key == 'lightB' %}
+        <div class="lightB-actual conditions">
+            <div class="title-data">
+                <h2>Luz Azul</h2>
+            </div>
+            <div class="value-actual">
+                <h2>
+                    {{ value }} nm
+                </h2>
+            </div>
+        </div>
+        {% endif %}
+        {% if key == 'lightR' %}
+        <div class="lightR-actual conditions">
+            <div class="title-data">
+                <h2>Luz Roja</h2>
+            </div>
+            <div class="value-actual">
+                <h2>
+                    {{ value }} nm
+                </h2>
+            </div>
+        </div>
+        {% endif %}
         {% if key == 'pressure' %}
-        <div class="pressure-actual">
+        <div class="pressure-actual conditions">
             <div class="title-data">
                 <h2>Presion</h2>
             </div>
@@ -40,7 +64,7 @@
         </div>
         {% endif %}
         {% if key == 'temperature' %}
-        <div class="humidity-actual">
+        <div class="temperature-actual conditions">
             <div class="title-data">
                 <h2>Temperatura</h2>
             </div>
@@ -52,6 +76,279 @@
         </div>
         {% endif %}
         {% endfor %}
+    </div>
+</div>
+<div class="graphic-data">
+    <div class="temp">
+        <div class="day">
+            <div class="title-graph">
+                <h1>{{ title_temp_day }}</h1>
+            </div>
+            <div class="line-graph">
+                <canvas id="chart_temp_day" class="temp-day messure"></canvas>
+            </div>
+            <script>
+                var barData = {
+                    labels : [
+                        {% for item in labels_temp_day %}
+                        "{{ item }}",
+                        {% endfor %}
+                    ],
+
+                    datasets : [{
+                        fillColor: "rgba(255,0,0,0.2)",
+                        strokeColor: "rgba(255,0,0,1)",
+                        pointColor: "rgba(180,0,0,1)",
+                        bezierCurve : false,
+                        data : [
+                        {% for item in values_temp_day %}
+                        {{ item }},
+                        {% endfor %}
+                        ]
+                    }]
+                }
+                Chart.defaults.global.scaleLineColor = "white";
+                Chart.defaults.global.scaleFontColor = "white";
+                var mychart = document.getElementById("chart_temp_day").getContext("2d");
+                steps = 10
+                max = {{ max_temp_day }}
+                var LineChartDemo = new Chart(mychart).Line(barData, {
+                    scaleOverride: true,
+                    scaleSteps: steps,
+                    scaleStepWidth: Math.ceil(max / steps),
+                    scaleStartValue: 0,
+                    scaleShowVerticalLines: true,
+                    scaleShowGridLines : true,
+                    barShowStroke : true,
+                    scaleShowLabels: true,
+                    bezierCurve: false,
+                });
+            </script>
+        </div>
+        <div class="month">
+            <div class="title-graph">
+                <h1>{{ title_temp_month }}</h1>
+            </div>
+            <div class="line-graph">
+                <canvas id="chart_temp_month" class="temp-month messure"></canvas>
+            </div>
+            <script>
+                var barData = {
+                    labels : [
+                        {% for item in labels_temp_month %}
+                        "{{ item }}",
+                        {% endfor %}
+                    ],
+
+                    datasets : [{
+                        fillColor: "rgba(255,0,0,0.2)",
+                        strokeColor: "rgba(255,0,0,1)",
+                        pointColor: "rgba(180,0,0,1)",
+                        bezierCurve : false,
+                        data : [
+                        {% for item in values_temp_month %}
+                        {{ item }},
+                        {% endfor %}
+                        ]
+                    }]
+                }
+                Chart.defaults.global.scaleLineColor = "black";
+                var mychart = document.getElementById("chart_temp_month").getContext("2d");
+                steps = 10
+                max = {{ max_temp_month }}
+                var LineChartDemo = new Chart(mychart).Line(barData, {
+                    scaleOverride: true,
+                    scaleSteps: steps,
+                    scaleStepWidth: Math.ceil(max / steps),
+                    scaleStartValue: 0,
+                    scaleShowVerticalLines: true,
+                    scaleShowGridLines : true,
+                    barShowStroke : true,
+                    scaleShowLabels: true,
+                    bezierCurve: false,
+                });
+            </script>
+        </div>
+    </div>
+    <div class="hum">
+        <div class="day">
+            <div class="title-graph">
+                <h1>{{ title_hum_day }}</h1>
+            </div>
+            <div class="line-graph">
+                <canvas id="chart_hum_day" class="hum-day messure"></canvas>
+            </div>
+            <script>
+                var barData = {
+                    labels : [
+                        {% for item in labels_hum_day %}
+                        "{{ item }}",
+                        {% endfor %}
+                    ],
+
+                    datasets : [{
+                        fillColor: "rgba(255,0,0,0.2)",
+                        strokeColor: "rgba(255,0,0,1)",
+                        pointColor: "rgba(180,0,0,1)",
+                        bezierCurve : false,
+                        data : [
+                        {% for item in values_hum_day %}
+                        {{ item }},
+                        {% endfor %}
+                        ]
+                    }]
+                }
+                Chart.defaults.global.scaleLineColor = "black";
+                var mychart = document.getElementById("chart_hum_day").getContext("2d");
+                steps = 10
+                max = {{ max_hum_day }}
+                var LineChartDemo = new Chart(mychart).Line(barData, {
+                    scaleOverride: true,
+                    scaleSteps: steps,
+                    scaleStepWidth: Math.ceil(max / steps),
+                    scaleStartValue: 0,
+                    scaleShowVerticalLines: true,
+                    scaleShowGridLines : true,
+                    barShowStroke : true,
+                    scaleShowLabels: true,
+                    bezierCurve: false,
+                });
+            </script>
+        </div>
+        <div class="month">
+            <div class="title-graph">
+                <h1>{{ title_hum_month }}</h1>
+            </div>
+            <div class="line-graph">
+                <canvas id="chart_hum_month" class="hum-month messure"></canvas>
+            </div>
+            <script>
+                var barData = {
+                    labels : [
+                        {% for item in labels_hum_month %}
+                        "{{ item }}",
+                        {% endfor %}
+                    ],
+
+                    datasets : [{
+                        fillColor: "rgba(255,0,0,0.2)",
+                        strokeColor: "rgba(255,0,0,1)",
+                        pointColor: "rgba(180,0,0,1)",
+                        bezierCurve : false,
+                        data : [
+                        {% for item in values_hum_month %}
+                        {{ item }},
+                        {% endfor %}
+                        ]
+                    }]
+                }
+                Chart.defaults.global.scaleLineColor = "black";
+                var mychart = document.getElementById("chart_hum_month").getContext("2d");
+                steps = 10
+                max = {{ max_hum_month }}
+                var LineChartDemo = new Chart(mychart).Line(barData, {
+                    scaleOverride: true,
+                    scaleSteps: steps,
+                    scaleStepWidth: Math.ceil(max / steps),
+                    scaleStartValue: 0,
+                    scaleShowVerticalLines: true,
+                    scaleShowGridLines : true,
+                    barShowStroke : true,
+                    scaleShowLabels: true,
+                    bezierCurve: false,
+                });
+            </script>
+        </div>
+    </div>
+    <div class="press">
+        <div class="day">
+            <div class="title-graph">
+                <h1>{{ title_press_day }}</h1>
+            </div>
+            <div class="line-graph">
+                <canvas id="chart_press_day" class="press-day messure"></canvas>
+            </div>
+            <script>
+                var barData = {
+                    labels : [
+                        {% for item in labels_press_day %}
+                        "{{ item }}",
+                        {% endfor %}
+                    ],
+
+                    datasets : [{
+                        fillColor: "rgba(255,0,0,0.2)",
+                        strokeColor: "rgba(255,0,0,1)",
+                        pointColor: "rgba(180,0,0,1)",
+                        bezierCurve : false,
+                        data : [
+                        {% for item in values_press_day %}
+                        {{ item }},
+                        {% endfor %}
+                        ]
+                    }]
+                }
+                Chart.defaults.global.scaleLineColor = "black";
+                var mychart = document.getElementById("chart_press_day").getContext("2d");
+                steps = 10
+                max = {{ max_press_day }}
+                var LineChartDemo = new Chart(mychart).Line(barData, {
+                    scaleOverride: true,
+                    scaleSteps: steps,
+                    scaleStepWidth: Math.ceil(max / steps),
+                    scaleStartValue: 0,
+                    scaleShowVerticalLines: true,
+                    scaleShowGridLines : true,
+                    barShowStroke : true,
+                    scaleShowLabels: true,
+                    bezierCurve: false,
+                });
+            </script>
+        </div>
+        <div class="month">
+            <div class="title-graph">
+                <h1>{{ title_press_month }}</h1>
+            </div>
+            <div class="line-graph">
+                <canvas id="chart_press_month" class="press-month messure"></canvas>
+            </div>
+            <script>
+                var barData = {
+                    labels : [
+                        {% for item in labels_press_month %}
+                        "{{ item }}",
+                        {% endfor %}
+                    ],
+
+                    datasets : [{
+                        fillColor: "rgba(255,0,0,0.2)",
+                        strokeColor: "rgba(255,0,0,1)",
+                        pointColor: "rgba(180,0,0,1)",
+                        bezierCurve : false,
+                        data : [
+                        {% for item in values_press_month %}
+                        {{ item }},
+                        {% endfor %}
+                        ]
+                    }]
+                }
+                Chart.defaults.global.scaleLineColor = "black";
+                var mychart = document.getElementById("chart_press_month").getContext("2d");
+                steps = 10
+                max = {{ max_press_month }}
+                var LineChartDemo = new Chart(mychart).Line(barData, {
+                    scaleOverride: true,
+                    scaleSteps: steps,
+                    scaleStepWidth: Math.ceil(max / steps),
+                    scaleStartValue: 0,
+                    scaleShowVerticalLines: true,
+                    scaleShowGridLines : true,
+                    barShowStroke : true,
+                    scaleShowLabels: true,
+                    bezierCurve: false,
+                });
+            </script>
+        </div>
     </div>
 </div>
 {% endblock %}
