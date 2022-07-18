@@ -1,0 +1,67 @@
+{% extends "layout.html"%}
+
+{% block title %}
+    Rate
+{% endblock %}
+
+{% block body %}
+    <div class="title-rates">
+        <h1>Actualizacion de nodos</h1>
+    </div>
+    <div class="form-actualization">
+        <div class="rate-actualization">
+            <h2 class="title-rate">Actualizar nodo aula 600</h2>
+            <form action="{{'form/1'}}" method="post">
+                <div class="fields-rate">
+                    <div class="rate-transmition">
+                        <label for="transmition">Transmicion</label>
+                        <input type="text" name="transmition" id="transmition" placeholder="Transmition rate..." required onkeypress="">
+                    </div>
+                    <div class="rate-sensor">
+                        <label for="sensor">Sensores</label>
+                        <input type="text" name="sensor" id="sensor" placeholder="Sensor rate..." required onkeypress="">
+                    </div>
+                    <div class="button-submit">
+                        <input type="submit" id="send-data" name="data" value="Actualizar" class="form-btn">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="rate-actualization">
+            <h2 class="title-rate">Actualizar nodo aula 601</h2>
+            <form action="{{'form/2'}}" method="post">
+                <div class="fields-rate">
+                    <div class="rate-transmition">
+                        <label for="transmition">Transmicion</label>
+                        <input type="text" name="transmition" id="transmition" placeholder="Transmition rate..." required onkeypress="">
+                    </div>
+                    <div class="rate-sensor">
+                        <label for="sensor">Sensores</label>
+                        <input type="text" name="sensor" id="sensor" placeholder="Sensor rate..." required onkeypress="">
+                    </div>
+                    <div class="button-submit">
+                        <input type="submit" id="send-data" name="data" value="Actualizar" class="form-btn">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="rate-actualization">
+            <h2 class="title-rate">Actualizar nodo aula 602</h2>
+            <form action="{{'form/3'}}" method="post">
+                <div class="fields-rate">
+                    <div class="rate-transmition">
+                        <label for="transmition">Transmicion</label>
+                        <input type="text" name="transmition" id="transmition" placeholder="Transmition rate..." required onkeypress="">
+                    </div>
+                    <div class="rate-sensor">
+                        <label for="sensor">Sensores</label>
+                        <input type="text" name="sensor" id="sensor" placeholder="Sensor rate..." required onkeypress="">
+                    </div>
+                    <div class="button-submit">
+                        <input type="submit" id="send-data" name="data" value="Actualizar" class="form-btn">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
