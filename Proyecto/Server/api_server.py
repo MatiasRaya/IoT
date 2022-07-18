@@ -155,11 +155,191 @@ def aula_600():
 
 @app.route("/aula_601", methods=['GET'])
 def aula_601():
-    return render_template("aula_601.html")
+    temp_data_day = []
+    temp_label_day = []
+    temp_data_month = []
+    temp_label_month = []
+    hum_data_day = []
+    hum_label_day = []
+    hum_data_month = []
+    hum_label_month = []
+    press_data_day = []
+    press_label_day = []
+    press_data_month = []
+    press_label_month = []
+    
+    actual_data = requests.get('http://' + SERVER_ADDRESS + '/consultation-last/2')
+    
+    temp_day = requests.get('http://' + SERVER_ADDRESS + '/consultation-day/2/temperature')
+    for dic in temp_day.json():
+        for key,value in dic.items():
+            temp_label_day.append('')
+            aux = round(value,2)
+            temp_data_day.append(aux)
+    temp_month = requests.get('http://' + SERVER_ADDRESS + '/consultation-month/2/temperature')
+    for dic in temp_month.json():
+        for key,value in dic.items():
+            temp_label_month.append('')
+            aux = round(value,2)
+            temp_data_month.append(aux)
+    
+    hum_day = requests.get('http://' + SERVER_ADDRESS + '/consultation-day/2/humidity')
+    for dic in hum_day.json():
+        for key,value in dic.items():
+            hum_label_day.append('')
+            aux = round(value,2)
+            hum_data_day.append(aux)
+    hum_month = requests.get('http://' + SERVER_ADDRESS + '/consultation-month/2/humidity')
+    for dic in hum_month.json():
+        for key,value in dic.items():
+            hum_label_month.append('')
+            aux = round(value,2)
+            hum_data_month.append(aux)
+
+    press_day = requests.get('http://' + SERVER_ADDRESS + '/consultation-day/2/pressure')
+    for dic in press_day.json():
+        for key,value in dic.items():
+            press_label_day.append('')
+            aux = round(value/1000,2)
+            press_data_day.append(aux)
+    press_month = requests.get('http://' + SERVER_ADDRESS + '/consultation-month/2/pressure')
+    for dic in press_month.json():
+        for key,value in dic.items():
+            press_label_month.append('')
+            aux = round(value/1000,2)
+            press_data_month.append(aux)
+
+    max_temp_day = requests.get('http://' + SERVER_ADDRESS + '/max-day/2/temperature')
+    aux_temp = max_temp_day.json()
+    max_temp_day = round(aux_temp['temperature'] + 3,2)
+    max_temp_month = requests.get('http://' + SERVER_ADDRESS + '/max-month/2/temperature')
+    aux_temp = max_temp_month.json()
+    max_temp_month = round(aux_temp['temperature'] + 3,2)
+
+    max_hum_day = requests.get('http://' + SERVER_ADDRESS + '/max-day/2/humidity')
+    aux_hum = max_hum_day.json()
+    max_hum_day = round(aux_hum['humidity'] + 3,2)
+    max_hum_month = requests.get('http://' + SERVER_ADDRESS + '/max-month/2/humidity')
+    aux_hum = max_hum_month.json()
+    max_hum_month = round(aux_hum['humidity'] + 3,2)
+
+    max_press_day = requests.get('http://' + SERVER_ADDRESS + '/max-day/2/pressure')
+    aux_press = max_press_day.json()
+    max_press_day = round(aux_press['pressure'] + 3,2)
+    max_press_month = requests.get('http://' + SERVER_ADDRESS + '/max-month/2/pressure')
+    aux_press = max_press_month.json()
+    max_press_month = round(aux_press['pressure'] + 3,2)
+
+    title_temp_day = 'Temperatura del dia (°C)'
+    title_temp_month = 'Temperatura del mes (°C)'
+    title_hum_day = 'Humedad Relativa del dia (%RH)'
+    title_hum_month = 'Humedad Relativa del mes (%RH)'
+    title_press_day = 'Presion del dia (kPA)'
+    title_press_month = 'Presion del mes (kPA)'
+
+    return render_template('aula_600.html', 
+                            actual_data=actual_data.json(),
+                            max_temp_day=max_temp_day, title_temp_day=title_temp_day, labels_temp_day=temp_label_day, values_temp_day=temp_data_day,
+                            max_temp_month=max_temp_month, title_temp_month=title_temp_month, labels_temp_month=temp_label_month, values_temp_month=temp_data_month,
+                            max_hum_day=max_hum_day, title_hum_day=title_hum_day, labels_hum_day=hum_label_day, values_hum_day=hum_data_day,
+                            max_hum_month=max_hum_month, title_hum_month=title_hum_month, labels_hum_month=hum_label_month, values_hum_month=hum_data_month,
+                            max_press_day=max_press_day, title_press_day=title_press_day, labels_press_day=press_label_day, values_press_day=press_data_day,
+                            max_press_month=max_press_month, title_press_month=title_press_month, labels_press_month=press_label_month, values_press_month=press_data_month
+                            )
 
 @app.route("/aula_602", methods=['GET'])
 def aula_602():
-    return render_template("aula_602.html")
+    temp_data_day = []
+    temp_label_day = []
+    temp_data_month = []
+    temp_label_month = []
+    hum_data_day = []
+    hum_label_day = []
+    hum_data_month = []
+    hum_label_month = []
+    press_data_day = []
+    press_label_day = []
+    press_data_month = []
+    press_label_month = []
+    
+    actual_data = requests.get('http://' + SERVER_ADDRESS + '/consultation-last/3')
+    
+    temp_day = requests.get('http://' + SERVER_ADDRESS + '/consultation-day/3/temperature')
+    for dic in temp_day.json():
+        for key,value in dic.items():
+            temp_label_day.append('')
+            aux = round(value,2)
+            temp_data_day.append(aux)
+    temp_month = requests.get('http://' + SERVER_ADDRESS + '/consultation-month/3/temperature')
+    for dic in temp_month.json():
+        for key,value in dic.items():
+            temp_label_month.append('')
+            aux = round(value,2)
+            temp_data_month.append(aux)
+    
+    hum_day = requests.get('http://' + SERVER_ADDRESS + '/consultation-day/3/humidity')
+    for dic in hum_day.json():
+        for key,value in dic.items():
+            hum_label_day.append('')
+            aux = round(value,2)
+            hum_data_day.append(aux)
+    hum_month = requests.get('http://' + SERVER_ADDRESS + '/consultation-month/3/humidity')
+    for dic in hum_month.json():
+        for key,value in dic.items():
+            hum_label_month.append('')
+            aux = round(value,2)
+            hum_data_month.append(aux)
+
+    press_day = requests.get('http://' + SERVER_ADDRESS + '/consultation-day/3/pressure')
+    for dic in press_day.json():
+        for key,value in dic.items():
+            press_label_day.append('')
+            aux = round(value/1000,2)
+            press_data_day.append(aux)
+    press_month = requests.get('http://' + SERVER_ADDRESS + '/consultation-month/3/pressure')
+    for dic in press_month.json():
+        for key,value in dic.items():
+            press_label_month.append('')
+            aux = round(value/1000,2)
+            press_data_month.append(aux)
+
+    max_temp_day = requests.get('http://' + SERVER_ADDRESS + '/max-day/3/temperature')
+    aux_temp = max_temp_day.json()
+    max_temp_day = round(aux_temp['temperature'] + 3,2)
+    max_temp_month = requests.get('http://' + SERVER_ADDRESS + '/max-month/3/temperature')
+    aux_temp = max_temp_month.json()
+    max_temp_month = round(aux_temp['temperature'] + 3,2)
+
+    max_hum_day = requests.get('http://' + SERVER_ADDRESS + '/max-day/3/humidity')
+    aux_hum = max_hum_day.json()
+    max_hum_day = round(aux_hum['humidity'] + 3,2)
+    max_hum_month = requests.get('http://' + SERVER_ADDRESS + '/max-month/3/humidity')
+    aux_hum = max_hum_month.json()
+    max_hum_month = round(aux_hum['humidity'] + 3,2)
+
+    max_press_day = requests.get('http://' + SERVER_ADDRESS + '/max-day/3/pressure')
+    aux_press = max_press_day.json()
+    max_press_day = round(aux_press['pressure'] + 3,2)
+    max_press_month = requests.get('http://' + SERVER_ADDRESS + '/max-month/3/pressure')
+    aux_press = max_press_month.json()
+    max_press_month = round(aux_press['pressure'] + 3,2)
+
+    title_temp_day = 'Temperatura del dia (°C)'
+    title_temp_month = 'Temperatura del mes (°C)'
+    title_hum_day = 'Humedad Relativa del dia (%RH)'
+    title_hum_month = 'Humedad Relativa del mes (%RH)'
+    title_press_day = 'Presion del dia (kPA)'
+    title_press_month = 'Presion del mes (kPA)'
+
+    return render_template('aula_600.html', 
+                            actual_data=actual_data.json(),
+                            max_temp_day=max_temp_day, title_temp_day=title_temp_day, labels_temp_day=temp_label_day, values_temp_day=temp_data_day,
+                            max_temp_month=max_temp_month, title_temp_month=title_temp_month, labels_temp_month=temp_label_month, values_temp_month=temp_data_month,
+                            max_hum_day=max_hum_day, title_hum_day=title_hum_day, labels_hum_day=hum_label_day, values_hum_day=hum_data_day,
+                            max_hum_month=max_hum_month, title_hum_month=title_hum_month, labels_hum_month=hum_label_month, values_hum_month=hum_data_month,
+                            max_press_day=max_press_day, title_press_day=title_press_day, labels_press_day=press_label_day, values_press_day=press_data_day,
+                            max_press_month=max_press_month, title_press_month=title_press_month, labels_press_month=press_label_month, values_press_month=press_data_month
+                            )
 
 @app.route('/data', methods=['POST'])
 def create_data():
@@ -204,6 +384,7 @@ def consutation_month(id, arg):
         task = db.session.query(Task.humidity).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).all()
     if arg == "pressure":
         task = db.session.query(Task.pressure).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).all()
+    
     resul = tasks_schema.dump(task)
     return jsonify(resul)
 
