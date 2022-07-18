@@ -11,8 +11,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-main.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-navigation.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-aula.css')}}">
-
-    
+    <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-rate.css')}}">    
 
     <script defer src="{{url_for('static', filename='/JS/top-nav-bar.js')}}"></script>
     <title>
@@ -44,10 +43,7 @@
                         <a href="{{url_for('aula_602')}}">AULA 602</a>
                     </li>
                     <li>
-                        <a href="./">RATE</a>
-                    </li>
-                    <li>
-                        <a href="./">RESETEAR</a>
+                        <a href="{{url_for('rate')}}">RATE</a>
                     </li>
                 </ul>
             </nav>
