@@ -1,0 +1,33 @@
+.form-actualization{
+    padding: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    text-align: center;
+}
+
+.title-rates{
+    margin-top: 20px;
+    text-align: center;
+    font-size: 30px;
+}
+
+.title-rate{
+    text-align: center;
+}
+
+.fields-rate{
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.rate-transmition{
+    display: block;
+    margin-top: 10px;
+}
+
+.form-btn{
+    width: 80%;
+    cursor: pointer;
+}
