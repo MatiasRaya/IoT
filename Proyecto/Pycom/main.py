@@ -40,6 +40,7 @@ SERVER_PORT = "5000"
 
 wlan = WLAN(mode=WLAN.STA)
 wlan.connect('LCD3', auth=(WLAN.WPA2, '1cdunc0rd0ba'))
+# wlan.connect('RAYA 2.4', auth=(WLAN.WPA2, 'Rayaplasencia1996'))
 print('Network found!')
 while not wlan.isconnected():
     machine.idle()
@@ -53,7 +54,7 @@ py = Pycoproc(Pycoproc.PYSENSE)
 pySensor = Sensors(py)
 
 data_sensor = {
-    'nodo' : 1,
+    'nodo' : 3,
     'iteration' : iteration,
     'year' : year,
     'month' : month,
