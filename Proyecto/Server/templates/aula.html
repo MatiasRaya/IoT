@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block title %}
-    Aula 600
+    {{ aula_name }}
 {% endblock %}
 
 {% block body %}
 <div class="actual-information">
     <div class="title-actual-data">
-        <h1>Valores actuales</h1>
+        <h1>Valores actuales del aula {{ aula_name }}</h1>
     </div>
     <div class="information-actual-data">
         {% for key, value in actual_data.items()  %}
