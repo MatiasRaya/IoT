@@ -159,6 +159,15 @@ def get_time(address):
     day = aux['day']
     return response
 
+def get_rate(address):
+    response = urequests.get(address)
+    aux = response.json()
+    rate['transmission_rate'] = aux['transmition']
+    rate['humidity_rate'] = aux['sensor']
+    rate['light_rate'] = aux['sensor']
+    rate['pressure_rate'] = aux['sensor']
+    rate['temperature_rate'] = aux['sensor']
+
 def get_method1(address):
     response = urequests.get(address)
     return response
@@ -183,6 +192,14 @@ for i in range(10):
             time.sleep(1)
             pycom.rgbled(NO_COLOUR)
         verification = verification - 1
+
+    try:
+        response = get_rate(SERVER_ADDRESS + ":" + SERVER_PORT + "/actualization/" + str(data_sensor['nodo']))
+    except Exception as e:
+        print(e)
+        pycom.rgbled(CIAN)
+        time.sleep(1)
+        pycom.rgbled(NO_COLOUR)
 
     try:
         response = get_time(SERVER_ADDRESS + ":" + SERVER_PORT + "/time")
