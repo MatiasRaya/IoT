@@ -4,7 +4,7 @@ import requests
 from crypt import methods
 from re import M, T
 from urllib import response
-from flask import Flask, request, jsonify, redirect, render_template
+from flask import Flask, request, jsonify, redirect, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
@@ -18,6 +18,12 @@ ma = Marshmallow(app)
 DAY = 0
 MONTH = 0
 YEAR = 0
+TRANSMITION1 = 0
+SENSORS1 = 0
+TRANSMITION2 = 0
+SENSORS2 = 0
+TRANSMITION3 = 0
+SENSORS3 = 0
 
 SERVER_ADDRESS = '192.168.1.142:5000' #LCD
 
@@ -143,7 +149,7 @@ def aula_600():
     title_press_day = 'Presion del dia (kPA)'
     title_press_month = 'Presion del mes (kPA)'
 
-    return render_template('aula_600.html', 
+    return render_template('aula.html', aula_name=600,
                             actual_data=actual_data.json(),
                             max_temp_day=max_temp_day, title_temp_day=title_temp_day, labels_temp_day=temp_label_day, values_temp_day=temp_data_day,
                             max_temp_month=max_temp_month, title_temp_month=title_temp_month, labels_temp_month=temp_label_month, values_temp_month=temp_data_month,
@@ -237,7 +243,7 @@ def aula_601():
     title_press_day = 'Presion del dia (kPA)'
     title_press_month = 'Presion del mes (kPA)'
 
-    return render_template('aula_600.html', 
+    return render_template('aula.html', aula_name=601,
                             actual_data=actual_data.json(),
                             max_temp_day=max_temp_day, title_temp_day=title_temp_day, labels_temp_day=temp_label_day, values_temp_day=temp_data_day,
                             max_temp_month=max_temp_month, title_temp_month=title_temp_month, labels_temp_month=temp_label_month, values_temp_month=temp_data_month,
@@ -331,7 +337,7 @@ def aula_602():
     title_press_day = 'Presion del dia (kPA)'
     title_press_month = 'Presion del mes (kPA)'
 
-    return render_template('aula_600.html', 
+    return render_template('aula.html', aula_name=602,
                             actual_data=actual_data.json(),
                             max_temp_day=max_temp_day, title_temp_day=title_temp_day, labels_temp_day=temp_label_day, values_temp_day=temp_data_day,
                             max_temp_month=max_temp_month, title_temp_month=title_temp_month, labels_temp_month=temp_label_month, values_temp_month=temp_data_month,
@@ -340,6 +346,45 @@ def aula_602():
                             max_press_day=max_press_day, title_press_day=title_press_day, labels_press_day=press_label_day, values_press_day=press_data_day,
                             max_press_month=max_press_month, title_press_month=title_press_month, labels_press_month=press_label_month, values_press_month=press_data_month
                             )
+
+@app.route("/rate", methods=['GET','POST'])
+def rate():
+    return render_template('rate.html')
+
+@app.route("/form/<id>", methods=['POST'])
+def form_consul(id):
+    global TRANSMITION1, SENSORS1, TRANSMITION2, SENSORS2, TRANSMITION3, SENSORS3
+    if int(id) == 1:
+        TRANSMITION1 = request.form['transmition']
+        SENSORS1 = request.form['sensor']
+        return redirect(url_for('rate'))
+    if int(id) == 2:
+        TRANSMITION2 = request.form['transmition']
+        SENSORS2 = request.form['sensor']
+        return redirect(url_for('rate'))
+    if int(id) == 3:
+        TRANSMITION3 = request.form['transmition']
+        SENSORS3 = request.form['sensor']
+        return redirect(url_for('rate'))
+    return id
+
+@app.route('/actualization/<id>', methods=['GET'])
+def actualization(id):
+    if int(id) == 1:
+        return jsonify({
+            'transmition' : TRANSMITION1,
+            'sensor' : SENSORS1
+        })
+    if int(id) == 2:
+        return jsonify({
+            'transmition' : TRANSMITION2,
+            'sensor' : SENSORS2
+        })
+    if int(id) == 3:
+        return jsonify({
+            'transmition' : TRANSMITION3,
+            'sensor' : SENSORS3
+        })
 
 @app.route('/data', methods=['POST'])
 def create_data():
