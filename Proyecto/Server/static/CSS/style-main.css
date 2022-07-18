@@ -10,9 +10,10 @@ section[id]{
 }
 
 body{
-    background-color: aqua;
     font-family: 'Open Sans', sans-serif;
     padding-top: 80px;
+    color: bisque;
+    background-color: rgba(39, 36, 36, 0.712);
 }
 
 a{
