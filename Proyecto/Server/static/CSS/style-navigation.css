@@ -69,10 +69,6 @@
         transition: opacity 0.1s;
     }
 
-    .logo-img img{
-        margin-top: -10px;
-    }
-
     .nav-top li{
         padding: 0;
     }
