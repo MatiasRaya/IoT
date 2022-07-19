@@ -6,62 +6,92 @@
 
 {% block body %}
     <div class="title-rates">
-        <h1>Actualizacion de nodos</h1>
+        <h1>ACTUALIZACION DE NODOS</h1>
     </div>
     <div class="form-actualization">
-        <div class="rate-actualization">
+        <div class="rate-actualization aula-600">
             <h2 class="title-rate">Actualizar nodo aula 600</h2>
             <form action="{{'form/1'}}" method="post">
                 <div class="fields-rate">
                     <div class="rate-transmition">
-                        <label for="transmition">Transmicion</label>
-                        <input type="text" name="transmition" id="transmition" placeholder="Transmition rate..." required onkeypress="">
+                        <label for="transmition">Taza de Transmicion</label>
+                        <input class="form-inp" type="text" name="transmition" id="transmition" placeholder="Transmition rate..." onkeypress="return restrictAlphabets(event)">
                     </div>
                     <div class="rate-sensor">
-                        <label for="sensor">Sensores</label>
-                        <input type="text" name="sensor" id="sensor" placeholder="Sensor rate..." required onkeypress="">
+                        <label for="sensor">Taza de actualizacion de Sensores</label>
+                        <input class="form-inp" type="text" name="sensor" id="sensor" placeholder="Sensor rate..." onkeypress="return restrictAlphabets(event)">
                     </div>
                     <div class="button-submit">
-                        <input type="submit" id="send-data" name="data" value="Actualizar" class="form-btn">
+                        <input type="submit" id="send-data" name="data" value="Actualizar" class="form-btn" onclick="return validation()">
                     </div>
                 </div>
             </form>
         </div>
-        <div class="rate-actualization">
+        <div class="rate-actualization aula-601">
             <h2 class="title-rate">Actualizar nodo aula 601</h2>
             <form action="{{'form/2'}}" method="post">
                 <div class="fields-rate">
                     <div class="rate-transmition">
                         <label for="transmition">Transmicion</label>
-                        <input type="text" name="transmition" id="transmition" placeholder="Transmition rate..." required onkeypress="">
+                        <input class="form-inp" type="text" name="transmition" id="transmition" placeholder="Transmition rate..." onkeypress="return restrictAlphabets(event)">
                     </div>
                     <div class="rate-sensor">
                         <label for="sensor">Sensores</label>
-                        <input type="text" name="sensor" id="sensor" placeholder="Sensor rate..." required onkeypress="">
+                        <input class="form-inp" type="text" name="sensor" id="sensor" placeholder="Sensor rate..." onkeypress="return restrictAlphabets(event)">
                     </div>
                     <div class="button-submit">
-                        <input type="submit" id="send-data" name="data" value="Actualizar" class="form-btn">
+                        <input type="submit" id="send-data" name="data" value="Actualizar" class="form-btn" onclick="return validation()">
                     </div>
                 </div>
             </form>
         </div>
-        <div class="rate-actualization">
+        <div class="rate-actualization aula-602">
             <h2 class="title-rate">Actualizar nodo aula 602</h2>
             <form action="{{'form/3'}}" method="post">
                 <div class="fields-rate">
                     <div class="rate-transmition">
                         <label for="transmition">Transmicion</label>
-                        <input type="text" name="transmition" id="transmition" placeholder="Transmition rate..." required onkeypress="">
+                        <input class="form-inp" type="text" name="transmition" id="transmition" placeholder="Transmition rate..." onkeypress="return restrictAlphabets(event)">
                     </div>
                     <div class="rate-sensor">
                         <label for="sensor">Sensores</label>
-                        <input type="text" name="sensor" id="sensor" placeholder="Sensor rate..." required onkeypress="">
+                        <input class="form-inp" type="text" name="sensor" id="sensor" placeholder="Sensor rate..." onkeypress="return restrictAlphabets(event)">
                     </div>
                     <div class="button-submit">
-                        <input type="submit" id="send-data" name="data" value="Actualizar" class="form-btn">
+                        <input type="submit" id="send-data" name="data" value="Actualizar" class="form-btn" onclick="return validation()">
                     </div>
                 </div>
             </form>
         </div>
     </div>
+    <script>
+        function restrictAlphabets(e){
+            var x = e.which || e.keycode;
+            if((x >= 48 && x <= 57))
+                return true;
+            else
+                return false;
+        }
+        
+        function validation(){
+            var numTrans = parseInt(document.getElementById("transmition").value);
+            var numSens = parseInt(document.getElementById("sensor").value);
+            if(numTrans > 0 && numSens > 0 && numTrans >= (2*numSens)){
+                window.alert("Valores actualizados satisfactorimente")
+                return true;
+            }
+            else if(numTrans < 0){
+                window.alert("Ingrese un valor de taza de transmicion mayor que 0")
+                return false;
+            }
+            else if(numSens < 0){
+                window.alert("Ingrese un valor de taza de actualizacion de sensores mayor que 0")
+                return false;
+            }
+            else if(numTrans < (2*numSens)){
+                window.alert("El valor de taza de transmicion tiene que ser por lo menos el doble de la taza de actualizacion de sensores")
+                return false;
+            }
+        }
+    </script>
 {% endblock %}

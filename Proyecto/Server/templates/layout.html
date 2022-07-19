@@ -5,11 +5,12 @@
     {% endblock %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- <meta http-equiv="refresh" content="5"> -->
+    <!-- <meta http-equiv="refresh" content="{{actual}}"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{url_for('static', filename='/Image/PNG/logo-circulo-lcd-con-fondo.png')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-main.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-navigation.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-start.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-aula.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-rate.css')}}">    
 
@@ -23,7 +24,7 @@
     <head class="navigation">
         <div class="top-navigation">
             <nav class="top-menu-nav">
-                <a href="./" class="logo-img">
+                <a href="{{url_for('home')}}" class="logo-img">
                     <img src="{{url_for('static', filename='/Image/SVG/logo-circulo-lcd.svg')}}" alt="">
                 </a>
                 <button class="open-menu" aria-label="Abrir menú">
@@ -34,13 +35,16 @@
                         <img src="{{url_for('static', filename='/Image/SVG/times-solid.svg')}}" alt="cerrar menu">
                     </button>
                     <li>
-                        <a href="{{url_for('aula_600')}}">AULA 600</a>
+                        <a href="{{url_for('home')}}">INICIO</a>
                     </li>
                     <li>
-                        <a href="{{url_for('aula_601')}}">AULA 601</a>
+                        <a href="{{url_for('aula', name=600, id=1)}}">AULA 600</a>
                     </li>
                     <li>
-                        <a href="{{url_for('aula_602')}}">AULA 602</a>
+                        <a href="{{url_for('aula', name=601, id=2)}}">AULA 601</a>
+                    </li>
+                    <li>
+                        <a href="{{url_for('aula', name=602, id=3)}}">AULA 602</a>
                     </li>
                     <li>
                         <a href="{{url_for('rate')}}">RATE</a>
