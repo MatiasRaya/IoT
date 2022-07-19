@@ -79,9 +79,10 @@ rate = {
 # Chrono definition and inicialization
 chrono = Timer.Chrono()
 
-# def transmission_handler(alarm):
-#     alarm.cancel()
-#     alarm = Timer.Alarm(transmission_handler, rate['transmission_rate'], periodic=True)
+def transmission_handler(alarm):
+    alarm.cancel()
+    alarm = Timer.Alarm(transmission_handler, rate['transmission_rate'], periodic=True)
+    print(time.localtime())
 
 def light_handler(alarm):
     alarm.cancel()
@@ -111,7 +112,7 @@ def pressure_handler(alarm):
 
 chrono.start()
 
-# transmission_alarm = Timer.Alarm(transmission_handler, rate['transmission_rate'], periodic=True)
+transmission_alarm = Timer.Alarm(transmission_handler, rate['transmission_rate'], periodic=True)
 light_rate = Timer.Alarm(light_handler, rate['light_rate'], periodic=True)
 humidity_rate = Timer.Alarm(humidity_handler, rate['humidity_rate'], periodic=True)
 temperature_rate = Timer.Alarm(temperature_handler, rate['temperature_rate'], periodic=True)
@@ -120,7 +121,7 @@ pressure_rate = Timer.Alarm(pressure_handler, rate['pressure_rate'], periodic=Tr
 
 alarm_sets = []
 
-# alarm_sets.append([transmission_alarm, transmission_handler, 'transmission_rate'])
+alarm_sets.append([transmission_alarm, transmission_handler, 'transmission_rate'])
 alarm_sets.append([light_rate, light_handler, 'light_rate'])
 alarm_sets.append([humidity_rate, humidity_handler, 'humidity_rate'])
 alarm_sets.append([temperature_rate, temperature_handler, 'temperature_rate'])
@@ -193,13 +194,13 @@ for i in range(10):
             pycom.rgbled(NO_COLOUR)
         verification = verification - 1
 
-    try:
-        response = get_rate(SERVER_ADDRESS + ":" + SERVER_PORT + "/actualization/" + str(data_sensor['nodo']))
-    except Exception as e:
-        print(e)
-        pycom.rgbled(CIAN)
-        time.sleep(1)
-        pycom.rgbled(NO_COLOUR)
+    # try:
+    #     response = get_rate(SERVER_ADDRESS + ":" + SERVER_PORT + "/actualization/" + str(data_sensor['nodo']))
+    # except Exception as e:
+    #     print(e)
+    #     pycom.rgbled(CIAN)
+    #     time.sleep(1)
+    #     pycom.rgbled(NO_COLOUR)
 
     try:
         response = get_time(SERVER_ADDRESS + ":" + SERVER_PORT + "/time")
