@@ -9,7 +9,6 @@ class Sensors:
         self.sensors["lightR"]=LTR329ALS01(pysense)
         self.sensors["humidity"]=SI7006A20(pysense)
         self.sensors["temperature"]=SI7006A20(pysense)
-        # self.sensors["altitude"]=MPL3115A2(pysense, mode=ALTITUDE)
         self.sensors["pressure"]=MPL3115A2(pysense, mode=PRESSURE)
     
     def get_lightB(self):
@@ -23,14 +22,9 @@ class Sensors:
     
     def get_temperature(self):
         return self.sensors["temperature"].temperature()
-    
-    # def get_altitude(self):
-    #     return self.sensors["altitude"].altitude()
 
     def get_pressure(self):
         return self.sensors["pressure"].pressure()
     
     def __del__(self):
         print("Object deleted")
-
-# Se decidió sacar la altitud a que esto se implementará en aulas, por lo tanto ese valor no es requerido
