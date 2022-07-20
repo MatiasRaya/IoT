@@ -64,16 +64,14 @@ data_sensor = {
     'lightR' : pySensor.get_lightR(),
     'humidity' : pySensor.get_humidity(),
     'temperature' : pySensor.get_temperature(),
-    # 'altitude' : pySensor.get_altitude(),
     'pressure' :pySensor.get_pressure()
 }
 
 rate = {
-    'transmission_rate': 2,
+    'transmission_rate': 5,
     'light_rate': 1,
     'humidity_rate': 1,
     'temperature_rate': 1,
-    # 'altitude_rate': 1,
     'pressure_rate': 1
 }
 
@@ -83,6 +81,7 @@ chrono = Timer.Chrono()
 def transmission_handler(alarm):
     alarm.cancel()
     alarm = Timer.Alarm(transmission_handler, rate['transmission_rate'], periodic=True)
+    send_recive()
 
 def light_handler(alarm):
     alarm.cancel()
@@ -100,11 +99,6 @@ def temperature_handler(alarm):
     alarm = Timer.Alarm(temperature_handler, rate['temperature_rate'], periodic=True)
     data_sensor['temperature'] = pySensor.get_temperature()
 
-# def altitude_handler(alarm):
-#     alarm.cancel()
-#     alarm = Timer.Alarm(altitude_handler, rate['altitude_rate'], periodic=True)
-#     data_sensor['altitude'] = pySensor.get_altitude()
-
 def pressure_handler(alarm):
     alarm.cancel()
     alarm = Timer.Alarm(pressure_handler, rate['pressure_rate'], periodic=True)
@@ -116,7 +110,6 @@ transmission_alarm = Timer.Alarm(transmission_handler, rate['transmission_rate']
 light_rate = Timer.Alarm(light_handler, rate['light_rate'], periodic=True)
 humidity_rate = Timer.Alarm(humidity_handler, rate['humidity_rate'], periodic=True)
 temperature_rate = Timer.Alarm(temperature_handler, rate['temperature_rate'], periodic=True)
-# altitude_rate = Timer.Alarm(altitude_handler, rate['altitude_rate'], periodic=True)
 pressure_rate = Timer.Alarm(pressure_handler, rate['pressure_rate'], periodic=True)
 
 alarm_sets = []
@@ -125,12 +118,10 @@ alarm_sets.append([transmission_alarm, transmission_handler, 'transmission_rate'
 alarm_sets.append([light_rate, light_handler, 'light_rate'])
 alarm_sets.append([humidity_rate, humidity_handler, 'humidity_rate'])
 alarm_sets.append([temperature_rate, temperature_handler, 'temperature_rate'])
-# alarm_sets.append([altitude_rate, altitude_handler, 'altitude_rate'])
 alarm_sets.append([pressure_rate, pressure_handler, 'pressure_rate'])
 
-def stored_data(interval):
+def stored_data():
     store_data = {}
-    time.sleep(interval)
     data_sensor['iteration'] = iteration
     data_sensor['year'] = year
     data_sensor['month'] = month
@@ -169,21 +160,8 @@ def get_rate(address):
     rate['pressure_rate'] = aux['sensor']
     rate['temperature_rate'] = aux['sensor']
 
-def get_method1(address):
-    response = urequests.get(address)
-    return response
-
-def delete_table():
-    try:
-        get_method1(SERVER_ADDRESS + ":" + SERVER_PORT + "/delete/" + str(data_sensor['nodo']))
-        print("Delete node " + str(data_sensor['nodo']) + " in the table")
-    except Exception as e:
-        print(e)
-        pycom.rgbled(PINK)
-        time.sleep(1)
-        pycom.rgbled(NO_COLOUR)
-
-for i in range(10):
+def send_recive():
+    global verification, iteration
     if verification == 1:
         try:
             response = get_iteration(SERVER_ADDRESS + ":" + SERVER_PORT + "/iteration/" + str(data_sensor['nodo']))
@@ -194,13 +172,13 @@ for i in range(10):
             pycom.rgbled(NO_COLOUR)
         verification = verification - 1
 
-    # try:
-    #     response = get_rate(SERVER_ADDRESS + ":" + SERVER_PORT + "/actualization/" + str(data_sensor['nodo']))
-    # except Exception as e:
-    #     print(e)
-    #     pycom.rgbled(CIAN)
-    #     time.sleep(1)
-    #     pycom.rgbled(NO_COLOUR)
+    try:
+        response = get_rate(SERVER_ADDRESS + ":" + SERVER_PORT + "/actualization/" + str(data_sensor['nodo']))
+    except Exception as e:
+        print(e)
+        pycom.rgbled(CIAN)
+        time.sleep(1)
+        pycom.rgbled(NO_COLOUR)
 
     try:
         response = get_time(SERVER_ADDRESS + ":" + SERVER_PORT + "/time")
@@ -210,10 +188,8 @@ for i in range(10):
         time.sleep(1)
         pycom.rgbled(NO_COLOUR)
 
-    store_data = stored_data(2)
-
     try:
-        response = post_data(SERVER_ADDRESS + ":" + SERVER_PORT + "/data", store_data)
+        response = post_data(SERVER_ADDRESS + ":" + SERVER_PORT + "/data", stored_data())
         iteration += 1
     except Exception as e:
         print(e)
@@ -221,8 +197,3 @@ for i in range(10):
         pycom.rgbled(RED)
         time.sleep(1)
         pycom.rgbled(NO_COLOUR)
-
-    print("Number of iteration " + str(iteration - 1))
-    print(i)
-
-# Se decidió sacar la altitud a que esto se implementará en aulas, por lo tanto ese valor no es requerido
