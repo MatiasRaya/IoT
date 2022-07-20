@@ -34,13 +34,14 @@ time.sleep(5)
 pycom.rgbled(NO_COLOUR)
 
 # WiFi connectation
-SERVER_ADDRESS = "http://192.168.1.142" # LCD
+# SERVER_ADDRESS = "http://192.168.1.142" # LCD
+SERVER_ADDRESS = 'http://192.168.0.18' # Casa
 # SERVER_ADDRESS = "" # APP HEROKU
 SERVER_PORT = "5000"
 
 wlan = WLAN(mode=WLAN.STA)
-wlan.connect('LCD3', auth=(WLAN.WPA2, '1cdunc0rd0ba'))
-# wlan.connect('RAYA 2.4', auth=(WLAN.WPA2, 'Rayaplasencia1996'))
+# wlan.connect('LCD3', auth=(WLAN.WPA2, '1cdunc0rd0ba'))
+wlan.connect('RAYA 2.4', auth=(WLAN.WPA2, 'Rayaplasencia1996'))
 print('Network found!')
 while not wlan.isconnected():
     machine.idle()
@@ -54,7 +55,7 @@ py = Pycoproc(Pycoproc.PYSENSE)
 pySensor = Sensors(py)
 
 data_sensor = {
-    'nodo' : 3,
+    'nodo' : 1,
     'iteration' : iteration,
     'year' : year,
     'month' : month,
@@ -82,7 +83,6 @@ chrono = Timer.Chrono()
 def transmission_handler(alarm):
     alarm.cancel()
     alarm = Timer.Alarm(transmission_handler, rate['transmission_rate'], periodic=True)
-    print(time.localtime())
 
 def light_handler(alarm):
     alarm.cancel()
