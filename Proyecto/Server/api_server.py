@@ -27,9 +27,10 @@ SENSORS3 = 1
 MULT1 = 1
 MULT2 = 1
 MULT3 = 1
+BIG = 5
 
 # SERVER_ADDRESS = '192.168.1.142:5000' #LCD
-SERVER_ADDRESS = '192.168.0.18:5000'
+SERVER_ADDRESS = '192.168.0.18:5000' # Casa
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -65,13 +66,25 @@ class TaskSchema(ma.Schema):
 task_schema = TaskSchema()
 tasks_schema = TaskSchema(many=True)
 
+def big_transmition():
+    global BIG
+    param1 = int(TRANSMITION1)
+    param2 = int(TRANSMITION2)
+    param3 = int(TRANSMITION3)
+    if(param1 > param2 and param1 > param3):
+        BIG = param1
+    elif(param2 > param3 and param2 > param1):
+        BIG = param2
+    elif(param3 > param1 and param3 > param2):
+        BIG = param3
+
 @app.route('/')
 def home():
-    prom = (int(TRANSMITION1 + TRANSMITION2 + TRANSMITION3)/3) + 1
     actual_data1 = requests.get('http://' + SERVER_ADDRESS + '/consultation-last/1')
     actual_data2 = requests.get('http://' + SERVER_ADDRESS + '/consultation-last/2')
     actual_data3 = requests.get('http://' + SERVER_ADDRESS + '/consultation-last/3')
-    return render_template("index.html", actual=prom,
+    big_transmition()
+    return render_template("index.html", actual=BIG,
                             actual_data1=actual_data1.json(),
                             actual_data2=actual_data2.json(),
                             actual_data3=actual_data3.json(),
@@ -154,6 +167,14 @@ def aula(name,id):
     aux_press = max_press_month.json()
     max_press_month = round(aux_press['pressure'] + 3,2)
 
+    global BIG
+    if(int(id) == 1):
+        BIG = TRANSMITION1
+    elif(int(id) == 2):
+        BIG = TRANSMITION2
+    elif(int(id) == 3):
+        BIG = TRANSMITION3
+
     title_temp_day = 'Temperatura del dia (°C)'
     title_temp_month = 'Temperatura del mes (°C)'
     title_hum_day = 'Humedad Relativa del dia (%RH)'
@@ -162,6 +183,7 @@ def aula(name,id):
     title_press_month = 'Presion del mes (kPA)'
 
     return render_template('aula.html', aula_name=str(name),
+                            actual=BIG,
                             actual_data=actual_data.json(),
                             max_temp_day=max_temp_day, title_temp_day=title_temp_day, labels_temp_day=temp_label_day, values_temp_day=temp_data_day,
                             max_temp_month=max_temp_month, title_temp_month=title_temp_month, labels_temp_month=temp_label_month, values_temp_month=temp_data_month,
