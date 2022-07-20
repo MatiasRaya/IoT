@@ -49,18 +49,6 @@
     padding: 20px 0px;
 }
 
-.multiplicator-rate-sensor{
-    background-color: blanchedalmond;
-    margin: auto 0;
-    padding: 10px;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-}
-
-.multiplicator-rate-sensor label{
-    font-size: 17px;
-}
-
 @media (max-width: 950px){
     .aulas{
         grid-template-columns: none;
