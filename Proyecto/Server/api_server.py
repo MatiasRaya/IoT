@@ -24,8 +24,12 @@ TRANSMITION2 = 5
 SENSORS2 = 1
 TRANSMITION3 = 5
 SENSORS3 = 1
+MULT1 = 1
+MULT2 = 1
+MULT3 = 1
 
-SERVER_ADDRESS = '192.168.1.142:5000' #LCD
+# SERVER_ADDRESS = '192.168.1.142:5000' #LCD
+SERVER_ADDRESS = '192.168.0.18:5000'
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -173,37 +177,50 @@ def rate():
 
 @app.route("/form/<id>", methods=['POST'])
 def form_consul(id):
-    global TRANSMITION1, SENSORS1, TRANSMITION2, SENSORS2, TRANSMITION3, SENSORS3
+    global TRANSMITION1, SENSORS1, TRANSMITION2, SENSORS2, TRANSMITION3, SENSORS3, MULT1, MULT2, MULT3
     if int(id) == 1:
         TRANSMITION1 = request.form['transmition']
         SENSORS1 = request.form['sensor']
+        MULT1 = request.form['mult1']
         return redirect(url_for('rate'))
     if int(id) == 2:
         TRANSMITION2 = request.form['transmition']
         SENSORS2 = request.form['sensor']
+        MULT2 = request.form['mult2']
         return redirect(url_for('rate'))
     if int(id) == 3:
         TRANSMITION3 = request.form['transmition']
         SENSORS3 = request.form['sensor']
+        MULT3 = request.form['mult3']
         return redirect(url_for('rate'))
     return id
 
 @app.route('/actualization/<id>', methods=['GET'])
 def actualization(id):
+    global TRANSMITION1, SENSORS1, TRANSMITION2, SENSORS2, TRANSMITION3, SENSORS3
     if int(id) == 1:
+        TRANSMITION1 = int(TRANSMITION1)*int(MULT1)
+        SENSORS1 = int(SENSORS1)*int(MULT1)
         return jsonify({
             'transmition' : TRANSMITION1,
-            'sensor' : SENSORS1
+            'sensor' : SENSORS1,
+            'mult' : MULT1,
         })
     if int(id) == 2:
+        TRANSMITION2 = int(TRANSMITION2)*int(MULT2)
+        SENSORS2 = int(SENSORS2)*int(MULT2)
         return jsonify({
             'transmition' : TRANSMITION2,
-            'sensor' : SENSORS2
+            'sensor' : SENSORS2,
+            'mult' : MULT2,
         })
     if int(id) == 3:
+        TRANSMITION3 = int(TRANSMITION3)*int(MULT3)
+        SENSORS3 = int(SENSORS3)*int(MULT3)
         return jsonify({
             'transmition' : TRANSMITION3,
-            'sensor' : SENSORS3
+            'sensor' : SENSORS3,
+            'mult' : MULT3,
         })
 
 @app.route('/data', methods=['POST'])
