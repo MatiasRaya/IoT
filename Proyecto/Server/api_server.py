@@ -84,7 +84,7 @@ def home():
     actual_data2 = requests.get('http://' + SERVER_ADDRESS + '/consultation-last/2')
     actual_data3 = requests.get('http://' + SERVER_ADDRESS + '/consultation-last/3')
     big_transmition()
-    return render_template("index.html", actual=BIG,
+    return render_template("index.html", actual=BIG+2,
                             actual_data1=actual_data1.json(),
                             actual_data2=actual_data2.json(),
                             actual_data3=actual_data3.json(),
@@ -169,11 +169,11 @@ def aula(name,id):
 
     global BIG
     if(int(id) == 1):
-        BIG = TRANSMITION1
+        BIG = int(TRANSMITION1)*int(MULT1)
     elif(int(id) == 2):
-        BIG = TRANSMITION2
+        BIG = int(TRANSMITION2)*int(MULT2)
     elif(int(id) == 3):
-        BIG = TRANSMITION3
+        BIG = int(TRANSMITION3)*int(MULT3)
 
     title_temp_day = 'Temperatura del dia (°C)'
     title_temp_month = 'Temperatura del mes (°C)'
@@ -183,7 +183,7 @@ def aula(name,id):
     title_press_month = 'Presion del mes (kPA)'
 
     return render_template('aula.html', aula_name=str(name),
-                            actual=BIG,
+                            actual=str(int(BIG)+2),
                             actual_data=actual_data.json(),
                             max_temp_day=max_temp_day, title_temp_day=title_temp_day, labels_temp_day=temp_label_day, values_temp_day=temp_data_day,
                             max_temp_month=max_temp_month, title_temp_month=title_temp_month, labels_temp_month=temp_label_month, values_temp_month=temp_data_month,
