@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    {% block head %}
-    {% endblock %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="refresh" content="{{actual}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block head %}
+    {% endblock %}
     <link rel="shortcut icon" href="{{url_for('static', filename='/Image/PNG/logo-circulo-lcd-con-fondo.png')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-main.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-navigation.css')}}">
