@@ -181,17 +181,17 @@ def form_consul(id):
     if int(id) == 1:
         TRANSMITION1 = request.form['transmition']
         SENSORS1 = request.form['sensor']
-        MULT1 = request.form['mult1']
+        MULT1 = request.form['mult']
         return redirect(url_for('rate'))
     if int(id) == 2:
         TRANSMITION2 = request.form['transmition']
         SENSORS2 = request.form['sensor']
-        MULT2 = request.form['mult2']
+        MULT2 = request.form['mult']
         return redirect(url_for('rate'))
     if int(id) == 3:
         TRANSMITION3 = request.form['transmition']
         SENSORS3 = request.form['sensor']
-        MULT3 = request.form['mult3']
+        MULT3 = request.form['mult']
         return redirect(url_for('rate'))
     return id
 
