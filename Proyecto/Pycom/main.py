@@ -34,14 +34,12 @@ time.sleep(5)
 pycom.rgbled(NO_COLOUR)
 
 # WiFi connectation
-# SERVER_ADDRESS = "http://192.168.1.142" # LCD
-SERVER_ADDRESS = 'http://192.168.0.18' # Casa
+SERVER_ADDRESS = "http://192.168.1.142" # LCD
 # SERVER_ADDRESS = "" # APP HEROKU
 SERVER_PORT = "5000"
 
 wlan = WLAN(mode=WLAN.STA)
-# wlan.connect('LCD3', auth=(WLAN.WPA2, '1cdunc0rd0ba'))
-wlan.connect('RAYA 2.4', auth=(WLAN.WPA2, 'Rayaplasencia1996'))
+wlan.connect('LCD', auth=(WLAN.WPA2, '1cdunc0rd0ba'))
 print('Network found!')
 while not wlan.isconnected():
     machine.idle()
@@ -60,8 +58,8 @@ data_sensor = {
     'year' : year,
     'month' : month,
     'day' : day,
-    'lightB' : pySensor.get_lightB(),
-    'lightR' : pySensor.get_lightR(),
+    'lightB' : pySensor.get_light()[0],
+    'lightR' : pySensor.get_light()[1],
     'humidity' : pySensor.get_humidity(),
     'temperature' : pySensor.get_temperature(),
     'pressure' :pySensor.get_pressure()
@@ -86,8 +84,9 @@ def transmission_handler(alarm):
 def light_handler(alarm):
     alarm.cancel()
     alarm = Timer.Alarm(light_handler, rate['light_rate'], periodic=True)
-    data_sensor['lightB'] = pySensor.get_lightB()
-    data_sensor['lightR'] = pySensor.get_lightR()
+    light = pySensor.get_light()
+    data_sensor['lightB'] = light[0]
+    data_sensor['lightR'] = light[1]
 
 def humidity_handler(alarm):
     alarm.cancel()
