@@ -1,9 +1,6 @@
 import datetime
 import requests
 
-from crypt import methods
-from re import M, T
-from urllib import response
 from flask import Flask, request, jsonify, redirect, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -29,8 +26,7 @@ MULT2 = 1
 MULT3 = 1
 BIG = 5
 
-# SERVER_ADDRESS = '192.168.1.142:5000' #LCD
-SERVER_ADDRESS = '192.168.0.18:5000' # Casa
+SERVER_ADDRESS = 'http://192.168.1.142:5000' #LCD
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -80,9 +76,9 @@ def big_transmition():
 
 @app.route('/')
 def home():
-    actual_data1 = requests.get('http://' + SERVER_ADDRESS + '/consultation-last/1')
-    actual_data2 = requests.get('http://' + SERVER_ADDRESS + '/consultation-last/2')
-    actual_data3 = requests.get('http://' + SERVER_ADDRESS + '/consultation-last/3')
+    actual_data1 = requests.get(SERVER_ADDRESS + '/consultation-last/1')
+    actual_data2 = requests.get(SERVER_ADDRESS + '/consultation-last/2')
+    actual_data3 = requests.get(SERVER_ADDRESS + '/consultation-last/3')
     big_transmition()
     return render_template("index.html", actual=BIG+2,
                             actual_data1=actual_data1.json(),
@@ -105,65 +101,65 @@ def aula(name,id):
     press_data_month = []
     press_label_month = []
     
-    actual_data = requests.get('http://' + SERVER_ADDRESS + '/consultation-last/' + id)
+    actual_data = requests.get(SERVER_ADDRESS + '/consultation-last/' + id)
     
-    temp_day = requests.get('http://' + SERVER_ADDRESS + '/consultation-day/' + id + '/temperature')
+    temp_day = requests.get(SERVER_ADDRESS + '/consultation-day/' + id + '/temperature')
     for dic in temp_day.json():
         for key,value in dic.items():
             temp_label_day.append('')
             aux = round(value,2)
             temp_data_day.append(aux)
-    temp_month = requests.get('http://' + SERVER_ADDRESS + '/consultation-month/' + id + '/temperature')
+    temp_month = requests.get(SERVER_ADDRESS + '/consultation-month/' + id + '/temperature')
     for dic in temp_month.json():
         for key,value in dic.items():
             temp_label_month.append('')
             aux = round(value,2)
             temp_data_month.append(aux)
     
-    hum_day = requests.get('http://' + SERVER_ADDRESS + '/consultation-day/' + id + '/humidity')
+    hum_day = requests.get(SERVER_ADDRESS + '/consultation-day/' + id + '/humidity')
     for dic in hum_day.json():
         for key,value in dic.items():
             hum_label_day.append('')
             aux = round(value,2)
             hum_data_day.append(aux)
-    hum_month = requests.get('http://' + SERVER_ADDRESS + '/consultation-month/' + id + '/humidity')
+    hum_month = requests.get(SERVER_ADDRESS + '/consultation-month/' + id + '/humidity')
     for dic in hum_month.json():
         for key,value in dic.items():
             hum_label_month.append('')
             aux = round(value,2)
             hum_data_month.append(aux)
 
-    press_day = requests.get('http://' + SERVER_ADDRESS + '/consultation-day/' + id + '/pressure')
+    press_day = requests.get(SERVER_ADDRESS + '/consultation-day/' + id + '/pressure')
     for dic in press_day.json():
         for key,value in dic.items():
             press_label_day.append('')
             aux = round(value/1000,2)
             press_data_day.append(aux)
-    press_month = requests.get('http://' + SERVER_ADDRESS + '/consultation-month/' + id + '/pressure')
+    press_month = requests.get(SERVER_ADDRESS + '/consultation-month/' + id + '/pressure')
     for dic in press_month.json():
         for key,value in dic.items():
             press_label_month.append('')
             aux = round(value/1000,2)
             press_data_month.append(aux)
 
-    max_temp_day = requests.get('http://' + SERVER_ADDRESS + '/max-day/' + id + '/temperature')
+    max_temp_day = requests.get(SERVER_ADDRESS + '/max-day/' + id + '/temperature')
     aux_temp = max_temp_day.json()
     max_temp_day = round(aux_temp['temperature'] + 3,2)
-    max_temp_month = requests.get('http://' + SERVER_ADDRESS + '/max-month/' + id + '/temperature')
+    max_temp_month = requests.get(SERVER_ADDRESS + '/max-month/' + id + '/temperature')
     aux_temp = max_temp_month.json()
     max_temp_month = round(aux_temp['temperature'] + 3,2)
 
-    max_hum_day = requests.get('http://' + SERVER_ADDRESS + '/max-day/' + id + '/humidity')
+    max_hum_day = requests.get(SERVER_ADDRESS + '/max-day/' + id + '/humidity')
     aux_hum = max_hum_day.json()
     max_hum_day = round(aux_hum['humidity'] + 3,2)
-    max_hum_month = requests.get('http://' + SERVER_ADDRESS + '/max-month/' + id + '/humidity')
+    max_hum_month = requests.get(SERVER_ADDRESS + '/max-month/' + id + '/humidity')
     aux_hum = max_hum_month.json()
     max_hum_month = round(aux_hum['humidity'] + 3,2)
 
-    max_press_day = requests.get('http://' + SERVER_ADDRESS + '/max-day/' + id + '/pressure')
+    max_press_day = requests.get(SERVER_ADDRESS + '/max-day/' + id + '/pressure')
     aux_press = max_press_day.json()
     max_press_day = round(aux_press['pressure'] + 3,2)
-    max_press_month = requests.get('http://' + SERVER_ADDRESS + '/max-month/' + id + '/pressure')
+    max_press_month = requests.get(SERVER_ADDRESS + '/max-month/' + id + '/pressure')
     aux_press = max_press_month.json()
     max_press_month = round(aux_press['pressure'] + 3,2)
 
@@ -281,7 +277,7 @@ def consutation_last(id):
 @app.route('/consultation-month/<id>/<arg>', methods=['GET'])
 def consutation_month(id, arg):
     global YEAR, MONTH
-    requests.get('http://' + SERVER_ADDRESS + '/time')
+    requests.get(SERVER_ADDRESS + '/time')
     if arg == "temperature":
         task = db.session.query(Task.temperature).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).order_by(Task.day.asc()).all()
     if arg == "humidity":
@@ -295,7 +291,7 @@ def consutation_month(id, arg):
 @app.route('/consultation-day/<id>/<arg>', methods=['GET'])
 def consutation_day(id,arg):
     global YEAR, MONTH, DAY
-    requests.get('http://' + SERVER_ADDRESS + '/time')
+    requests.get(SERVER_ADDRESS + '/time')
     if arg == "temperature":
         task = db.session.query(Task.temperature).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).all()
     if arg == "humidity":
@@ -335,7 +331,7 @@ def delte_table(id):
 @app.route('/max-day/<id>/<arg>')
 def maxDay(id,arg):
     global YEAR, MONTH, DAY
-    requests.get('http://' + SERVER_ADDRESS + '/time')
+    requests.get(SERVER_ADDRESS + '/time')
     if arg == "temperature":
         task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).order_by(Task.temperature.desc()).first()
     if arg == "pressure":
@@ -351,7 +347,7 @@ def maxDay(id,arg):
 @app.route('/max-month/<id>/<arg>')
 def maxmonth(id,arg):
     global YEAR, MONTH
-    requests.get('http://' + SERVER_ADDRESS + '/time')
+    requests.get(SERVER_ADDRESS + '/time')
     if arg == "temperature":
         task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).order_by(Task.temperature.desc()).first()
     if arg == "pressure":
