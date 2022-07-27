@@ -1,6 +1,6 @@
-from crypt import methods
 import datetime
-import requests
+import json
+import os
 
 from flask import Flask, request, jsonify, redirect, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
@@ -29,7 +29,8 @@ MULT2 = 1
 MULT3 = 1
 BIG = 5
 
-SERVER_ADDRESS = 'http://192.168.1.142:5000' #LCD
+# SERVER_ADDRESS = 'http://matiasraya.pythonanywhere.com/' #LCD
+# SERVER_ADDRESS = 'http://192.168.1.142:5000'
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -77,16 +78,80 @@ def big_transmition():
     elif(param3 > param1 and param3 > param2):
         BIG = param3
 
+def time():
+    global DAY, MONTH, YEAR
+    x = datetime.datetime.now()
+    YEAR = x.year
+    MONTH = x.month
+    DAY = x.day
+
+def consultation_last(id):
+    task = Task.query.filter(Task.nodo==id).order_by(Task.id.desc()).first()
+    resul = task_schema.dump(task)
+    return jsonify(resul)
+
+def consultation_month(id, arg):
+    time()
+    if arg == "temperature":
+        task = db.session.query(Task.temperature).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).order_by(Task.day.asc()).all()
+    if arg == "humidity":
+        task = db.session.query(Task.humidity).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).all()
+    if arg == "pressure":
+        task = db.session.query(Task.pressure).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).all()
+
+    resul = tasks_schema.dump(task)
+    return jsonify(resul)
+
+def consultation_day(id,arg):
+    time()
+    if arg == "temperature":
+        task = db.session.query(Task.temperature).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).all()
+    if arg == "humidity":
+        task = db.session.query(Task.humidity).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).all()
+    if arg == "pressure":
+        task = db.session.query(Task.pressure).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).all()
+
+    resul = tasks_schema.dump(task)
+    return jsonify(resul)
+
+def max_day(id,arg):
+    time()
+    if arg == "temperature":
+        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).order_by(Task.temperature.desc()).first()
+    if arg == "pressure":
+        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).order_by(Task.pressure.desc()).first()
+    if arg == "humidity":
+        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).order_by(Task.humidity.desc()).first()
+    resul = task_schema.dump(task)
+    iter = resul['{}'.format(str(arg))]
+    if arg == "pressure":
+        iter = round(iter/1000,2)
+    return jsonify({'{}'.format(str(arg)) : iter})
+
+def max_month(id,arg):
+    time()
+    if arg == "temperature":
+        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).order_by(Task.temperature.desc()).first()
+    if arg == "pressure":
+        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).order_by(Task.pressure.desc()).first()
+    if arg == "humidity":
+        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).order_by(Task.humidity.desc()).first()
+    resul = task_schema.dump(task)
+    iter = resul['{}'.format(str(arg))]
+    if arg == "pressure":
+        iter = round(iter/1000,2)
+    return jsonify({'{}'.format(str(arg)) : iter})
+
 @app.route('/')
 def home():
-    actual_data1 = requests.get(SERVER_ADDRESS + '/consultation-last/1')
-    actual_data2 = requests.get(SERVER_ADDRESS + '/consultation-last/2')
-    actual_data3 = requests.get(SERVER_ADDRESS + '/consultation-last/3')
+    actual_data1 = consultation_last(id=1)
+    actual_data2 = consultation_last(id=2)
+    actual_data3 = consultation_last(id=3)
     big_transmition()
     return render_template("index.html", actual=BIG+2,
-                            actual_data1=actual_data1.json(),
-                            actual_data2=actual_data2.json(),
-                            actual_data3=actual_data3.json(),
+                            actual_data1=actual_data1.json,
+                            actual_data2=actual_data2.json,
+                            actual_data3=actual_data3.json,
                             )
 
 @app.route('/aula/<name>/<id>')
@@ -103,66 +168,60 @@ def aula(name,id):
     press_label_day = []
     press_data_month = []
     press_label_month = []
-    
-    actual_data = requests.get(SERVER_ADDRESS + '/consultation-last/' + id)
-    
-    temp_day = requests.get(SERVER_ADDRESS + '/consultation-day/' + id + '/temperature')
-    for dic in temp_day.json():
-        for key,value in dic.items():
-            temp_label_day.append('')
-            aux = round(value,2)
-            temp_data_day.append(aux)
-    temp_month = requests.get(SERVER_ADDRESS + '/consultation-month/' + id + '/temperature')
-    for dic in temp_month.json():
-        for key,value in dic.items():
-            temp_label_month.append('')
-            aux = round(value,2)
-            temp_data_month.append(aux)
-    
-    hum_day = requests.get(SERVER_ADDRESS + '/consultation-day/' + id + '/humidity')
-    for dic in hum_day.json():
-        for key,value in dic.items():
-            hum_label_day.append('')
-            aux = round(value,2)
-            hum_data_day.append(aux)
-    hum_month = requests.get(SERVER_ADDRESS + '/consultation-month/' + id + '/humidity')
-    for dic in hum_month.json():
-        for key,value in dic.items():
-            hum_label_month.append('')
-            aux = round(value,2)
-            hum_data_month.append(aux)
 
-    press_day = requests.get(SERVER_ADDRESS + '/consultation-day/' + id + '/pressure')
-    for dic in press_day.json():
-        for key,value in dic.items():
-            press_label_day.append('')
-            aux = round(value/1000,2)
-            press_data_day.append(aux)
-    press_month = requests.get(SERVER_ADDRESS + '/consultation-month/' + id + '/pressure')
-    for dic in press_month.json():
-        for key,value in dic.items():
-            press_label_month.append('')
-            aux = round(value/1000,2)
-            press_data_month.append(aux)
+    actual_data = consultation_last(id)
 
-    max_temp_day = requests.get(SERVER_ADDRESS + '/max-day/' + id + '/temperature')
+    temp_day = consultation_day(id=id, arg=name)
+    for key,value in temp_day.items():
+        temp_label_day.append('')
+        aux = round(value,2)
+        temp_data_day.append(aux)
+    temp_month = consultation_month(id=id, arg=name)
+    for key,value in temp_month.items():
+        temp_label_month.append('')
+        aux = round(value,2)
+        temp_data_month.append(aux)
+
+    hum_day = consultation_day(id=id, arg=name)
+    for key,value in hum_day.items():
+        hum_label_day.append('')
+        aux = round(value,2)
+        hum_data_day.append(aux)
+    hum_month = consultation_month(id=id, arg=name)
+    for key,value in hum_month.items():
+        hum_label_month.append('')
+        aux = round(value,2)
+        hum_data_month.append(aux)
+
+    press_day = consultation_day(id=id, arg=name)
+    for key,value in press_day.items():
+        press_label_day.append('')
+        aux = round(value/1000,2)
+        press_data_day.append(aux)
+    press_month = consultation_month(id=id, arg=name)
+    for key,value in press_month.items():
+        press_label_month.append('')
+        aux = round(value/1000,2)
+        press_data_month.append(aux)
+
+    max_temp_day = max_day(id=id,arg='temperature')
     aux_temp = max_temp_day.json()
     max_temp_day = round(aux_temp['temperature'] + 3,2)
-    max_temp_month = requests.get(SERVER_ADDRESS + '/max-month/' + id + '/temperature')
+    max_temp_month = max_month(id=id,arg='temperature')
     aux_temp = max_temp_month.json()
     max_temp_month = round(aux_temp['temperature'] + 3,2)
 
-    max_hum_day = requests.get(SERVER_ADDRESS + '/max-day/' + id + '/humidity')
+    max_hum_day = max_day(id=id,arg='humidity')
     aux_hum = max_hum_day.json()
     max_hum_day = round(aux_hum['humidity'] + 3,2)
-    max_hum_month = requests.get(SERVER_ADDRESS + '/max-month/' + id + '/humidity')
+    max_hum_month = max_month(id=id,arg='humidity')
     aux_hum = max_hum_month.json()
     max_hum_month = round(aux_hum['humidity'] + 3,2)
 
-    max_press_day = requests.get(SERVER_ADDRESS + '/max-day/' + id + '/pressure')
+    max_press_day = max_day(id=id,arg='pressure')
     aux_press = max_press_day.json()
     max_press_day = round(aux_press['pressure'] + 3,2)
-    max_press_month = requests.get(SERVER_ADDRESS + '/max-month/' + id + '/pressure')
+    max_press_month = max_month(id=id,arg='pressure')
     aux_press = max_press_month.json()
     max_press_month = round(aux_press['pressure'] + 3,2)
 
@@ -246,12 +305,13 @@ def actualization(id):
 
 @app.route('/data', methods=['POST'])
 def create_data():
+    time()
     information = request.get_json(force=True)
     nodo = information['nodo']
     iteration = information['iteration']
-    year = information['year']
-    month = information['month']
-    day = information['day']
+    year = YEAR
+    month = MONTH
+    day = DAY
     lightB = information['lightB']
     lightR = information['lightR']
     humidity = information['humidity']
@@ -271,53 +331,6 @@ def consultation_all(id):
     result = tasks_schema.dump(all_tasks)
     return jsonify(result)
 
-@app.route('/consultation-last/<id>', methods=['GET'])
-def consutation_last(id):
-    task = Task.query.filter(Task.nodo==id).order_by(Task.id.desc()).first()
-    resul = task_schema.dump(task)
-    return jsonify(resul)
-
-@app.route('/consultation-month/<id>/<arg>', methods=['GET'])
-def consutation_month(id, arg):
-    global YEAR, MONTH
-    requests.get(SERVER_ADDRESS + '/time')
-    if arg == "temperature":
-        task = db.session.query(Task.temperature).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).order_by(Task.day.asc()).all()
-    if arg == "humidity":
-        task = db.session.query(Task.humidity).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).all()
-    if arg == "pressure":
-        task = db.session.query(Task.pressure).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).all()
-    
-    resul = tasks_schema.dump(task)
-    return jsonify(resul)
-
-@app.route('/consultation-day/<id>/<arg>', methods=['GET'])
-def consutation_day(id,arg):
-    global YEAR, MONTH, DAY
-    requests.get(SERVER_ADDRESS + '/time')
-    if arg == "temperature":
-        task = db.session.query(Task.temperature).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).all()
-    if arg == "humidity":
-        task = db.session.query(Task.humidity).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).all()
-    if arg == "pressure":
-        task = db.session.query(Task.pressure).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).all()
-    
-    resul = tasks_schema.dump(task)
-    return jsonify(resul)
-
-@app.route('/time', methods=['GET'])
-def time():
-    global DAY, MONTH, YEAR
-    x = datetime.datetime.now()
-    YEAR = x.year
-    MONTH = x.month
-    DAY = x.day
-    return jsonify({
-        'year' : YEAR,
-        'month' : MONTH,
-        'day' : DAY
-    })
-
 @app.route('/iteration/<id>', methods=['GET'])
 def itertaio(id):
     task = Task.query.filter(Task.nodo==id).order_by(Task.id.desc()).first()
@@ -330,58 +343,6 @@ def delte_table(id):
     db.session.query(Task).filter(Task.nodo==id).delete()
     db.session.commit()
     return jsonify({'key' : 'value'})
-
-@app.route('/max-day/<id>/<arg>')
-def maxDay(id,arg):
-    global YEAR, MONTH, DAY
-    requests.get(SERVER_ADDRESS + '/time')
-    if arg == "temperature":
-        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).order_by(Task.temperature.desc()).first()
-    if arg == "pressure":
-        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).order_by(Task.pressure.desc()).first()
-    if arg == "humidity":
-        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).order_by(Task.humidity.desc()).first()
-    resul = task_schema.dump(task)
-    iter = resul['{}'.format(str(arg))]
-    if arg == "pressure":
-        iter = round(iter/1000,2)
-    return jsonify({'{}'.format(str(arg)) : iter})
-
-@app.route('/max-month/<id>/<arg>')
-def maxmonth(id,arg):
-    global YEAR, MONTH
-    requests.get(SERVER_ADDRESS + '/time')
-    if arg == "temperature":
-        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).order_by(Task.temperature.desc()).first()
-    if arg == "pressure":
-        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).order_by(Task.pressure.desc()).first()
-    if arg == "humidity":
-        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).order_by(Task.humidity.desc()).first()
-    resul = task_schema.dump(task)
-    iter = resul['{}'.format(str(arg))]
-    if arg == "pressure":
-        iter = round(iter/1000,2)
-    return jsonify({'{}'.format(str(arg)) : iter})
-
-AUXLAT = 0
-AUXLON = 0
-COUNTTRACK = 0
-@app.route('/track', methods=['POST','GET'])
-def track():
-    global AUXLAT, AUXLON, COUNTTRACK
-    if request.method == "POST":
-        information = request.get_json(force=True)
-        AUXLAT = information["lat"]
-        AUXLON = information["lon"]
-        file = open('datos-pytack2.txt','a')
-        file.write('Iteracion {}'.format(str(COUNTTRACK)) +'\n' + "{},{}".format(str(AUXLAT),str(AUXLON)) + '\n')
-        COUNTTRACK += 1
-        file.close()
-    else:
-        print(AUXLAT)
-        print(AUXLON)
-    return {"key" : "value"}
-
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5000,debug=True)
