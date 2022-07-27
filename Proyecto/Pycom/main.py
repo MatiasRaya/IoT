@@ -30,8 +30,8 @@ time.sleep(5)
 pycom.rgbled(NO_COLOUR)
 
 # WiFi connectation
-SERVER_ADDRESS = "http://192.168.1.142:5000" # LCD
-# SERVER_ADDRESS = "http://matiasraya.pythonanywhere.com/" # APP PYTHONANYWHERE
+# SERVER_ADDRESS = "http://192.168.1.127:5000" # LCD
+SERVER_ADDRESS = "https://matiasraya.pythonanywhere.com" # APP PYTHONANYWHERE
 
 wlan = WLAN(mode=WLAN.STA)
 wlan.connect('LCD', auth=(WLAN.WPA2, '1cdunc0rd0ba'))
@@ -48,7 +48,7 @@ py = Pycoproc(Pycoproc.PYSENSE)
 pySensor = Sensors(py)
 
 data_sensor = {
-    'nodo' : 3,
+    'nodo' : 2,
     'iteration' : iteration,
     'lightB' : pySensor.get_light()[0],
     'lightR' : pySensor.get_light()[1],
