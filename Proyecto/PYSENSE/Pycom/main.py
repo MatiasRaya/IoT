@@ -48,7 +48,7 @@ py = Pycoproc(Pycoproc.PYSENSE)
 pySensor = Sensors(py)
 
 data_sensor = {
-    'nodo' : 2,
+    'nodo' : 1,
     'iteration' : iteration,
     'lightB' : pySensor.get_light()[0],
     'lightR' : pySensor.get_light()[1],
@@ -59,10 +59,7 @@ data_sensor = {
 
 rate = {
     'transmission_rate': 5,
-    'sensor': 1,
-    'humidity_rate': 1,
-    'temperature_rate': 1,
-    'pressure_rate': 1
+    'sensor': 1
 }
 
 # Chrono definition and inicialization
