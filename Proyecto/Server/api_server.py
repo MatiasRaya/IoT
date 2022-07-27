@@ -171,58 +171,70 @@ def aula(name,id):
 
     actual_data = consultation_last(id)
 
-    temp_day = consultation_day(id=id, arg=name)
-    for key,value in temp_day.items():
-        temp_label_day.append('')
-        aux = round(value,2)
-        temp_data_day.append(aux)
-    temp_month = consultation_month(id=id, arg=name)
-    for key,value in temp_month.items():
-        temp_label_month.append('')
-        aux = round(value,2)
-        temp_data_month.append(aux)
+    temp_day = consultation_day(id=id, arg="temperature")
+    for dic in temp_day.json:
+        for key,value in dic.items():
+            if key == "temperature":
+                temp_label_day.append('')
+                aux = round(value,2)
+                temp_data_day.append(aux)
+    temp_month = consultation_month(id=id, arg="temperature")
+    for dic in temp_month.json:
+        for key,value in dic.items():
+            if key == "temperature":
+                temp_label_month.append('')
+                aux = round(value,2)
+                temp_data_month.append(aux)
 
-    hum_day = consultation_day(id=id, arg=name)
-    for key,value in hum_day.items():
-        hum_label_day.append('')
-        aux = round(value,2)
-        hum_data_day.append(aux)
-    hum_month = consultation_month(id=id, arg=name)
-    for key,value in hum_month.items():
-        hum_label_month.append('')
-        aux = round(value,2)
-        hum_data_month.append(aux)
+    hum_day = consultation_day(id=id, arg="humidity")
+    for dic in hum_day.json:
+        for key,value in dic.items():
+            if key == "humidity":
+                hum_label_day.append('')
+                aux = round(value,2)
+                hum_data_day.append(aux)
+    hum_month = consultation_month(id=id, arg="humidity")
+    for dic in hum_month.json:
+        for key,value in dic.items():
+            if key == "humidity":
+                hum_label_month.append('')
+                aux = round(value,2)
+                hum_data_month.append(aux)
 
-    press_day = consultation_day(id=id, arg=name)
-    for key,value in press_day.items():
-        press_label_day.append('')
-        aux = round(value/1000,2)
-        press_data_day.append(aux)
-    press_month = consultation_month(id=id, arg=name)
-    for key,value in press_month.items():
-        press_label_month.append('')
-        aux = round(value/1000,2)
-        press_data_month.append(aux)
+    press_day = consultation_day(id=id, arg="pressure")
+    for dic in press_day.json:
+        for key,value in dic.items():
+            if key == "pressure":
+                press_label_day.append('')
+                aux = round(value/1000,2)
+                press_data_day.append(aux)
+    press_month = consultation_month(id=id, arg="pressure")
+    for dic in press_month.json:
+        for key,value in dic.items():
+            if key == "pressure":
+                press_label_month.append('')
+                aux = round(value/1000,2)
+                press_data_month.append(aux)
 
     max_temp_day = max_day(id=id,arg='temperature')
-    aux_temp = max_temp_day.json()
+    aux_temp = max_temp_day.json
     max_temp_day = round(aux_temp['temperature'] + 3,2)
     max_temp_month = max_month(id=id,arg='temperature')
-    aux_temp = max_temp_month.json()
+    aux_temp = max_temp_month.json
     max_temp_month = round(aux_temp['temperature'] + 3,2)
 
     max_hum_day = max_day(id=id,arg='humidity')
-    aux_hum = max_hum_day.json()
+    aux_hum = max_hum_day.json
     max_hum_day = round(aux_hum['humidity'] + 3,2)
     max_hum_month = max_month(id=id,arg='humidity')
-    aux_hum = max_hum_month.json()
+    aux_hum = max_hum_month.json
     max_hum_month = round(aux_hum['humidity'] + 3,2)
 
     max_press_day = max_day(id=id,arg='pressure')
-    aux_press = max_press_day.json()
+    aux_press = max_press_day.json
     max_press_day = round(aux_press['pressure'] + 3,2)
     max_press_month = max_month(id=id,arg='pressure')
-    aux_press = max_press_month.json()
+    aux_press = max_press_month.json
     max_press_month = round(aux_press['pressure'] + 3,2)
 
     global BIG
@@ -242,7 +254,7 @@ def aula(name,id):
 
     return render_template('aula.html', aula_name=str(name),
                             actual=str(int(BIG)+2),
-                            actual_data=actual_data.json(),
+                            actual_data=actual_data.json,
                             max_temp_day=max_temp_day, title_temp_day=title_temp_day, labels_temp_day=temp_label_day, values_temp_day=temp_data_day,
                             max_temp_month=max_temp_month, title_temp_month=title_temp_month, labels_temp_month=temp_label_month, values_temp_month=temp_data_month,
                             max_hum_day=max_hum_day, title_hum_day=title_hum_day, labels_hum_day=hum_label_day, values_hum_day=hum_data_day,
