@@ -1,3 +1,4 @@
+from crypt import methods
 import datetime
 import requests
 
@@ -5,8 +6,10 @@ from flask import Flask, request, jsonify, redirect, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
+dbdir = "sqlite:///" + os.path.abspath(os.getcwd()) + "/database.db"
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///datos-ambientales.sqlite'
+app.config['SQLALCHEMY_DATABASE_URI'] = dbdir
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -359,6 +362,26 @@ def maxmonth(id,arg):
     if arg == "pressure":
         iter = round(iter/1000,2)
     return jsonify({'{}'.format(str(arg)) : iter})
+
+AUXLAT = 0
+AUXLON = 0
+COUNTTRACK = 0
+@app.route('/track', methods=['POST','GET'])
+def track():
+    global AUXLAT, AUXLON, COUNTTRACK
+    if request.method == "POST":
+        information = request.get_json(force=True)
+        AUXLAT = information["lat"]
+        AUXLON = information["lon"]
+        file = open('datos-pytack2.txt','a')
+        file.write('Iteracion {}'.format(str(COUNTTRACK)) +'\n' + "{},{}".format(str(AUXLAT),str(AUXLON)) + '\n')
+        COUNTTRACK += 1
+        file.close()
+    else:
+        print(AUXLAT)
+        print(AUXLON)
+    return {"key" : "value"}
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5000,debug=True)
