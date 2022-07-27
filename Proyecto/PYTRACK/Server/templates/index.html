@@ -1,0 +1,167 @@
+{% extends "layout.html"%}
+
+{% block head %}
+    <meta http-equiv="refresh" content="{{actual}}">
+{% endblock %}
+
+{% block title %}
+    LCD
+{% endblock %}
+
+{% block body %}
+    <div class="aulas">
+        <a href="{{url_for('aula', name=600, id=1)}}">
+            <div class="aula-600-start">
+                <div class="title-start">
+                    <h1>AULA 600</h1>
+                </div>
+                <div class="information-actual-data-start">
+                    {% for key, value in actual_data1.items()  %}
+                    {% if key == 'humidity' %}
+                    <div class="humidity-actual back">
+                        <div class="title-data">
+                            <h2>Humedad Relativa</h2>
+                        </div>
+                        <div class="value-actual">
+                            <h2>
+                                {{ value|round(2) }} %
+                            </h2>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if key == 'pressure' %}
+                    <div class="pressure-actual back">
+                        <div class="data-info">
+                            <div class="title-data">
+                                <h2>Presion</h2>
+                            </div>
+                            <div class="value-actual">
+                                <h2>
+                                    {{ (value/1000)|round(2) }} kPa
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if key == 'temperature' %}
+                    <div class="temperature-actual back">
+                        <div class="data-info">
+                            <div class="title-data">
+                                <h2>Temperatura</h2>
+                            </div>
+                            <div class="value-actual">
+                                <h2>
+                                    {{ value|round(2) }} °C
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </a>
+        <a href="{{url_for('aula', name=601, id=2)}}">
+            <div class="aula-600-start">
+                <div class="title-start">
+                    <h1>AULA 601</h1>
+                </div>
+                <div class="information-actual-data-start">
+                    {% for key, value in actual_data2.items()  %}
+                    {% if key == 'humidity' %}
+                    <div class="humidity-actual back">
+                        <div class="title-data">
+                            <h2>Humedad Relativa</h2>
+                        </div>
+                        <div class="value-actual">
+                            <h2>
+                                {{ value|round(2) }} %
+                            </h2>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if key == 'pressure' %}
+                    <div class="pressure-actual back">
+                        <div class="data-info">
+                            <div class="title-data">
+                                <h2>Presion</h2>
+                            </div>
+                            <div class="value-actual">
+                                <h2>
+                                    {{ (value/1000)|round(2) }} kPa
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if key == 'temperature' %}
+                    <div class="temperature-actual back">
+                        <div class="data-info">
+                            <div class="title-data">
+                                <h2>Temperatura</h2>
+                            </div>
+                            <div class="value-actual">
+                                <h2>
+                                    {{ value|round(2) }} °C
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </a>
+        <a href="{{url_for('aula', name=602, id=3)}}">
+            <div class="aula-600-start">
+                <div class="title-start">
+                    <h1>AULA 602</h1>
+                </div>
+                <div class="information-actual-data-start">
+                    {% for key, value in actual_data3.items()  %}
+                    {% if key == 'humidity' %}
+                    <div class="humidity-actual back">
+                        <div class="title-data">
+                            <h2>Humedad Relativa</h2>
+                        </div>
+                        <div class="value-actual">
+                            <h2>
+                                {{ value|round(2) }} %
+                            </h2>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if key == 'pressure' %}
+                    <div class="pressure-actual back">
+                        <div class="data-info">
+                            <div class="title-data">
+                                <h2>Presion</h2>
+                            </div>
+                            <div class="value-actual">
+                                <h2>
+                                    {{ (value/1000)|round(2) }} kPa
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if key == 'temperature' %}
+                    <div class="temperature-actual back">
+                        <div class="data-info">
+                            <div class="title-data">
+                                <h2>Temperatura</h2>
+                            </div>
+                            <div class="value-actual">
+                                <h2>
+                                    {{ value|round(2) }} °C
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </a>
+    </div>
+{% endblock %}
