@@ -10,10 +10,9 @@
     <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-main.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-navigation.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-start.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-aula.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-machine.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='/CSS/style-rate.css')}}">    
 
-    <script defer src="{{url_for('static', filename='/JS/top-nav-bar.js')}}"></script>
     <title>
         {% block title %}
         {% endblock %}
@@ -37,13 +36,13 @@
                         <a href="{{url_for('home')}}">INICIO</a>
                     </li>
                     <li>
-                        <a href="{{url_for('aula', name=600, id=1)}}">AULA 600</a>
+                        <a href="{{url_for('machine', id=1)}}">MAQUINA 1</a>
                     </li>
                     <li>
-                        <a href="{{url_for('aula', name=601, id=2)}}">AULA 601</a>
+                        <a href="{{url_for('machine', id=2)}}">MAQUINA 2</a>
                     </li>
                     <li>
-                        <a href="{{url_for('aula', name=602, id=3)}}">AULA 602</a>
+                        <a href="{{url_for('machine', id=3)}}">MAQUINA 3</a>
                     </li>
                     <li>
                         <a href="{{url_for('rate')}}">RATE</a>
@@ -52,6 +51,18 @@
             </nav>
         </div>
     </head>
+    <script>
+        const menu = document.querySelector(".nav-top");
+        const openMenuBtn = document.querySelector(".open-menu");
+        const closeMenuBtn = document.querySelector(".close-menu");
+
+        function toggleMenu() {
+            menu.classList.toggle("menu_opened");
+        }
+
+        openMenuBtn.addEventListener("click", toggleMenu);
+        closeMenuBtn.addEventListener("click", toggleMenu);
+    </script>
     {% block body %}
     {% endblock %}
 </body>

@@ -1,7 +1,7 @@
 {% extends "layout.html"%}
 
 {% block head %}
-    <meta http-equiv="refresh" content="{{actual}}">
+    <!-- <meta http-equiv="refresh" content="{{actual}}"> -->
 {% endblock %}
 
 {% block title %}
@@ -9,157 +9,112 @@
 {% endblock %}
 
 {% block body %}
-    <div class="aulas">
-        <a href="{{url_for('aula', name=600, id=1)}}">
-            <div class="aula-600-start">
+    <div class="machine">
+        <a href="{{url_for('machine', id=1)}}">
+            <div class="machine-1-start">
                 <div class="title-start">
-                    <h1>AULA 600</h1>
+                    <h1>MAQUINA 1</h1>
                 </div>
                 <div class="information-actual-data-start">
-                    {% for key, value in actual_data1.items()  %}
-                    {% if key == 'humidity' %}
-                    <div class="humidity-actual back">
-                        <div class="title-data">
-                            <h2>Humedad Relativa</h2>
-                        </div>
-                        <div class="value-actual">
-                            <h2>
-                                {{ value|round(2) }} %
-                            </h2>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% if key == 'pressure' %}
-                    <div class="pressure-actual back">
-                        <div class="data-info">
-                            <div class="title-data">
-                                <h2>Presion</h2>
-                            </div>
-                            <div class="value-actual">
-                                <h2>
-                                    {{ (value/1000)|round(2) }} kPa
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% if key == 'temperature' %}
-                    <div class="temperature-actual back">
-                        <div class="data-info">
-                            <div class="title-data">
-                                <h2>Temperatura</h2>
-                            </div>
-                            <div class="value-actual">
-                                <h2>
-                                    {{ value|round(2) }} °C
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                    <h2 class="title-position">
+                        Ubicacion actual
+                    </h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>DIA</th>
+                                <th>MES</th>
+                                <th>AÑO</th>
+                                <th>HORA</th>
+                                <th>MINUTO</th>
+                                <th>LATITUD</th>
+                                <th>LONGITUD</th>
+                                <th>UBICACION</th>
+                            </tr>
+                            <tr>
+                                <td>{{actual_data1[0]}}</td>
+                                <td>{{actual_data1[3]}}</td>
+                                <td>{{actual_data1[7]}}</td>
+                                <td>{{actual_data1[1]}}</td>
+                                <td>{{actual_data1[2]}}</td>
+                                <td>{{actual_data1[4]}}</td>
+                                <td>{{actual_data1[5]}}</td>
+                                <td>{{actual_data1[6]}}</td>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </a>
-        <a href="{{url_for('aula', name=601, id=2)}}">
-            <div class="aula-600-start">
+        <a href="{{url_for('machine', id=2)}}">
+            <div class="machine-2-start">
                 <div class="title-start">
-                    <h1>AULA 601</h1>
+                    <h1>MAQUINA 2</h1>
                 </div>
                 <div class="information-actual-data-start">
-                    {% for key, value in actual_data2.items()  %}
-                    {% if key == 'humidity' %}
-                    <div class="humidity-actual back">
-                        <div class="title-data">
-                            <h2>Humedad Relativa</h2>
-                        </div>
-                        <div class="value-actual">
-                            <h2>
-                                {{ value|round(2) }} %
-                            </h2>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% if key == 'pressure' %}
-                    <div class="pressure-actual back">
-                        <div class="data-info">
-                            <div class="title-data">
-                                <h2>Presion</h2>
-                            </div>
-                            <div class="value-actual">
-                                <h2>
-                                    {{ (value/1000)|round(2) }} kPa
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% if key == 'temperature' %}
-                    <div class="temperature-actual back">
-                        <div class="data-info">
-                            <div class="title-data">
-                                <h2>Temperatura</h2>
-                            </div>
-                            <div class="value-actual">
-                                <h2>
-                                    {{ value|round(2) }} °C
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                    <h2 class="title-position">
+                        Ubicacion actual
+                    </h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>DIA</th>
+                                <th>MES</th>
+                                <th>AÑO</th>
+                                <th>HORA</th>
+                                <th>MINUTO</th>
+                                <th>LATITUD</th>
+                                <th>LONGITUD</th>
+                                <th>UBICACION</th>
+                            </tr>
+                            <tr>
+                                <td>{{actual_data2[0]}}</td>
+                                <td>{{actual_data2[3]}}</td>
+                                <td>{{actual_data2[7]}}</td>
+                                <td>{{actual_data2[1]}}</td>
+                                <td>{{actual_data2[2]}}</td>
+                                <td>{{actual_data2[4]}}</td>
+                                <td>{{actual_data2[5]}}</td>
+                                <td>{{actual_data2[6]}}</td>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </a>
-        <a href="{{url_for('aula', name=602, id=3)}}">
-            <div class="aula-600-start">
+        <a href="{{url_for('machine', id=3)}}">
+            <div class="machine-3-start">
                 <div class="title-start">
-                    <h1>AULA 602</h1>
+                    <h1>MAQUINA 3</h1>
                 </div>
                 <div class="information-actual-data-start">
-                    {% for key, value in actual_data3.items()  %}
-                    {% if key == 'humidity' %}
-                    <div class="humidity-actual back">
-                        <div class="title-data">
-                            <h2>Humedad Relativa</h2>
-                        </div>
-                        <div class="value-actual">
-                            <h2>
-                                {{ value|round(2) }} %
-                            </h2>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% if key == 'pressure' %}
-                    <div class="pressure-actual back">
-                        <div class="data-info">
-                            <div class="title-data">
-                                <h2>Presion</h2>
-                            </div>
-                            <div class="value-actual">
-                                <h2>
-                                    {{ (value/1000)|round(2) }} kPa
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% if key == 'temperature' %}
-                    <div class="temperature-actual back">
-                        <div class="data-info">
-                            <div class="title-data">
-                                <h2>Temperatura</h2>
-                            </div>
-                            <div class="value-actual">
-                                <h2>
-                                    {{ value|round(2) }} °C
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                    <h2 class="title-position">
+                        Ubicacion actual
+                    </h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>DIA</th>
+                                <th>MES</th>
+                                <th>AÑO</th>
+                                <th>HORA</th>
+                                <th>MINUTO</th>
+                                <th>LATITUD</th>
+                                <th>LONGITUD</th>
+                                <th>UBICACION</th>
+                            </tr>
+                            <tr>
+                                <td>{{actual_data3[0]}}</td>
+                                <td>{{actual_data3[3]}}</td>
+                                <td>{{actual_data3[7]}}</td>
+                                <td>{{actual_data3[1]}}</td>
+                                <td>{{actual_data3[2]}}</td>
+                                <td>{{actual_data3[4]}}</td>
+                                <td>{{actual_data3[5]}}</td>
+                                <td>{{actual_data3[6]}}</td>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </a>

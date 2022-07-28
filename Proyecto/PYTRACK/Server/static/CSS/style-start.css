@@ -1,52 +1,42 @@
-.aulas{
+.machine{
     padding: 40px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
 
-.aula-600-start{
+.machine-1-start{
+    background-color: aqua;
     padding: 40px;
-    background: url(../Image/JPG/aula-600.jpeg);
-    background-size: cover;
-    background-position: center;
-}
-
-.aula-601-start{
-    padding: 40px;
-    background: url(../Image/JPG/aula-601.jpeg);
-    background-size: cover;
-    background-position: center;
-}
-
-.aula-602-start{
-    padding: 40px;
-    background: url(../Image/JPG/aula-602.jpeg);
-    background-size: cover;
-    background-position: center;
 }
 
 .title-start{
     text-align: center;
-    color: black;
+    margin: auto 240px;
+    color: white;
+    background: rgba(128, 128, 128, 0.7);
 }
 
 .information-actual-data-start{
     margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    color: black;
+    color: white;
 }
 
-.back{
-    background-color: rgba(128, 128, 128, 0.521); 
+.title-position{
     text-align: center;
-    padding: 10px;
+    margin-bottom: 20px;
 }
 
-.data-info{
-    padding: 20px 0px;
+table{
+    border: 2px solid green;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td{
+    padding: 10px;
+    border: 2px solid green;
+    text-align: center;
 }
 
 @media (max-width: 950px){
