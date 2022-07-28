@@ -1,3 +1,4 @@
+from ctypes import sizeof
 import datetime
 import json
 import os
@@ -15,6 +16,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
+MINUTE = 0
+HOUR = 0
 DAY = 0
 MONTH = 0
 YEAR = 0
@@ -29,9 +32,6 @@ MULT2 = 1
 MULT3 = 1
 BIG = 5
 
-# SERVER_ADDRESS = 'http://matiasraya.pythonanywhere.com/' #LCD
-# SERVER_ADDRESS = 'http://192.168.1.142:5000'
-
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nodo = db.Column(db.Integer)
@@ -39,29 +39,29 @@ class Task(db.Model):
     year = db.Column(db.Integer)
     month = db.Column(db.Integer)
     day = db.Column(db.Integer)
-    lightB = db.Column(db.Integer)
-    lightR = db.Column(db.Integer)
-    humidity = db.Column(db.Integer)
-    temperature = db.Column(db.Integer)
-    pressure = db.Column(db.Integer)
+    hour = db.Column(db.Integer)
+    minute = db.Column(db.Integer)
+    posLat = db.Column(db.Integer)
+    posLon = db.Column(db.Integer)
+    ubication = db.Column(db.String)
 
-    def __init__(self, nodo, iteration, year, month, day, lightB, lightR, humidity, temperature, pressure):
+    def __init__(self, nodo, iteration, year, month, day, hour, minute, posLat, posLon, ubication):
         self.nodo = nodo
         self.iteration = iteration
         self.year = year
         self.month = month
         self.day = day
-        self.lightB = lightB
-        self.lightR = lightR
-        self.humidity = humidity
-        self.temperature = temperature
-        self.pressure = pressure
+        self.hour = hour
+        self.minute = minute
+        self.posLat = posLat
+        self.posLon = posLon
+        self.ubication = ubication
 
 db.create_all()
 
 class TaskSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'nodo', 'iteration', 'year', 'month', 'day', 'lightB', 'lightR', 'humidity', 'temperature', 'pressure')
+        fields = ('id', 'nodo', 'iteration', 'year', 'month', 'day', 'hour', 'minute', 'posLat', 'posLon', 'ubication')
 
 task_schema = TaskSchema()
 tasks_schema = TaskSchema(many=True)
@@ -79,163 +79,66 @@ def big_transmition():
         BIG = param3
 
 def time():
-    global DAY, MONTH, YEAR
+    global MINUTE, HOUR, DAY, MONTH, YEAR
     x = datetime.datetime.now()
     YEAR = x.year
     MONTH = x.month
     DAY = x.day
+    HOUR = x.hour
+    MINUTE = x.minute
 
 def consultation_last(id):
-    task = Task.query.filter(Task.nodo==id).order_by(Task.id.desc()).first()
-    resul = task_schema.dump(task)
-    return jsonify(resul)
+    tasks = Task.query.filter(Task.nodo==id).order_by(Task.id.desc()).first()
+    resul1 = task_schema.dump(tasks)
+    return jsonify(resul1)    
 
-def consultation_month(id, arg):
-    time()
-    if arg == "temperature":
-        task = db.session.query(Task.temperature).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).order_by(Task.day.asc()).all()
-    if arg == "humidity":
-        task = db.session.query(Task.humidity).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).all()
-    if arg == "pressure":
-        task = db.session.query(Task.pressure).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).all()
-
+def consultation_all(id):
+    task = Task.query.filter(Task.nodo==id).order_by(Task.id.desc()).all()
     resul = tasks_schema.dump(task)
     return jsonify(resul)
-
-def consultation_day(id,arg):
-    time()
-    if arg == "temperature":
-        task = db.session.query(Task.temperature).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).all()
-    if arg == "humidity":
-        task = db.session.query(Task.humidity).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).all()
-    if arg == "pressure":
-        task = db.session.query(Task.pressure).filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).all()
-
-    resul = tasks_schema.dump(task)
-    return jsonify(resul)
-
-def max_day(id,arg):
-    time()
-    if arg == "temperature":
-        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).order_by(Task.temperature.desc()).first()
-    if arg == "pressure":
-        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).order_by(Task.pressure.desc()).first()
-    if arg == "humidity":
-        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).order_by(Task.humidity.desc()).first()
-    resul = task_schema.dump(task)
-    iter = resul['{}'.format(str(arg))]
-    if arg == "pressure":
-        iter = round(iter/1000,2)
-    return jsonify({'{}'.format(str(arg)) : iter})
-
-def max_month(id,arg):
-    time()
-    if arg == "temperature":
-        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).order_by(Task.temperature.desc()).first()
-    if arg == "pressure":
-        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).order_by(Task.pressure.desc()).first()
-    if arg == "humidity":
-        task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).order_by(Task.humidity.desc()).first()
-    resul = task_schema.dump(task)
-    iter = resul['{}'.format(str(arg))]
-    if arg == "pressure":
-        iter = round(iter/1000,2)
-    return jsonify({'{}'.format(str(arg)) : iter})
 
 @app.route('/')
 def home():
+    actual_data_1 = []
+    actual_data_2 = []
+    actual_data_3 = []
+
     actual_data1 = consultation_last(id=1)
+    actual_data1 = actual_data1.json
+    for key,value in actual_data1.items():
+        if key != "id" and key != "nodo" and key != "iteration":
+            actual_data_1.append(value)
+    
     actual_data2 = consultation_last(id=2)
+    actual_data2 = actual_data2.json
+    for key,value in actual_data2.items():
+        if key != "id" and key != "nodo" and key != "iteration":
+            actual_data_2.append(value)
+    
     actual_data3 = consultation_last(id=3)
+    actual_data3 = actual_data3.json
+    for key,value in actual_data3.items():
+        if key != "id" and key != "nodo" and key != "iteration":
+            actual_data_3.append(value)
     big_transmition()
     return render_template("index.html", actual=BIG+2,
-                            actual_data1=actual_data1.json,
-                            actual_data2=actual_data2.json,
-                            actual_data3=actual_data3.json,
-                            )
+                           actual_data1=actual_data_1,
+                           actual_data2=actual_data_2,
+                           actual_data3=actual_data_3,
+                           )
 
-@app.route('/aula/<name>/<id>')
-def aula(name,id):
-    temp_data_day = []
-    temp_label_day = []
-    temp_data_month = []
-    temp_label_month = []
-    hum_data_day = []
-    hum_label_day = []
-    hum_data_month = []
-    hum_label_month = []
-    press_data_day = []
-    press_label_day = []
-    press_data_month = []
-    press_label_month = []
+@app.route('/machine/<id>')
+def machine(id):
+    actual_data_machine = []
 
-    actual_data = consultation_last(id)
+    actual_data = consultation_last(id=id)
+    actual_data = actual_data.json
+    for key,value in actual_data.items():
+        if key != "id" and key != "nodo" and key != "iteration":
+            actual_data_machine.append(value)
 
-    temp_day = consultation_day(id=id, arg="temperature")
-    for dic in temp_day.json:
-        for key,value in dic.items():
-            if key == "temperature":
-                temp_label_day.append('')
-                aux = round(value,2)
-                temp_data_day.append(aux)
-    temp_month = consultation_month(id=id, arg="temperature")
-    for dic in temp_month.json:
-        for key,value in dic.items():
-            if key == "temperature":
-                temp_label_month.append('')
-                aux = round(value,2)
-                temp_data_month.append(aux)
-
-    hum_day = consultation_day(id=id, arg="humidity")
-    for dic in hum_day.json:
-        for key,value in dic.items():
-            if key == "humidity":
-                hum_label_day.append('')
-                aux = round(value,2)
-                hum_data_day.append(aux)
-    hum_month = consultation_month(id=id, arg="humidity")
-    for dic in hum_month.json:
-        for key,value in dic.items():
-            if key == "humidity":
-                hum_label_month.append('')
-                aux = round(value,2)
-                hum_data_month.append(aux)
-
-    press_day = consultation_day(id=id, arg="pressure")
-    for dic in press_day.json:
-        for key,value in dic.items():
-            if key == "pressure":
-                press_label_day.append('')
-                aux = round(value/1000,2)
-                press_data_day.append(aux)
-    press_month = consultation_month(id=id, arg="pressure")
-    for dic in press_month.json:
-        for key,value in dic.items():
-            if key == "pressure":
-                press_label_month.append('')
-                aux = round(value/1000,2)
-                press_data_month.append(aux)
-
-    max_temp_day = max_day(id=id,arg='temperature')
-    aux_temp = max_temp_day.json
-    max_temp_day = round(aux_temp['temperature'] + 3,2)
-    max_temp_month = max_month(id=id,arg='temperature')
-    aux_temp = max_temp_month.json
-    max_temp_month = round(aux_temp['temperature'] + 3,2)
-
-    max_hum_day = max_day(id=id,arg='humidity')
-    aux_hum = max_hum_day.json
-    max_hum_day = round(aux_hum['humidity'] + 3,2)
-    max_hum_month = max_month(id=id,arg='humidity')
-    aux_hum = max_hum_month.json
-    max_hum_month = round(aux_hum['humidity'] + 3,2)
-
-    max_press_day = max_day(id=id,arg='pressure')
-    aux_press = max_press_day.json
-    max_press_day = round(aux_press['pressure'] + 3,2)
-    max_press_month = max_month(id=id,arg='pressure')
-    aux_press = max_press_month.json
-    max_press_month = round(aux_press['pressure'] + 3,2)
+    all_data_all = consultation_all(id=id)
+    all_data_all = all_data_all.json
 
     global BIG
     if(int(id) == 1):
@@ -245,22 +148,11 @@ def aula(name,id):
     elif(int(id) == 3):
         BIG = int(TRANSMITION3)*int(MULT3)
 
-    title_temp_day = 'Temperatura del dia (°C)'
-    title_temp_month = 'Temperatura del mes (°C)'
-    title_hum_day = 'Humedad Relativa del dia (%RH)'
-    title_hum_month = 'Humedad Relativa del mes (%RH)'
-    title_press_day = 'Presion del dia (kPA)'
-    title_press_month = 'Presion del mes (kPA)'
-
-    return render_template('aula.html', aula_name=str(name),
+    return render_template('machine.html', machine_name=str(id),
                             actual=str(int(BIG)+2),
-                            actual_data=actual_data.json,
-                            max_temp_day=max_temp_day, title_temp_day=title_temp_day, labels_temp_day=temp_label_day, values_temp_day=temp_data_day,
-                            max_temp_month=max_temp_month, title_temp_month=title_temp_month, labels_temp_month=temp_label_month, values_temp_month=temp_data_month,
-                            max_hum_day=max_hum_day, title_hum_day=title_hum_day, labels_hum_day=hum_label_day, values_hum_day=hum_data_day,
-                            max_hum_month=max_hum_month, title_hum_month=title_hum_month, labels_hum_month=hum_label_month, values_hum_month=hum_data_month,
-                            max_press_day=max_press_day, title_press_day=title_press_day, labels_press_day=press_label_day, values_press_day=press_data_day,
-                            max_press_month=max_press_month, title_press_month=title_press_month, labels_press_month=press_label_month, values_press_month=press_data_month
+                            actual_data=actual_data_machine,
+                            history_data_all=all_data_all,
+                            len_data_all = len(all_data_all)
                             )
 
 @app.route("/rate", methods=['GET','POST'])
@@ -317,31 +209,27 @@ def actualization(id):
 
 @app.route('/data', methods=['POST'])
 def create_data():
-    time()
     information = request.get_json(force=True)
-    nodo = information['nodo']
-    iteration = information['iteration']
-    year = YEAR
-    month = MONTH
-    day = DAY
-    lightB = information['lightB']
-    lightR = information['lightR']
-    humidity = information['humidity']
-    temperature = information['temperature']
-    pressure = information['pressure']
+    if str(information['posLat']) != "None" and str(information['posLon']) != "None":
+        print("Guardando")
+        time()
+        nodo = information['nodo']
+        iteration = information['iteration']
+        year = YEAR
+        month = MONTH
+        day = DAY
+        hour = HOUR
+        minute = MINUTE
+        posLat = information['posLat']
+        posLon = information['posLon']
+        ubication = "hola"
 
-    new_task = Task(nodo, iteration, year, month, day, lightB, lightR, humidity, temperature, pressure)
+        new_task = Task(nodo=nodo, iteration=iteration, year=year, month=month, day=day, hour=hour, minute=minute, posLat=posLat, posLon=posLon, ubication=ubication)
 
-    db.session.add(new_task)
-    db.session.commit()
+        db.session.add(new_task)
+        db.session.commit()
 
     return jsonify({'key' : 'value'})
-
-@app.route('/consultation-all/<id>', methods=['GET'])
-def consultation_all(id):
-    all_tasks = Task.query.filter_by(nodo=id).all()
-    result = tasks_schema.dump(all_tasks)
-    return jsonify(result)
 
 @app.route('/iteration/<id>', methods=['GET'])
 def itertaio(id):
@@ -350,9 +238,9 @@ def itertaio(id):
     iter = resul['iteration']
     return jsonify({'iteration' : iter})
 
-@app.route('/delete/<id>', methods=['GET'])
+@app.route('/delete', methods=['GET'])
 def delte_table(id):
-    db.session.query(Task).filter(Task.nodo==id).delete()
+    db.session.query(Task).delete()
     db.session.commit()
     return jsonify({'key' : 'value'})
 
