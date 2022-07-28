@@ -1,10 +1,8 @@
-from urllib import response
 import pycom
 import machine
 import urequests
 import time
 import ujson
-import gc
 
 from network import WLAN
 from sensors import Sensors
@@ -55,8 +53,8 @@ l76 = pySensor.get_position().coordinates()
 data_sensor = {
     'nodo' : 1,
     'iteration' : iteration,
-    'positionLat' : pySensor.get_position().coordinates()[0],
-    'positionLon' : pySensor.get_position().coordinates()[1]
+    'posLat' : pySensor.get_position().coordinates()[0],
+    'posLon' : pySensor.get_position().coordinates()[1]
 }
 
 rate = {
@@ -76,8 +74,8 @@ def sensor_handler(alarm):
     alarm.cancel()
     alarm = Timer.Alarm(sensor_handler, rate['sensor'], periodic=True)
     position = pySensor.get_position().coordinates()
-    data_sensor['positionLat'] = position[0]
-    data_sensor['positionLon'] = position[1]
+    data_sensor['posLat'] = position[0]
+    data_sensor['posLon'] = position[1]
 
 chrono.start()
 
