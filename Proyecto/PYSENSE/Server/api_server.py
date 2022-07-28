@@ -29,9 +29,6 @@ MULT2 = 1
 MULT3 = 1
 BIG = 5
 
-# SERVER_ADDRESS = 'http://matiasraya.pythonanywhere.com/' #LCD
-# SERVER_ADDRESS = 'http://192.168.1.142:5000'
-
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nodo = db.Column(db.Integer)
@@ -336,12 +333,6 @@ def create_data():
     db.session.commit()
 
     return jsonify({'key' : 'value'})
-
-@app.route('/consultation-all/<id>', methods=['GET'])
-def consultation_all(id):
-    all_tasks = Task.query.filter_by(nodo=id).all()
-    result = tasks_schema.dump(all_tasks)
-    return jsonify(result)
 
 @app.route('/iteration/<id>', methods=['GET'])
 def itertaio(id):
