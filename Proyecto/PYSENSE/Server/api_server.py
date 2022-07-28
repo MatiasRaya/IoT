@@ -83,7 +83,8 @@ def time():
     DAY = x.day
 
 def consultation_last(id):
-    task = Task.query.filter(Task.nodo==id).order_by(Task.id.desc()).first()
+    time()
+    task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).order_by(Task.id.desc()).first()
     resul = task_schema.dump(task)
     return jsonify(resul)
 
