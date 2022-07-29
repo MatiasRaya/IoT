@@ -30,8 +30,8 @@ time.sleep(5)
 pycom.rgbled(NO_COLOUR)
 
 # WiFi connectation
-# SERVER_ADDRESS = "http://192.168.1.127:5000" # LCD
-SERVER_ADDRESS = "https://matiasraya.pythonanywhere.com" # APP PYTHONANYWHERE
+SERVER_ADDRESS = "http://192.168.1.127:5000" # LCD
+# SERVER_ADDRESS = "https://matiasraya.pythonanywhere.com" # APP PYTHONANYWHERE
 
 wlan = WLAN(mode=WLAN.STA)
 wlan.connect('LCD', auth=(WLAN.WPA2, '1cdunc0rd0ba'))
@@ -48,7 +48,7 @@ py = Pycoproc(Pycoproc.PYSENSE)
 pySensor = Sensors(py)
 
 data_sensor = {
-    'nodo' : 1,
+    'nodo' : 3,
     'iteration' : iteration,
     'lightB' : pySensor.get_light()[0],
     'lightR' : pySensor.get_light()[1],
@@ -79,6 +79,7 @@ def sensor_handler(alarm):
     data_sensor['humidity'] = pySensor.get_humidity()
     data_sensor['temperature'] = pySensor.get_temperature()
     data_sensor['pressure'] = pySensor.get_pressure()
+    data_sensor['iteration'] = iteration
 
 chrono.start()
 

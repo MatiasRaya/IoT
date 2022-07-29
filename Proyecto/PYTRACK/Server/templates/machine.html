@@ -5,68 +5,171 @@
 {% endblock %}
 
 {% block title %}
-    {{ aula_name }}
+   Maquina {{ machine_name }}
 {% endblock %}
 
 {% block body %}
-<div class="actual-information">
-    <div class="title-actual-data">
-        <h1>Valores actuales de posicion de la maquina {{ machine_name }}</h1>
+<div class="machine">
+    <div class="actual-information">
+        <div class="title-actual-data">
+            <h1>Valores actuales de posicion de la maquina {{ machine_name }}</h1>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>DIA</th>
+                    <th>MES</th>
+                    <th>AÑO</th>
+                    <th>HORA</th>
+                    <th>MINUTO</th>
+                    <th>SEGUNDO</th>
+                    <th>LATITUD</th>
+                    <th>LONGITUD</th>
+                    <th>UBICACION</th>
+                </tr>
+                <tr>
+                    <td>{{actual_data[0]}}</td>
+                    <td>{{actual_data[3]}}</td>
+                    <td>{{actual_data[8]}}</td>
+                    <td>{{actual_data[1]}}</td>
+                    <td>{{actual_data[2]}}</td>
+                    <td>{{actual_data[5]}}</td>
+                    <td>{{actual_data[4]}}</td>
+                    <td>{{actual_data[5]}}</td>
+                    <td>{{actual_data[7]}}</td>
+                </tr>
+            </thead>
+        </table>
     </div>
-    <table>
-        <thead>
-            <tr>
-                <th>DIA</th>
-                <th>MES</th>
-                <th>AÑO</th>
-                <th>HORA</th>
-                <th>MINUTO</th>
-                <th>LATITUD</th>
-                <th>LONGITUD</th>
-                <th>UBICACION</th>
-            </tr>
-            <tr>
-                <td>{{actual_data[0]}}</td>
-                <td>{{actual_data[3]}}</td>
-                <td>{{actual_data[7]}}</td>
-                <td>{{actual_data[1]}}</td>
-                <td>{{actual_data[2]}}</td>
-                <td>{{actual_data[4]}}</td>
-                <td>{{actual_data[5]}}</td>
-                <td>{{actual_data[6]}}</td>
-            </tr>
-        </thead>
-    </table>
-</div>
-<div class="history-information">
-    <div class="title-actual-data">
-        <h1>Valores historicos de posicion de la maquina {{ machine_name }}</h1>
+    <div class="selection-view">
+        <h2>Los valores de cuando desea ver:</h2>
+        <input type="radio" name="view" id="day">
+        <label for="day">DIA</label>
+        <input type="radio" name="view" id="month">
+        <label for="month">MES</label>
+        <input type="radio" name="view" id="year">
+        <label for="year">AÑO</label>
+        <input type="radio" name="view" id="all">
+        <label for="all">TODOS</label>
+        <input type="button" value="Validar">
     </div>
-    <table>
-        {% for i in range(len_data_all)%}
-        <thead>
-            <tr>
-                <th>DIA</th>
-                <th>MES</th>
-                <th>AÑO</th>
-                <th>HORA</th>
-                <th>MINUTO</th>
-                <th>LATITUD</th>
-                <th>LONGITUD</th>
-                <th>UBICACION</th>
-            </tr>
-            <tr>
-                <td>{{history_data_all[i]["day"]}}</td>
-                <td>{{history_data_all[i]["month"]}}</td>
-                <td>{{history_data_all[i]["year"]}}</td>
-                <td>{{history_data_all[i]["hour"]}}</td>
-                <td>{{history_data_all[i]["minute"]}}</td>
-                <td>{{history_data_all[i]["posLat"]}}</td>
-                <td>{{history_data_all[i]["posLon"]}}</td>
-                <td>{{history_data_all[i]["ubication"]}}</td>
-            </tr>
-        </thead>
-        {% endfor %}
-    </table>
+    <div class="history-day-information visible">
+        <div class="title-actual-data">
+            <h1>Valores historicos de posicion del dia de la maquina {{ machine_name }}</h1>
+        </div>
+        <table>
+            {% for i in range(len_data_day)%}
+            <thead>
+                <tr>
+                    <th>HORA</th>
+                    <th>MINUTO</th>
+                    <th>SEGUNDO</th>
+                    <th>LATITUD</th>
+                    <th>LONGITUD</th>
+                    <th>UBICACION</th>
+                </tr>
+                <tr>
+                    <td>{{history_data_day[i]["hour"]}}</td>
+                    <td>{{history_data_day[i]["minute"]}}</td>
+                    <td>{{history_data_day[i]["second"]}}</td>
+                    <td>{{history_data_day[i]["posLat"]}}</td>
+                    <td>{{history_data_day[i]["posLon"]}}</td>
+                    <td>{{history_data_day[i]["ubication"]}}</td>
+                </tr>
+            </thead>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="history-month-information invisible">
+        <div class="title-actual-data">
+            <h1>Valores historicos de posicion del mes de la maquina {{ machine_name }}</h1>
+        </div>
+        <table>
+            {% for i in range(len_data_month)%}
+            <thead>
+                <tr>
+                    <th>DIA</th>
+                    <th>HORA</th>
+                    <th>MINUTO</th>
+                    <th>SEGUNDO</th>
+                    <th>LATITUD</th>
+                    <th>LONGITUD</th>
+                    <th>UBICACION</th>
+                </tr>
+                <tr>
+                    <td>{{history_data_month[i]["day"]}}</td>
+                    <td>{{history_data_month[i]["hour"]}}</td>
+                    <td>{{history_data_month[i]["minute"]}}</td>
+                    <td>{{history_data_month[i]["second"]}}</td>
+                    <td>{{history_data_month[i]["posLat"]}}</td>
+                    <td>{{history_data_month[i]["posLon"]}}</td>
+                    <td>{{history_data_month[i]["ubication"]}}</td>
+                </tr>
+            </thead>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="history-year-information invisible">
+        <div class="title-actual-data">
+            <h1>Valores historicos de posicion del año de la maquina {{ machine_name }}</h1>
+        </div>
+        <table>
+            {% for i in range(len_data_year)%}
+            <thead>
+                <tr>
+                    <th>DIA</th>
+                    <th>MES</th>
+                    <th>HORA</th>
+                    <th>MINUTO</th>
+                    <th>SEGUNDO</th>
+                    <th>LATITUD</th>
+                    <th>LONGITUD</th>
+                    <th>UBICACION</th>
+                </tr>
+                <tr>
+                    <td>{{history_data_year[i]["day"]}}</td>
+                    <td>{{history_data_year[i]["month"]}}</td>
+                    <td>{{history_data_year[i]["hour"]}}</td>
+                    <td>{{history_data_year[i]["minute"]}}</td>
+                    <td>{{history_data_year[i]["second"]}}</td>
+                    <td>{{history_data_year[i]["posLat"]}}</td>
+                    <td>{{history_data_year[i]["posLon"]}}</td>
+                    <td>{{history_data_year[i]["ubication"]}}</td>
+                </tr>
+            </thead>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="history-all-information invisible">
+        <div class="title-actual-data">
+            <h1>Valores historicos de posicion de la maquina {{ machine_name }}</h1>
+        </div>
+        <table>
+            {% for i in range(len_data_all)%}
+            <thead>
+                <tr>
+                    <th>DIA</th>
+                    <th>MES</th>
+                    <th>AÑO</th>
+                    <th>HORA</th>
+                    <th>MINUTO</th>
+                    <th>LATITUD</th>
+                    <th>LONGITUD</th>
+                    <th>UBICACION</th>
+                </tr>
+                <tr>
+                    <td>{{history_data_all[i]["day"]}}</td>
+                    <td>{{history_data_all[i]["month"]}}</td>
+                    <td>{{history_data_all[i]["year"]}}</td>
+                    <td>{{history_data_all[i]["hour"]}}</td>
+                    <td>{{history_data_all[i]["minute"]}}</td>
+                    <td>{{history_data_all[i]["posLat"]}}</td>
+                    <td>{{history_data_all[i]["posLon"]}}</td>
+                    <td>{{history_data_all[i]["ubication"]}}</td>
+                </tr>
+            </thead>
+            {% endfor %}
+        </table>
+    </div>
 </div>
 {% endblock %}

@@ -30,7 +30,8 @@ time.sleep(5)
 pycom.rgbled(NO_COLOUR)
 
 # WiFi connectation
-SERVER_ADDRESS = "http://192.168.1.127:5000" # LCD
+# SERVER_ADDRESS = "http://192.168.1.127:5000" # LCD
+SERVER_ADDRESS = "http://192.168.1.142:5000" # LCD
 # SERVER_ADDRESS = "" # APP 
 
 wlan = WLAN(mode=WLAN.STA)
@@ -47,9 +48,6 @@ pycom.rgbled(NO_COLOUR)
 py = Pycoproc(Pycoproc.PYTRACK)
 pySensor = Sensors(py)
 
-
-l76 = pySensor.get_position().coordinates()
-
 data_sensor = {
     'nodo' : 1,
     'iteration' : iteration,
@@ -58,8 +56,8 @@ data_sensor = {
 }
 
 rate = {
-    'transmission_rate' : 41,
-    'sensor' : 40
+    'transmission_rate' : 5,
+    'sensor' : 1
 }
 
 # Chrono definition and inicialization
@@ -76,6 +74,7 @@ def sensor_handler(alarm):
     position = pySensor.get_position().coordinates()
     data_sensor['posLat'] = position[0]
     data_sensor['posLon'] = position[1]
+    data_sensor['iteration'] = iteration
 
 chrono.start()
 
@@ -91,6 +90,7 @@ def stored_data():
     store_data = {}
     store_data = data_sensor
     json_store_data = ujson.dumps(store_data)
+    print(json_store_data)
     return json_store_data
 
 def post_data(address, raw_data):
@@ -118,22 +118,27 @@ def send_recive():
             response = get_iteration(SERVER_ADDRESS + "/iteration/" + str(data_sensor['nodo']))
         except Exception as e:
             print(e)
+            print("ITERATION attempet failed.")
             pycom.rgbled(BLUE)
             time.sleep(1)
             pycom.rgbled(NO_COLOUR)
         verification = verification - 1
 
+
     try:
         response = get_rate(SERVER_ADDRESS + "/actualization/" + str(data_sensor['nodo']))
     except Exception as e:
         print(e)
+        print("ACTUALIZATION attempet failed.")
         pycom.rgbled(CIAN)
         time.sleep(1)
         pycom.rgbled(NO_COLOUR)
 
     try:
         response = post_data(SERVER_ADDRESS + "/data", stored_data())
-        iteration += 1
+        print(type(data_sensor['posLat']))
+        if data_sensor['posLat'] is not None:
+            iteration += 1
     except Exception as e:
         print(e)
         print("POST attempet failed.")

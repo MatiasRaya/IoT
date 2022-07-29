@@ -1,6 +1,19 @@
-.actual-information{
+.machine{
     padding: 40px;
+    display: block;
+}
+
+.actual-information{
     text-align: center;
+}
+
+.selection-view{
+    margin-top: 20px;
+}
+
+.selection-view h2{
+    text-align: center;
+    font-size: 40px;
 }
 
 .history-information{
@@ -19,50 +32,13 @@
     gap: 20px;
 }
 
-.conditions{
-    background-color: rgba(150, 7, 7, 0.568);
+.invisible{
+    display: none;
 }
 
-.lightB-actual{
-    color: blue;
+.visible{
+    display: block;
 }
-
-.lightR-actual{
-    color: red;
-}
-
-.title-data{
-    font-size: 20px;
-}
-
-.value-actual{
-    font-size: 15px;
-}
-
-.temp{
-    text-align: center;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.hum{
-    text-align: center;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.press{
-    text-align: center;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.messure{
-    width: 400px;
-    height: auto;
-    background-color: rgba(85, 81, 81, 0.39);
-}
-
 
 @media (max-width: 950px){
     .title-actual-data{

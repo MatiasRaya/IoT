@@ -1,11 +1,11 @@
-from ctypes import sizeof
 import datetime
-import json
 import os
 
 from flask import Flask, request, jsonify, redirect, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from geopy.geocoders import Nominatim
+from geopy.point import Point
 
 dbdir = "sqlite:///" + os.path.abspath(os.getcwd()) + "/database.db"
 
@@ -16,6 +16,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
+SECOND = 0
 MINUTE = 0
 HOUR = 0
 DAY = 0
@@ -41,11 +42,12 @@ class Task(db.Model):
     day = db.Column(db.Integer)
     hour = db.Column(db.Integer)
     minute = db.Column(db.Integer)
+    second = db.Column(db.Integer)
     posLat = db.Column(db.Integer)
     posLon = db.Column(db.Integer)
     ubication = db.Column(db.String)
 
-    def __init__(self, nodo, iteration, year, month, day, hour, minute, posLat, posLon, ubication):
+    def __init__(self, nodo, iteration, year, month, day, hour, minute, second, posLat, posLon, ubication):
         self.nodo = nodo
         self.iteration = iteration
         self.year = year
@@ -53,6 +55,7 @@ class Task(db.Model):
         self.day = day
         self.hour = hour
         self.minute = minute
+        self.second = second
         self.posLat = posLat
         self.posLon = posLon
         self.ubication = ubication
@@ -61,7 +64,7 @@ db.create_all()
 
 class TaskSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'nodo', 'iteration', 'year', 'month', 'day', 'hour', 'minute', 'posLat', 'posLon', 'ubication')
+        fields = ('id', 'nodo', 'iteration', 'year', 'month', 'day', 'hour', 'minute', 'second', 'posLat', 'posLon', 'ubication')
 
 task_schema = TaskSchema()
 tasks_schema = TaskSchema(many=True)
@@ -79,16 +82,18 @@ def big_transmition():
         BIG = param3
 
 def time():
-    global MINUTE, HOUR, DAY, MONTH, YEAR
+    global SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
     x = datetime.datetime.now()
     YEAR = x.year
     MONTH = x.month
     DAY = x.day
     HOUR = x.hour
     MINUTE = x.minute
+    SECOND = x.second
 
 def consultation_last(id):
-    tasks = Task.query.filter(Task.nodo==id).order_by(Task.id.desc()).first()
+    time()
+    tasks = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).order_by(Task.id.desc()).first()
     resul1 = task_schema.dump(tasks)
     return jsonify(resul1)    
 
@@ -96,6 +101,29 @@ def consultation_all(id):
     task = Task.query.filter(Task.nodo==id).order_by(Task.id.desc()).all()
     resul = tasks_schema.dump(task)
     return jsonify(resul)
+
+def consultation_day(id):
+    time()
+    task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH, Task.day==DAY).order_by(Task.id.desc()).all()
+    resul = tasks_schema.dump(task)
+    return jsonify(resul)
+
+def consultation_month(id):
+    time()
+    task = Task.query.filter(Task.nodo==id, Task.year==YEAR, Task.month==MONTH).order_by(Task.id.desc()).all()
+    resul = tasks_schema.dump(task)
+    return jsonify(resul)
+
+def consultation_year(id):
+    time()
+    task = Task.query.filter(Task.nodo==id, Task.year==YEAR).order_by(Task.id.desc()).all()
+    resul = tasks_schema.dump(task)
+    return jsonify(resul)
+
+def consultation_ubication(lat,long):
+    geolocator = Nominatim(user_agent="myapp")
+    location = geolocator.reverse("{}, {}".format(lat,long))
+    return location.address
 
 @app.route('/')
 def home():
@@ -108,6 +136,7 @@ def home():
     for key,value in actual_data1.items():
         if key != "id" and key != "nodo" and key != "iteration":
             actual_data_1.append(value)
+    print(actual_data_1)
     
     actual_data2 = consultation_last(id=2)
     actual_data2 = actual_data2.json
@@ -140,6 +169,15 @@ def machine(id):
     all_data_all = consultation_all(id=id)
     all_data_all = all_data_all.json
 
+    all_data_day = consultation_day(id=id)
+    all_data_day = all_data_day.json
+
+    all_data_month = consultation_month(id=id)
+    all_data_month = all_data_month.json
+
+    all_data_year = consultation_year(id=id)
+    all_data_year = all_data_year.json
+
     global BIG
     if(int(id) == 1):
         BIG = int(TRANSMITION1)*int(MULT1)
@@ -152,7 +190,13 @@ def machine(id):
                             actual=str(int(BIG)+2),
                             actual_data=actual_data_machine,
                             history_data_all=all_data_all,
-                            len_data_all = len(all_data_all)
+                            len_data_all=len(all_data_all),
+                            history_data_day=all_data_day,
+                            len_data_day=len(all_data_day),
+                            history_data_month=all_data_month,
+                            len_data_month=len(all_data_month),
+                            history_data_year=all_data_year,
+                            len_data_year=len(all_data_year),
                             )
 
 @app.route("/rate", methods=['GET','POST'])
@@ -215,16 +259,18 @@ def create_data():
         time()
         nodo = information['nodo']
         iteration = information['iteration']
+        print(iteration)
         year = YEAR
         month = MONTH
         day = DAY
         hour = HOUR
         minute = MINUTE
+        second = SECOND
         posLat = information['posLat']
         posLon = information['posLon']
-        ubication = "hola"
+        ubication = consultation_ubication(lat=posLat, long=posLon)
 
-        new_task = Task(nodo=nodo, iteration=iteration, year=year, month=month, day=day, hour=hour, minute=minute, posLat=posLat, posLon=posLon, ubication=ubication)
+        new_task = Task(nodo=nodo, iteration=iteration, year=year, month=month, day=day, hour=hour, minute=minute, second=second, posLat=posLat, posLon=posLon, ubication=ubication)
 
         db.session.add(new_task)
         db.session.commit()
@@ -236,6 +282,7 @@ def itertaio(id):
     task = Task.query.filter(Task.nodo==id).order_by(Task.id.desc()).first()
     resul = task_schema.dump(task)
     iter = resul['iteration']
+    print(iter)
     return jsonify({'iteration' : iter})
 
 @app.route('/delete', methods=['GET'])

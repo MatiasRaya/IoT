@@ -1,6 +1,5 @@
 from L76GNSS import L76GNSS
 
-
 class Sensors:
     sensors = {}
     def __init__(self,pytrack):
