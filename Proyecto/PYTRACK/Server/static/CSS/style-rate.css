@@ -68,21 +68,24 @@ label{
 }
 
 .aula-600{
-    background: url(../Image/JPG/aula-600.jpeg);
+    background: linear-gradient(to right, hsla(0, 0%, 47%, 0.671), hsla(0, 0%, 62%, 0.671)), url(../Image/JPG/maquina-1.jpg);
     background-size: cover;
     background-position: center;
+    color: white;
 }
 
 .aula-601{
-    background: url(../Image/JPG/aula-601.jpeg);
+    background: linear-gradient(to right, hsla(0, 0%, 47%, 0.671), hsla(0, 0%, 62%, 0.671)), url(../Image/JPG/maquina-2.jpg);
     background-size: cover;
     background-position: center;
+    color: white;
 }
 
 .aula-602{
-    background: url(../Image/JPG/aula-602.jpeg);
+    background: linear-gradient(to right, hsla(0, 0%, 47%, 0.671), hsla(0, 0%, 62%, 0.671)), url(../Image/JPG/maquina-3.jpg);
     background-size: cover;
     background-position: center;
+    color: white;
 }
 
 .multiplicator-rate-sensor{
