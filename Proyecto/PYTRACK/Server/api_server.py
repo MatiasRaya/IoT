@@ -255,11 +255,9 @@ def actualization(id):
 def create_data():
     information = request.get_json(force=True)
     if str(information['posLat']) != "None" and str(information['posLon']) != "None":
-        print("Guardando")
         time()
         nodo = information['nodo']
         iteration = information['iteration']
-        print(iteration)
         year = YEAR
         month = MONTH
         day = DAY
@@ -282,7 +280,6 @@ def itertaio(id):
     task = Task.query.filter(Task.nodo==id).order_by(Task.id.desc()).first()
     resul = task_schema.dump(task)
     iter = resul['iteration']
-    print(iter)
     return jsonify({'iteration' : iter})
 
 @app.route('/delete', methods=['GET'])
