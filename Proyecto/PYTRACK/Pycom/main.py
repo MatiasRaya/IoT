@@ -30,9 +30,8 @@ time.sleep(5)
 pycom.rgbled(NO_COLOUR)
 
 # WiFi connectation
-# SERVER_ADDRESS = "http://192.168.1.127:5000" # LCD
-SERVER_ADDRESS = "http://192.168.1.142:5000" # LCD
-# SERVER_ADDRESS = "" # APP 
+SERVER_ADDRESS = "http://192.168.1.127:5000" # LCD
+# SERVER_ADDRESS = "" # APP
 
 wlan = WLAN(mode=WLAN.STA)
 wlan.connect('LCD', auth=(WLAN.WPA2, '1cdunc0rd0ba'))
