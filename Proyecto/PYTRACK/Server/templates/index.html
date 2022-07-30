@@ -1,7 +1,7 @@
 {% extends "layout.html"%}
 
 {% block head %}
-    <!-- <meta http-equiv="refresh" content="{{actual}}"> -->
+    <meta http-equiv="refresh" content="{{actual}}">
 {% endblock %}
 
 {% block title %}
@@ -19,7 +19,7 @@
                     <h2 class="title-position">
                         Ubicacion actual
                     </h2>
-                    <table>
+                    <table class="table-desktop">
                         <thead>
                             <tr>
                                 <th>DIA</th>
@@ -32,19 +32,61 @@
                                 <th>LONGITUD</th>
                                 <th>UBICACION</th>
                             </tr>
-                            <tr>
-                                <td>{{actual_data1[0]}}</td>
-                                <td>{{actual_data1[3]}}</td>
-                                <td>{{actual_data1[8]}}</td>
-                                <td>{{actual_data1[1]}}</td>
-                                <td>{{actual_data1[2]}}</td>
-                                <td>{{actual_data1[5]}}</td>
-                                <td>{{actual_data1[4]}}</td>
-                                <td>{{actual_data1[5]}}</td>
-                                <td>{{actual_data1[7]}}</td>
-                            </tr>
                         </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="DIA">{{actual_data1[0]}}</td>
+                                <td data-label="MES">{{actual_data1[3]}}</td>
+                                <td data-label="AÑO">{{actual_data1[8]}}</td>
+                                <td data-label="HORA">{{actual_data1[1]}}</td>
+                                <td data-label="MINUTO">{{actual_data1[2]}}</td>
+                                <td data-label="SEGUNDO">{{actual_data1[6]}}</td>
+                                <td data-label="LATITUD">{{actual_data1[4]}}</td>
+                                <td data-label="LONGITUD">{{actual_data1[5]}}</td>
+                                <td data-label="UBICACION">{{actual_data1[7]}}</td>
+                            </tr>
+                        </tbody>
                     </table>
+                    <div class="table-mobile">
+                        <div class="row">
+                            <div class="column">
+                                <div class="header">DIA</div>
+                                <div class="contain">{{actual_data1[0]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">MES</div>
+                                <div class="contain">{{actual_data1[3]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">AÑO</div>
+                                <div class="contain">{{actual_data1[8]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">HORA</div>
+                                <div class="contain">{{actual_data1[1]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">MINUTO</div>
+                                <div class="contain">{{actual_data1[2]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">SEGUNDO</div>
+                                <div class="contain">{{actual_data1[6]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">LATITUD</div>
+                                <div class="contain">{{actual_data1[4]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">LONGITUD</div>
+                                <div class="contain">{{actual_data1[5]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">UBICACION</div>
+                                <div class="contain">{{actual_data1[7]}}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </a>
@@ -57,7 +99,7 @@
                     <h2 class="title-position">
                         Ubicacion actual
                     </h2>
-                    <table>
+                    <table class="table-desktop">
                         <thead>
                             <tr>
                                 <th>DIA</th>
@@ -65,22 +107,66 @@
                                 <th>AÑO</th>
                                 <th>HORA</th>
                                 <th>MINUTO</th>
+                                <th>SEGUNDO</th>
                                 <th>LATITUD</th>
                                 <th>LONGITUD</th>
                                 <th>UBICACION</th>
                             </tr>
-                            <tr>
-                                <td>{{actual_data2[0]}}</td>
-                                <td>{{actual_data2[3]}}</td>
-                                <td>{{actual_data2[7]}}</td>
-                                <td>{{actual_data2[1]}}</td>
-                                <td>{{actual_data2[2]}}</td>
-                                <td>{{actual_data2[4]}}</td>
-                                <td>{{actual_data2[5]}}</td>
-                                <td>{{actual_data2[6]}}</td>
-                            </tr>
                         </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="DIA">{{actual_data2[0]}}</td>
+                                <td data-label="MES">{{actual_data2[3]}}</td>
+                                <td data-label="AÑO">{{actual_data2[8]}}</td>
+                                <td data-label="HORA">{{actual_data2[1]}}</td>
+                                <td data-label="MINUTO">{{actual_data2[2]}}</td>
+                                <td data-label="SEGUNDO">{{actual_data2[6]}}</td>
+                                <td data-label="LATITUD">{{actual_data2[4]}}</td>
+                                <td data-label="LONGITUD">{{actual_data2[5]}}</td>
+                                <td data-label="UBICACION">{{actual_data2[7]}}</td>
+                            </tr>
+                        </tbody>
                     </table>
+                    <div class="table-mobile">
+                        <div class="row">
+                            <div class="column">
+                                <div class="header">DIA</div>
+                                <div class="contain">{{actual_data2[0]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">MES</div>
+                                <div class="contain">{{actual_data2[3]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">AÑO</div>
+                                <div class="contain">{{actual_data2[8]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">HORA</div>
+                                <div class="contain">{{actual_data2[1]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">MINUTO</div>
+                                <div class="contain">{{actual_data2[2]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">SEGUNDO</div>
+                                <div class="contain">{{actual_data2[6]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">LATITUD</div>
+                                <div class="contain">{{actual_data2[4]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">LONGITUD</div>
+                                <div class="contain">{{actual_data2[5]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">UBICACION</div>
+                                <div class="contain">{{actual_data2[7]}}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </a>
@@ -93,7 +179,7 @@
                     <h2 class="title-position">
                         Ubicacion actual
                     </h2>
-                    <table>
+                    <table class="table-desktop">
                         <thead>
                             <tr>
                                 <th>DIA</th>
@@ -101,22 +187,66 @@
                                 <th>AÑO</th>
                                 <th>HORA</th>
                                 <th>MINUTO</th>
+                                <th>SEGUNDO</th>
                                 <th>LATITUD</th>
                                 <th>LONGITUD</th>
                                 <th>UBICACION</th>
                             </tr>
-                            <tr>
-                                <td>{{actual_data3[0]}}</td>
-                                <td>{{actual_data3[3]}}</td>
-                                <td>{{actual_data3[7]}}</td>
-                                <td>{{actual_data3[1]}}</td>
-                                <td>{{actual_data3[2]}}</td>
-                                <td>{{actual_data3[4]}}</td>
-                                <td>{{actual_data3[5]}}</td>
-                                <td>{{actual_data3[6]}}</td>
-                            </tr>
                         </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="DIA">{{actual_data3[0]}}</td>
+                                <td data-label="MES">{{actual_data3[3]}}</td>
+                                <td data-label="AÑO">{{actual_data3[8]}}</td>
+                                <td data-label="HORA">{{actual_data3[1]}}</td>
+                                <td data-label="MINUTO">{{actual_data3[2]}}</td>
+                                <td data-label="SEGUNDO">{{actual_data3[6]}}</td>
+                                <td data-label="LATITUD">{{actual_data3[4]}}</td>
+                                <td data-label="LONGITUD">{{actual_data3[5]}}</td>
+                                <td data-label="UBICACION">{{actual_data3[7]}}</td>
+                            </tr>
+                        </tbody>
                     </table>
+                    <div class="table-mobile">
+                        <div class="row">
+                            <div class="column">
+                                <div class="header">DIA</div>
+                                <div class="contain">{{actual_data3[0]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">MES</div>
+                                <div class="contain">{{actual_data3[3]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">AÑO</div>
+                                <div class="contain">{{actual_data3[8]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">HORA</div>
+                                <div class="contain">{{actual_data3[1]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">MINUTO</div>
+                                <div class="contain">{{actual_data3[2]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">SEGUNDO</div>
+                                <div class="contain">{{actual_data3[6]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">LATITUD</div>
+                                <div class="contain">{{actual_data3[4]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">LONGITUD</div>
+                                <div class="contain">{{actual_data3[5]}}</div>
+                            </div>
+                            <div class="column">
+                                <div class="header">UBICACION</div>
+                                <div class="contain">{{actual_data3[7]}}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </a>
