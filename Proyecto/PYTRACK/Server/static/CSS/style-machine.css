@@ -1,35 +1,70 @@
 .machine{
     padding: 40px;
     display: block;
-}
-
-.actual-information{
-    text-align: center;
-}
-
-.selection-view{
-    margin-top: 20px;
-}
-
-.selection-view h2{
-    text-align: center;
-    font-size: 40px;
-}
-
-.history-information{
-    padding: 40px;
-    text-align: center;
+    gap: 20px;
 }
 
 .title-actual-data{
+    margin-bottom: 20px;
+    font-size: 27px;
+    text-align: center;
+}
+
+.table-desktop-machine{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-desktop-machine td, th{
+    padding: 12px 15px;
+    border: 2px solid rgb(148, 25, 25);
+    text-align: center;
+}
+
+.table-desktop-machine th{
+    background-color: rgba(165, 42, 42, 0.445);
+}
+
+.table-mobile-machine{
+    display: none;
+}
+
+.selection-view{
+    padding: 25px;
+    text-align: center;
+}
+
+.title-selection-view{
+    text-align: center;
     font-size: 30px;
 }
 
-.information-actual-data{
+.selection{
     margin-top: 20px;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.selector-view{
+    margin: auto 0;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+}
+
+.selector-view label{
+    font-size: 17px;
+}
+
+.form-btn-machine{
+    width: 50%;
+    height: 30px;
+    cursor: pointer;
+    border: rgba(221, 8, 8, 0.705);
+    background: rgba(160, 6, 6, 0.705);
+    color: blanchedalmond;
+    font-size: medium;
 }
 
 .invisible{
@@ -44,45 +79,50 @@
     .title-actual-data{
         margin-bottom: 10px;
         font-size: 20px;
+        text-align: center;
     }
 
-    .information-actual-data{
-        margin: 20px auto 0;
-        display: grid;
-        grid-template-columns: none;
-        grid-template-rows: repeat(5, 1fr);
-        gap: 20px;
+    .table-desktop-machine{
+        display: none;
     }
 
-    .temp{
-        margin-top: 20px;
+    .table-mobile-machine{
+        display: block;
+        width: 100%;
+    }
+
+    .table-mobile-machine .row-machine:nth-of-type(even) .column-machine .contain-machine{
+        background-color: brown;
+    }
+
+    .row-machine .column-machine{
+        display: flex;
+    }
+
+    .header-machine, .contain-machine{
+        border: 2px solid rgb(148, 25, 25);
+        padding: 10px;
+    }
+    
+    .header-machine{
+        width: 40%;
+        text-align: center;
+        background-color: rgba(165, 42, 42, 0.445);
+    }
+
+    .contain-machine{
+        width: 60%;
+        text-align: center;
+    }
+
+    .selection{
         display: grid;
         grid-template-columns: none;
         grid-template-rows: repeat(2, 1fr);
-    }
-    
-    .hum{
-        margin-top: 20px;
-        display: grid;
-        grid-template-columns: none;
-        grid-template-rows: repeat(2, 1fr);
-    }
-    
-    .press{
-        margin-top: 20px;
-        display: grid;
-        grid-template-columns: none;
-        grid-template-rows: repeat(2, 1fr);
-    }
-    
-    .messure{
-        margin-top: 15px;
-        width: 90%;
-        height: auto;
-        background-color: rgba(85, 81, 81, 0.39);
+        gap: 10px;
     }
 
-    .month{
-        margin-top: 10px;
+    .selector-view{
+        gap: 10px;
     }
 }
