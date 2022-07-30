@@ -1,20 +1,28 @@
-.machine{
+.machine-1-start{
     padding: 40px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    background: linear-gradient(to right, hsla(0, 0%, 47%, 0.671), hsla(0, 0%, 62%, 0.671)), url(../Image/JPG/maquina-1.jpg);
+    background-size: cover;
 }
 
-.machine-1-start{
-    background-color: aqua;
+.machine-2-start{
+    margin-top: 30px;
     padding: 40px;
+    background: linear-gradient(to right, hsla(0, 0%, 47%, 0.671), hsla(0, 0%, 62%, 0.671)), url(../Image/JPG/maquina-2.jpg);
+    background-size: cover;
+}
+
+.machine-3-start{
+    margin-top: 30px;
+    padding: 40px;
+    background: linear-gradient(to right, hsla(0, 0%, 47%, 0.671), hsla(0, 0%, 62%, 0.671)), url(../Image/JPG/maquina-3.jpg);
+    background-size: cover;
 }
 
 .title-start{
-    text-align: center;
     margin: auto 240px;
+    text-align: center;
     color: white;
-    background: rgba(128, 128, 128, 0.7);
+    font-size: 25px;
 }
 
 .information-actual-data-start{
@@ -23,32 +31,65 @@
 }
 
 .title-position{
-    text-align: center;
     margin-bottom: 20px;
+    text-align: center;
+    font-size: 25px;
 }
 
-table{
-    border: 2px solid green;
+.table-desktop{
     width: 100%;
     border-collapse: collapse;
 }
 
-th, td{
-    padding: 10px;
-    border: 2px solid green;
-    text-align: center;
+.table-desktop td, th{
+    padding: 12px 15px;
+    border: 2px solid rgb(148, 25, 25);
 }
 
-@media (max-width: 950px){
-    .aulas{
-        grid-template-columns: none;
-        grid-template-rows: repeat(3, 1fr);
-        row-gap: 40px;
+.table-desktop th{
+    background-color: rgba(165, 42, 42, 0.445);
+}
+
+.table-mobile{
+    display: none;
+}
+
+@media (max-width: 950px){    
+    .title-start{
+        margin: auto;
+        font-size: 15px;
+    }
+    
+    .title-position{
+        font-size: 20px;
     }
 
-    .information-actual-data-start{
-        grid-template-columns: none;
-        grid-template-rows: repeat(3, 1fr);
-        row-gap: 20px;
+    .table-desktop{
+        display: none;
+    }
+
+    .table-mobile{
+        display: block;
+        width: 100%;
+    }
+
+    .row .column{
+        display: flex;
+    }
+
+    .header, .contain{
+        border: 2px solid rgb(148, 25, 25);
+        padding: 10px;
+    }
+    
+    .header{
+        width: 40%;
+        text-align: center;
+        background-color: rgba(165, 42, 42, 0.445);
+    }
+
+    .contain{
+        width: 60%;
+        text-align: center;
     }
 }
