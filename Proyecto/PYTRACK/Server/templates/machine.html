@@ -1,7 +1,7 @@
 {% extends "layout.html"%}
 
 {% block head %}
-    <!-- <meta http-equiv="refresh" content="{{actual}}"> -->
+    <meta http-equiv="refresh" content="{{actual}}">
 {% endblock %}
 
 {% block title %}
@@ -14,7 +14,7 @@
         <div class="title-actual-data">
             <h1>Valores actuales de posicion de la maquina {{ machine_name }}</h1>
         </div>
-        <table>
+        <table class="table-desktop-machine">
             <thead>
                 <tr>
                     <th>DIA</th>
@@ -27,38 +27,88 @@
                     <th>LONGITUD</th>
                     <th>UBICACION</th>
                 </tr>
+            </thead>
+            <tbody>
                 <tr>
                     <td>{{actual_data[0]}}</td>
                     <td>{{actual_data[3]}}</td>
                     <td>{{actual_data[8]}}</td>
                     <td>{{actual_data[1]}}</td>
                     <td>{{actual_data[2]}}</td>
-                    <td>{{actual_data[5]}}</td>
+                    <td>{{actual_data[6]}}</td>
                     <td>{{actual_data[4]}}</td>
                     <td>{{actual_data[5]}}</td>
                     <td>{{actual_data[7]}}</td>
                 </tr>
-            </thead>
+            </tbody>
         </table>
+        <div class="table-mobile-machine">
+            <div class="row-machine">
+                <div class="column-machine">
+                    <div class="header-machine">DIA</div>
+                    <div class="contain-machine">{{actual_data[0]}}</div>
+                </div>
+                <div class="column-machine">
+                    <div class="header-machine">MES</div>
+                    <div class="contain-machine">{{actual_data[3]}}</div>
+                </div>
+                <div class="column-machine">
+                    <div class="header-machine">AÑO</div>
+                    <div class="contain-machine">{{actual_data[8]}}</div>
+                </div>
+                <div class="column-machine">
+                    <div class="header-machine">HORA</div>
+                    <div class="contain-machine">{{actual_data[1]}}</div>
+                </div>
+                <div class="column-machine">
+                    <div class="header-machine">MINUTO</div>
+                    <div class="contain-machine">{{actual_data[2]}}</div>
+                </div>
+                <div class="column-machine">
+                    <div class="header-machine">SEGUNDO</div>
+                    <div class="contain-machine">{{actual_data[6]}}</div>
+                </div>
+                <div class="column-machine">
+                    <div class="header-machine">LATITUD</div>
+                    <div class="contain-machine">{{actual_data[4]}}</div>
+                </div>
+                <div class="column-machine">
+                    <div class="header-machine">LONGITUD</div>
+                    <div class="contain-machine">{{actual_data[5]}}</div>
+                </div>
+                <div class="column-machine">
+                    <div class="header-machine">UBICACION</div>
+                    <div class="contain-machine">{{actual_data[7]}}</div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="selection-view">
-        <h2>Los valores de cuando desea ver:</h2>
-        <input type="radio" name="view" id="day">
-        <label for="day">DIA</label>
-        <input type="radio" name="view" id="month">
-        <label for="month">MES</label>
-        <input type="radio" name="view" id="year">
-        <label for="year">AÑO</label>
-        <input type="radio" name="view" id="all">
-        <label for="all">TODOS</label>
-        <input type="button" value="Validar">
+        <div class="title-selection-view">
+            <h2>Los valores de cuando desea ver:</h2>
+        </div>
+        <div class="selection">
+            <div class="selector-view">
+                <input type="radio" name="view" id="day">
+                <label for="day">DIA</label>
+                <input type="radio" name="view" id="month">
+                <label for="month">MES</label>
+                <input type="radio" name="view" id="year">
+                <label for="year">AÑO</label>
+                <input type="radio" name="view" id="all">
+                <label for="all">TODOS</label>
+            </div>
+            <div class="button-submit-machine">
+                <input type="button" class="form-btn-machine" value="Validar" onclick="return validationView()">
+            </div>
+        </div>
     </div>
-    <div class="history-day-information visible">
+    <div class="history-day-information invisible" id="history-day-information">
         <div class="title-actual-data">
             <h1>Valores historicos de posicion del dia de la maquina {{ machine_name }}</h1>
         </div>
-        <table>
-            {% for i in range(len_data_day)%}
+        {% for i in range(len_data_day)%}
+        <table class="table-desktop-machine">
             <thead>
                 <tr>
                     <th>HORA</th>
@@ -68,6 +118,8 @@
                     <th>LONGITUD</th>
                     <th>UBICACION</th>
                 </tr>
+            </thead>
+            <tbody>
                 <tr>
                     <td>{{history_data_day[i]["hour"]}}</td>
                     <td>{{history_data_day[i]["minute"]}}</td>
@@ -76,16 +128,44 @@
                     <td>{{history_data_day[i]["posLon"]}}</td>
                     <td>{{history_data_day[i]["ubication"]}}</td>
                 </tr>
-            </thead>
-            {% endfor %}
+            </tbody>
         </table>
+        <div class="table-mobile-machine">
+            <div class="row">
+                <div class="column">
+                    <div class="header-machine">HORA</div>
+                    <div class="contain-machine">{{history_data_day[i]["hour"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">MINUTO</div>
+                    <div class="contain-machine">{{history_data_day[i]["minute"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">SEGUNDO</div>
+                    <div class="contain-machine">{{history_data_day[i]["second"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">LATITUD</div>
+                    <div class="contain-machine">{{history_data_day[i]["posLat"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">LONGITUD</div>
+                    <div class="contain-machine">{{history_data_day[i]["posLon"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">UBICACION</div>
+                    <div class="contain-machine">{{history_data_day[i]["ubication"]}}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    <div class="history-month-information invisible">
+    <div class="history-month-information invisible" id="history-month-information">
         <div class="title-actual-data">
             <h1>Valores historicos de posicion del mes de la maquina {{ machine_name }}</h1>
         </div>
-        <table>
-            {% for i in range(len_data_month)%}
+        {% for i in range(len_data_month)%}
+        <table class="table-desktop-machine">
             <thead>
                 <tr>
                     <th>DIA</th>
@@ -96,6 +176,8 @@
                     <th>LONGITUD</th>
                     <th>UBICACION</th>
                 </tr>
+            </thead>
+            <tbody>
                 <tr>
                     <td>{{history_data_month[i]["day"]}}</td>
                     <td>{{history_data_month[i]["hour"]}}</td>
@@ -105,16 +187,48 @@
                     <td>{{history_data_month[i]["posLon"]}}</td>
                     <td>{{history_data_month[i]["ubication"]}}</td>
                 </tr>
-            </thead>
-            {% endfor %}
+            </tbody>
         </table>
+        <div class="table-mobile-machine">
+            <div class="row">
+                <div class="column">
+                    <div class="header-machine">DIA</div>
+                    <div class="contain-machine">{{history_data_month[i]["day"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">HORA</div>
+                    <div class="contain-machine">{{history_data_month[i]["hour"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">MINUTO</div>
+                    <div class="contain-machine">{{history_data_month[i]["minute"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">SEGUNDO</div>
+                    <div class="contain-machine">{{history_data_month[i]["second"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">LATITUD</div>
+                    <div class="contain-machine">{{history_data_month[i]["posLat"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">LONGITUD</div>
+                    <div class="contain-machine">{{history_data_month[i]["posLon"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">UBICACION</div>
+                    <div class="contain-machine">{{history_data_month[i]["ubication"]}}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    <div class="history-year-information invisible">
+    <div class="history-year-information invisible" id="history-year-information">
         <div class="title-actual-data">
             <h1>Valores historicos de posicion del año de la maquina {{ machine_name }}</h1>
         </div>
-        <table>
-            {% for i in range(len_data_year)%}
+        {% for i in range(len_data_year)%}
+        <table class="table-desktop-machine">
             <thead>
                 <tr>
                     <th>DIA</th>
@@ -126,6 +240,8 @@
                     <th>LONGITUD</th>
                     <th>UBICACION</th>
                 </tr>
+            </thead>
+            <tbody>
                 <tr>
                     <td>{{history_data_year[i]["day"]}}</td>
                     <td>{{history_data_year[i]["month"]}}</td>
@@ -136,16 +252,52 @@
                     <td>{{history_data_year[i]["posLon"]}}</td>
                     <td>{{history_data_year[i]["ubication"]}}</td>
                 </tr>
-            </thead>
-            {% endfor %}
+            </tbody>
         </table>
+        <div class="table-mobile-machine">
+            <div class="row">
+                <div class="column">
+                    <div class="header-machine">DIA</div>
+                    <div class="contain-machine">{{history_data_year[i]["day"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">MES</div>
+                    <div class="contain-machine">{{history_data_year[i]["month"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">HORA</div>
+                    <div class="contain-machine">{{history_data_year[i]["hour"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">MINUTO</div>
+                    <div class="contain-machine">{{history_data_year[i]["minute"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">SEGUNDO</div>
+                    <div class="contain-machine">{{history_data_year[i]["second"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">LATITUD</div>
+                    <div class="contain-machine">{{history_data_year[i]["posLat"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">LONGITUD</div>
+                    <div class="contain-machine">{{history_data_year[i]["posLon"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">UBICACION</div>
+                    <div class="contain-machine">{{history_data_year[i]["ubication"]}}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    <div class="history-all-information invisible">
+    <div class="history-all-information invisible" id="history-all-information">
         <div class="title-actual-data">
             <h1>Valores historicos de posicion de la maquina {{ machine_name }}</h1>
         </div>
-        <table>
-            {% for i in range(len_data_all)%}
+        {% for i in range(len_data_all)%}
+        <table class="table-desktop-machine">
             <thead>
                 <tr>
                     <th>DIA</th>
@@ -153,23 +305,107 @@
                     <th>AÑO</th>
                     <th>HORA</th>
                     <th>MINUTO</th>
+                    <th>SEGUNDO</th>
                     <th>LATITUD</th>
                     <th>LONGITUD</th>
                     <th>UBICACION</th>
                 </tr>
+            </thead>
+            <tbody>
                 <tr>
                     <td>{{history_data_all[i]["day"]}}</td>
                     <td>{{history_data_all[i]["month"]}}</td>
                     <td>{{history_data_all[i]["year"]}}</td>
                     <td>{{history_data_all[i]["hour"]}}</td>
                     <td>{{history_data_all[i]["minute"]}}</td>
+                    <td>{{history_data_all[i]["second"]}}</td>
                     <td>{{history_data_all[i]["posLat"]}}</td>
                     <td>{{history_data_all[i]["posLon"]}}</td>
                     <td>{{history_data_all[i]["ubication"]}}</td>
                 </tr>
-            </thead>
-            {% endfor %}
+            </tbody>
         </table>
+        <div class="table-mobile-machine">
+            <div class="row">
+                <div class="column">
+                    <div class="header-machine">DIA</div>
+                    <div class="contain-machine">{{history_data_all[i]["day"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">MES</div>
+                    <div class="contain-machine">{{history_data_all[i]["month"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">AÑO</div>
+                    <div class="contain-machine">{{history_data_all[i]["year"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">HORA</div>
+                    <div class="contain-machine">{{history_data_all[i]["hour"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">MINUTO</div>
+                    <div class="contain-machine">{{history_data_all[i]["minute"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">SEGUNDO</div>
+                    <div class="contain-machine">{{history_data_all[i]["second"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">LATITUD</div>
+                    <div class="contain-machine">{{history_data_all[i]["posLat"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">LONGITUD</div>
+                    <div class="contain-machine">{{history_data_all[i]["posLon"]}}</div>
+                </div>
+                <div class="column">
+                    <div class="header-machine">UBICACION</div>
+                    <div class="contain-machine">{{history_data_all[i]["ubication"]}}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
+<script>
+    function validationView(){
+        dayCheck = document.getElementById("day").checked;
+        monthCheck = document.getElementById("month").checked;
+        yearCheck = document.getElementById("year").checked;
+        allCheck = document.getElementById("all").checked;
+        if(dayCheck){
+            document.getElementById("history-day-information").classList.add("visible");
+            document.getElementById("history-month-information").classList.remove("visible")
+            document.getElementById("history-year-information").classList.remove("visible")
+            document.getElementById("history-all-information").classList.remove("visible")
+            return true;
+        }
+        else if(monthCheck){
+            document.getElementById("history-month-information").classList.add("visible");
+            document.getElementById("history-day-information").classList.remove("visible")
+            document.getElementById("history-year-information").classList.remove("visible")
+            document.getElementById("history-all-information").classList.remove("visible")
+            return true;
+        }
+        else if(yearCheck){
+            document.getElementById("history-year-information").classList.add("visible");
+            document.getElementById("history-month-information").classList.remove("visible")
+            document.getElementById("history-day-information").classList.remove("visible")
+            document.getElementById("history-all-information").classList.remove("visible")
+            return true;
+        }
+        else if(allCheck){
+            document.getElementById("history-all-information").classList.add("visible");
+            document.getElementById("history-year-information").classList.remove("visible")
+            document.getElementById("history-month-information").classList.remove("visible")
+            document.getElementById("history-day-information").classList.remove("visible")
+            return true;
+        }
+        else{
+            window.alert("Debe seleccionar alguna opcion");
+            return false;
+        }
+    }
+</script>
 {% endblock %}
