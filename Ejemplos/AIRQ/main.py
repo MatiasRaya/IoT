@@ -4,7 +4,9 @@ import ubinascii
 import struct
 import math
 
+# Declaramos una variable que hace referencia a la funcion de conexion Bluetooth
 bt = Bluetooth()
+# Se inicia el escaneo sin tiempo de espera
 bt.start_scan(-1)
 
 def twoscmp(value):
@@ -63,6 +65,7 @@ def air_quality_score(hum, gas_res):
         print("Good")
 
 while True:
+    # Obtenemos la tupla con el nombre del
     adv = bt.get_adv()
     if adv: # and adv.rssi>-80:# and ubinascii.hexlify(adv.mac)==b'cd9e13c0f24a':
         read_adv = bt.resolve_adv_data(adv.data, Bluetooth.ADV_MANUFACTURER_DATA)
