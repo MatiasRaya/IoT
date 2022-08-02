@@ -48,7 +48,7 @@ py = Pycoproc(Pycoproc.PYSENSE)
 pySensor = Sensors(py)
 
 data_sensor = {
-    'nodo' : 3,
+    'nodo' : 2,
     'iteration' : iteration,
     'lightB' : pySensor.get_light()[0],
     'lightR' : pySensor.get_light()[1],
