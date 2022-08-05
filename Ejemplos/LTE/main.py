@@ -4,7 +4,7 @@ import socket
 
 lte = LTE()
 
-# Seteamos la banda en la que vamos a operar (la cual depende de la version de nuestra FiPy) y la apn del operador de nuestra SIM
+# Seteamos la banda en la que vamos a operar (la cual depende de la version de nuestra FiPy, las basicas son: 3, 4, 12, 13, 20, 28) y la apn del operador de nuestra SIM
 # APN para android
 # APN Personal: datos.personal.com
 # APN Claro: igprs.claro.com.ar
