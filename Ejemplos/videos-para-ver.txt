@@ -35,3 +35,7 @@ https://www.geeksforgeeks.org/response-json-python-requests/ -> hacer un request
 https://tedboy.github.io/jinja2/templ14.html?highlight=round#round -> documentacion de jinja2
 
 https://hackmd.io/@DavidL/SkYsx5GRO -> explicacion funcionamiento pytrack2
+
+
+https://newesc.com/configurar-apn-argentina-personal-claro-movistar/ -> APN de compañias tlefonicas en Argentina
+https://es.wikipedia.org/wiki/Anexo:Localidades_con_cobertura_de_telefon%C3%ADa_m%C3%B3vil_4G_en_Argentina -> Bandas autorizadas para telefonia en Argentina
