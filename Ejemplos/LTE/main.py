@@ -17,6 +17,7 @@ lte = LTE()
 
 # Hailitamos la funcionalidad de radio y conectarse a la red LTE autorizada por la tarjeta SIM
 lte.attach(band=28, apn="datos.personal.com")
+# lte.attach(band=28, apn="igprs.claro.com.ar")
 print("attaching..",end='')
 # Consultamos si estamos conectados a la red
 while not lte.isattached():
