@@ -1,10 +1,9 @@
 import pycom
-import machine
 import urequests
 import time
 import ujson
+import connections
 
-from network import WLAN
 from sensors import Sensors
 from pycoproc_1 import Pycoproc
 from machine import Timer
@@ -33,12 +32,8 @@ pycom.rgbled(NO_COLOUR)
 SERVER_ADDRESS = "http://192.168.1.127:5000" # LCD
 # SERVER_ADDRESS = "https://matiasraya.pythonanywhere.com" # APP PYTHONANYWHERE
 
-wlan = WLAN(mode=WLAN.STA)
-wlan.connect('LCD', auth=(WLAN.WPA2, '1cdunc0rd0ba'))
-print('Network found!')
-while not wlan.isconnected():
-    machine.idle()
-print('WLAN connection succeeded!')
+connections.wifi_connection()
+# connections.lte_connection()
 pycom.rgbled(YELLOW)
 time.sleep(2)
 pycom.rgbled(NO_COLOUR)
