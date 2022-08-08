@@ -30,8 +30,8 @@ time.sleep(5)
 pycom.rgbled(NO_COLOUR)
 
 # WiFi connectation
-# SERVER_ADDRESS = "http://192.168.1.127:5000" # LCD
-SERVER_ADDRESS = "https://matiasraya.pythonanywhere.com" # APP PYTHONANYWHERE
+SERVER_ADDRESS = "http://192.168.1.127:5000" # LCD
+# SERVER_ADDRESS = "https://matiasraya.pythonanywhere.com" # APP PYTHONANYWHERE
 
 wlan = WLAN(mode=WLAN.STA)
 wlan.connect('LCD', auth=(WLAN.WPA2, '1cdunc0rd0ba'))
