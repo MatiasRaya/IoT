@@ -31,7 +31,7 @@ pycom.rgbled(NO_COLOUR)
 
 # WiFi connectation
 SERVER_ADDRESS = "http://192.168.1.127:5000" # LCD
-# SERVER_ADDRESS = "" # APP
+# SERVER_ADDRESS = "https://matiasraya.pythonanywhere.com" # APP PYTHONANYWHERE
 
 wlan = WLAN(mode=WLAN.STA)
 wlan.connect('LCD', auth=(WLAN.WPA2, '1cdunc0rd0ba'))
@@ -89,7 +89,6 @@ def stored_data():
     store_data = {}
     store_data = data_sensor
     json_store_data = ujson.dumps(store_data)
-    print(json_store_data)
     return json_store_data
 
 def post_data(address, raw_data):
@@ -135,7 +134,6 @@ def send_recive():
 
     try:
         response = post_data(SERVER_ADDRESS + "/data", stored_data())
-        print(type(data_sensor['posLat']))
         if data_sensor['posLat'] is not None:
             iteration += 1
     except Exception as e:
