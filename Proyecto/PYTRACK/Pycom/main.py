@@ -32,13 +32,13 @@ pycom.rgbled(NO_COLOUR)
 SERVER_ADDRESS = "http://192.168.1.127:5000" # LCD
 # SERVER_ADDRESS = "https://matiasraya.pythonanywhere.com" # APP PYTHONANYWHERE
 
-connections.wifi_connection()
-# connections.lte_connection()
+# connections.wifi_connection()
+connections.lte_connection()
 pycom.rgbled(YELLOW)
 time.sleep(2)
 pycom.rgbled(NO_COLOUR)
 
-# Pysense object and sensors
+# Pytrack object and sensors
 py = Pycoproc(Pycoproc.PYTRACK)
 pySensor = Sensors(py)
 

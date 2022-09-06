@@ -18,8 +18,8 @@ def wifi_connection():
 
 def lte_connection():
     lte = LTE()
-    lte.attach(band=28, apn="datos.personal.com")
-    # lte.attach(band=28, apn="igprs.claro.com.ar")
+    # lte.attach(band=28, apn="datos.personal.com")
+    lte.attach(band=28, apn="igprs.claro.com.ar")
     while not lte.isattached():
         time.sleep(0.25)
     lte.connect()
