@@ -6,6 +6,7 @@ import math
 
 # Declaramos una variable que hace referencia a la funcion de conexion Bluetooth
 bt = Bluetooth()
+bt.init(antenna=Bluetooth.EXT_ANT)
 # Se inicia el escaneo sin tiempo de espera
 bt.start_scan(-1)
 
@@ -95,6 +96,7 @@ while True:
             manuf_data = ubinascii.hexlify(read_adv[0:4])
             # Verifiamos que el id coincide con el producto nuestro
             if (manuf_data == b'4c000215') :#or (manuf_data == b'd2000215')):# company id=d2 is Dialog, b'4c000215' is Apple's id and it implies ibeacon
+                print(adv.rssi)
                 print(adv.mac)
                 # Obtenemos la direccion mac de nestro aparato
                 print("mac:", ubinascii.hexlify(adv.mac))
