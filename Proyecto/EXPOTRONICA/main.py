@@ -22,7 +22,7 @@ temperature = 0
 humidity = 0
 pressure = 0
 gas_resistance = 0
-VoC = 0
+voc = 0
 rssi = 0
 
 # Colors indicator led
@@ -55,17 +55,40 @@ pycom.rgbled(NO_COLOUR)
 py = Pycoproc(Pycoproc.PYTRACK)
 pySensor = Sensors(py)
 
-data_sensor = {
-    'variable' : '{}'.format(mac),
-    'temperature': temperature,
-    'pressure': pressure,
-    'humidity': humidity,
-    'gas_resistance': gas_resistance,
-    'VoC': VoC,
-    'rssi': rssi,
-    'posLat' : pySensor.get_position().coordinates()[0],
-    'posLon' : pySensor.get_position().coordinates()[0]
-}
+data_sensor = [
+    {
+        "variable" : "temperature{}".format(mac),
+        "value" : temperature
+    },
+    {
+        "variable" : "pressure{}".format(mac),
+        "value" : pressure
+    },
+    {
+        "variable" : "humidity{}".format(mac),
+        "value" : humidity
+    },
+    {
+        "variable" : "gas_resistance{}".format(mac),
+        "value" : gas_resistance
+    },
+    {
+        "variable" : "voc{}".format(mac),
+        "value" : voc
+    },
+    {
+        "variable" : "rssi{}".format(mac),
+        "value" : rssi
+    },
+    {
+        "variable" : "location{}".format(mac),
+        "value" : "{}".format(mac),
+        "location" : {
+            "lat" : pySensor.get_position().coordinates()[0],
+            "lng" : pySensor.get_position().coordinates()[1]
+        }
+    },
+]
 
 rate = {
     'transmission_rate' : 5,
@@ -77,22 +100,31 @@ chrono = Timer.Chrono()
 def transmission_handler(alarm):
     alarm.cancel()
     alarm = Timer.Alarm(transmission_handler, rate['transmission_rate'], periodic=True)
+    print("Por enviar")
+    send_data()
+    print("Enviado")
     print(data_sensor)
-    sed_data()
 
 def sensor_handler(alarm):
     alarm.cancel()
     alarm = Timer.Alarm(sensor_handler, rate['sensor'], periodic=True)
     position = pySensor.get_position().coordinates()
     data_bt()
-    data_sensor['variable'] = '{}'.format(mac)
-    data_sensor['temperature'] = temperature
-    data_sensor['pressure'] = pressure
-    data_sensor['humidity'] = humidity
-    data_sensor['gas_resistance'] = gas_resistance
-    data_sensor['VoC'] = VoC
-    data_sensor['posLat'] = position[0]
-    data_sensor['posLon'] = position[1]
+    data_sensor[0]["variable"] = 'temperature{}'.format(mac)
+    data_sensor[0]["value"] = temperature
+    data_sensor[1]["variable"] = 'pressure{}'.format(mac)
+    data_sensor[1]["value"] = pressure
+    data_sensor[2]["variable"] = 'humidity{}'.format(mac)
+    data_sensor[2]["value"] = humidity
+    data_sensor[3]["variable"] = 'gas_resistance{}'.format(mac)
+    data_sensor[3]["value"] = gas_resistance
+    data_sensor[4]["variable"] = 'voc{}'.format(mac)
+    data_sensor[4]["value"] = voc
+    data_sensor[5]["variable"] = 'rssi{}'.format(mac)
+    data_sensor[5]["value"] = rssi
+    data_sensor[6]["variable"] = 'location{}'.format(mac)
+    data_sensor[6]["location"]["lat"] = pySensor.get_position().coordinates()[0]
+    data_sensor[6]["location"]["lng"] = pySensor.get_position().coordinates()[1]
     
 
 chrono.start()
@@ -116,7 +148,7 @@ def post_data(address, raw_data):
     return response
 
 def data_bt():
-    global rssi, mac, gas_resistance, pressure, temperature, humidity, VoC
+    global rssi, mac, gas_resistance, pressure, temperature, humidity, voc
     while True:
         adv = bt.get_adv()
         if adv:
@@ -139,14 +171,16 @@ def data_bt():
                         minor_f = minor_int/100
                         temperature = major_f
                         humidity = minor_f
-                        VoC = airq.air_quality_score(minor_f, gas_resistance)
+                        voc = airq.air_quality_score(minor_f, gas_resistance)
                         break
         else:
             time.sleep(0.050)
 
-def sed_data():
+def send_data():
     try:
-        response = post_data(SERVER_ADDRESS, stored_data())
+        if data_sensor[6]["location"]["lat"] is not None:
+            print("Hola")
+            response = post_data(SERVER_ADDRESS, stored_data())
     except Exception as e:
         print(e)
         print("POST attempet failed.")
