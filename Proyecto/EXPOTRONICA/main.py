@@ -103,12 +103,10 @@ def transmission_handler(alarm):
     print("Por enviar")
     send_data()
     print("Enviado")
-    print(data_sensor)
 
 def sensor_handler(alarm):
     alarm.cancel()
     alarm = Timer.Alarm(sensor_handler, rate['sensor'], periodic=True)
-    position = pySensor.get_position().coordinates()
     data_bt()
     data_sensor[0]["variable"] = 'temperature{}'.format(mac)
     data_sensor[0]["value"] = temperature
@@ -123,6 +121,7 @@ def sensor_handler(alarm):
     data_sensor[5]["variable"] = 'rssi{}'.format(mac)
     data_sensor[5]["value"] = rssi
     data_sensor[6]["variable"] = 'location{}'.format(mac)
+    data_sensor[6]["value"] = "{}".format(mac)
     data_sensor[6]["location"]["lat"] = pySensor.get_position().coordinates()[0]
     data_sensor[6]["location"]["lng"] = pySensor.get_position().coordinates()[1]
     
@@ -179,7 +178,6 @@ def data_bt():
 def send_data():
     try:
         if data_sensor[6]["location"]["lat"] is not None:
-            print("Hola")
             response = post_data(SERVER_ADDRESS, stored_data())
     except Exception as e:
         print(e)
