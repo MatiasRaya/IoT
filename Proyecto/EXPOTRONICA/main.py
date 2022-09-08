@@ -45,8 +45,8 @@ pycom.rgbled(NO_COLOUR)
 SERVER_ADDRESS = "https://api.tago.io/data"
 headers={'Content-Type':'application/json','Authorization':'531bc5a5-4e7b-433d-9f32-e605ac4e8a15'}
 
-connections.wifi_connection()
-# conections.lte_connection()
+# connections.wifi_connection()
+connections.lte_connection()
 pycom.rgbled(YELLOW)
 time.sleep(2)
 pycom.rgbled(NO_COLOUR)
