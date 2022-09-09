@@ -7,10 +7,11 @@ import airq
 import connections
 
 from sensors import Sensors
-from network import Bluetooth
 from machine import Timer
 from pycoproc_1 import Pycoproc
+from network import Bluetooth
 
+# Bluetooth connecton
 bt = Bluetooth()
 bt.init(antenna=bt.EXT_ANT)
 bt.start_scan(-1)
@@ -24,6 +25,8 @@ pressure = 0
 gas_resistance = 0
 voc = 0
 rssi = 0
+actualization1 = 5
+actualization2 = 1
 
 # Colors indicator led
 RED = 0x7f0000
@@ -43,7 +46,7 @@ pycom.rgbled(NO_COLOUR)
 
 # wifi connection 
 SERVER_ADDRESS = "https://api.tago.io/data"
-headers={'Content-Type':'application/json','Authorization':'531bc5a5-4e7b-433d-9f32-e605ac4e8a15'}
+headers={'Content-Type':'application/json','Authorization':'531bc5a5-4e7b-433d-9f32-e605ac4e8a15','User-Agent':'LCD'}
 
 connections.wifi_connection()
 # connections.lte_connection()
@@ -91,8 +94,8 @@ data_sensor = [
 ]
 
 rate = {
-    'transmission_rate' : 5,
-    'sensor' : 1
+    'transmission_rate' : actualization1,
+    'sensor' : actualization2
 }
 
 chrono = Timer.Chrono()
@@ -122,10 +125,8 @@ def sensor_handler(alarm):
     data_sensor[5]["value"] = rssi
     data_sensor[6]["variable"] = 'location{}'.format(mac)
     data_sensor[6]["value"] = "{}".format(mac)
-    # data_sensor[6]["location"]["lat"] = pySensor.get_position().coordinates()[0]
-    # data_sensor[6]["location"]["lng"] = pySensor.get_position().coordinates()[1]
-    data_sensor[6]["location"]["lat"] = 0
-    data_sensor[6]["location"]["lng"] = 0
+    rate["transmission_rate"] = actualization1
+    rate["sensor"] = actualization2
     
 
 chrono.start()
@@ -137,16 +138,6 @@ alarm_sets = []
 
 alarm_sets.append([transmission_alarm, transmission_handler, 'transmission_rate'])
 alarm_sets.append([sensor_rate, sensor_handler, 'sensor'])
-
-def stored_data():
-    store_data = {}
-    store_data = data_sensor
-    json_store_data = ujson.dumps(store_data)
-    return json_store_data
-
-def post_data(address, raw_data):
-    response = urequests.post(address, headers=headers, data=raw_data)
-    return response
 
 def data_bt():
     global rssi, mac, gas_resistance, pressure, temperature, humidity, voc
@@ -177,14 +168,45 @@ def data_bt():
         else:
             time.sleep(0.050)
 
+def stored_data():
+    store_data = {}
+    store_data = data_sensor
+    json_store_data = ujson.dumps(store_data)
+    return json_store_data
+
+def post_data(address, raw_data):
+    response = urequests.post(address, headers=headers, data=raw_data)
+    return response
+
+def get_data(address):
+    response = urequests.get(address, headers=headers)
+    aux = response.json()
+    return aux
+
 def send_data():
+    global actualization1, actualization2
     try:
-        # if data_sensor[6]["location"]["lat"] is not None:
-        #     response = post_data(SERVER_ADDRESS, stored_data())
-        response = post_data(SERVER_ADDRESS, stored_data())
+        if (data_sensor[6]["location"]["lat"] is not None) and (rssi > -40) and (mac != 0):
+            print("Se envio")
+            response = post_data(SERVER_ADDRESS, stored_data())
     except Exception as e:
         print(e)
         print("POST attempet failed.")
         pycom.rgbled(RED)
         time.sleep(1)
         pycom.rgbled(NO_COLOUR)
+
+    # try:
+    #     response = get_data(SERVER_ADDRESS)
+    #     aux1 = list(filter(lambda actual: actual["variable"] == "actualization1", list(filter(lambda actual: actual["variable"] == "actualization1", response["result"]))))[0]["value"]
+    #     aux2 = list(filter(lambda actual: actual["variable"] == "actualization2", list(filter(lambda actual: actual["variable"] == "actualization2", response["result"]))))[0]["value"]
+    #     if aux1 >= 5:
+    #         actualization1 = aux1
+    #     if aux2 >= 1:
+    #         actualization2 = aux2
+    # except Exception as e:
+    #     print(e)
+    #     print("GET attempet failed.")
+    #     pycom.rgbled(BLUE)
+    #     time.sleep(1)
+    #     pycom.rgbled(NO_COLOUR)
