@@ -1,8 +1,8 @@
 from unittest import result
+import requests
 
-import urequests
 respuesta = {
-    "status": True,
+    "status": true,
     "result": [
         {
             "id": "631a8d224f4d200011f9f3c1",
@@ -140,17 +140,15 @@ respuesta = {
         }
     ]
 }
-SERVER_ADDRESS = "https://api.tago.io/data"
-headers={'Authorization':'531bc5a5-4e7b-433d-9f32-e605ac4e8a15'}
-print((urequests.get(SERVER_ADDRESS,headers=headers))["result"])
-# pe = list(filter(lambda actual: actual["variable"] == "actuaization1", list(filter(lambda actual: actual["variable"] == "actuaization1",(requests.get(SERVER_ADDRESS,headers=headers))["result"]))[0]["value"]
-# prue = (respuesta["result"])
+
+prue = (respuesta["result"])
 # print((respuesta["result"]))
 # print(len(respuesta["result"]))
 # print(respuesta["result"][len(respuesta["result"])-1])
 # print(list(filter(lambda actual: actual["variable"] == "actuaization1", prue)))
-# pr = list(filter(lambda actual: actual["variable"] == "actuaization1", respuesta["result"]))
+pr = list(filter(lambda actual: actual["variable"] == "actuaization1", respuesta["result"]))
 # print(type(pr))
 # print(pr)
 p = list(filter(lambda actual: actual["variable"] == "actuaization1", list(filter(lambda actual: actual["variable"] == "actuaization1", respuesta["result"]))))[0]["value"]
+
 print(p)
