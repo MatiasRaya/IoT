@@ -45,8 +45,8 @@ pycom.rgbled(NO_COLOUR)
 SERVER_ADDRESS = "https://api.tago.io/data"
 headers={'Content-Type':'application/json','Authorization':'531bc5a5-4e7b-433d-9f32-e605ac4e8a15'}
 
-# connections.wifi_connection()
-connections.lte_connection()
+connections.wifi_connection()
+# connections.lte_connection()
 pycom.rgbled(YELLOW)
 time.sleep(2)
 pycom.rgbled(NO_COLOUR)
@@ -122,8 +122,10 @@ def sensor_handler(alarm):
     data_sensor[5]["value"] = rssi
     data_sensor[6]["variable"] = 'location{}'.format(mac)
     data_sensor[6]["value"] = "{}".format(mac)
-    data_sensor[6]["location"]["lat"] = pySensor.get_position().coordinates()[0]
-    data_sensor[6]["location"]["lng"] = pySensor.get_position().coordinates()[1]
+    # data_sensor[6]["location"]["lat"] = pySensor.get_position().coordinates()[0]
+    # data_sensor[6]["location"]["lng"] = pySensor.get_position().coordinates()[1]
+    data_sensor[6]["location"]["lat"] = 0
+    data_sensor[6]["location"]["lng"] = 0
     
 
 chrono.start()
@@ -177,8 +179,9 @@ def data_bt():
 
 def send_data():
     try:
-        if data_sensor[6]["location"]["lat"] is not None:
-            response = post_data(SERVER_ADDRESS, stored_data())
+        # if data_sensor[6]["location"]["lat"] is not None:
+        #     response = post_data(SERVER_ADDRESS, stored_data())
+        response = post_data(SERVER_ADDRESS, stored_data())
     except Exception as e:
         print(e)
         print("POST attempet failed.")
