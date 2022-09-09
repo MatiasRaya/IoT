@@ -98,7 +98,7 @@ while True:
             if (manuf_data == b'4c000215') :#or (manuf_data == b'd2000215')):# company id=d2 is Dialog, b'4c000215' is Apple's id and it implies ibeacon
                 print(adv.rssi)
                 print(adv.mac)
-                print(int.from_bytes(adv.mac, "little"))
+                print("mac int:{}".format(int.from_bytes(adv.mac, "little")))
                 # Obtenemos la direccion mac de nestro aparato
                 print("mac:", ubinascii.hexlify(adv.mac))
                 # Obtenemos el UUID de nuestro dispositivo
