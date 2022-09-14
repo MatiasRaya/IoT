@@ -3,6 +3,7 @@ import time
 import ubinascii
 import ujson
 import urequests
+import math
 import airq
 import connections
 
@@ -25,6 +26,8 @@ pressure = 0
 gas_resistance = 0
 voc = 0
 rssi = 0
+x = 0
+y = 0
 actualization1 = 5
 actualization2 = 1
 
@@ -48,8 +51,8 @@ pycom.rgbled(NO_COLOUR)
 SERVER_ADDRESS = "https://api.tago.io/data"
 headers={'Content-Type':'application/json','Authorization':'531bc5a5-4e7b-433d-9f32-e605ac4e8a15','User-Agent':'LCD'}
 
-connections.wifi_connection()
-# connections.lte_connection()
+# connections.wifi_connection()
+connections.lte_connection()
 pycom.rgbled(YELLOW)
 time.sleep(2)
 pycom.rgbled(NO_COLOUR)
@@ -81,7 +84,11 @@ data_sensor = [
     },
     {
         "variable" : "rssi{}".format(mac),
-        "value" : rssi
+        "value" : rssi,
+        "metadata" : {
+            "x" : x,
+            "y": y
+        }
     },
     {
         "variable" : "location{}".format(mac),
@@ -111,6 +118,7 @@ def sensor_handler(alarm):
     alarm.cancel()
     alarm = Timer.Alarm(sensor_handler, rate['sensor'], periodic=True)
     data_bt()
+    conversor()
     data_sensor[0]["variable"] = 'temperature{}'.format(mac)
     data_sensor[0]["value"] = temperature
     data_sensor[1]["variable"] = 'pressure{}'.format(mac)
@@ -123,8 +131,12 @@ def sensor_handler(alarm):
     data_sensor[4]["value"] = voc
     data_sensor[5]["variable"] = 'rssi{}'.format(mac)
     data_sensor[5]["value"] = rssi
+    data_sensor[5]["metadata"]["x"] = x
+    data_sensor[5]["metadata"]["y"] = y
     data_sensor[6]["variable"] = 'location{}'.format(mac)
     data_sensor[6]["value"] = "{}".format(mac)
+    data_sensor[6]["location"]["lat"] = pySensor.get_position().coordinates()[0]
+    data_sensor[6]["location"]["lng"] = pySensor.get_position().coordinates()[1]
     rate["transmission_rate"] = actualization1
     rate["sensor"] = actualization2
     
@@ -167,6 +179,14 @@ def data_bt():
                         break
         else:
             time.sleep(0.050)
+
+def conversor():
+    global x, y
+    aux1 = data_sensor[6]["location"]["lat"]
+    aux2 = data_sensor[6]["location"]["lng"]
+    vec = math.sqrt(math.pow(aux1,2)+math.pow(aux2,2))
+    x = aux2/vec
+    y = aux1/vec
 
 def stored_data():
     store_data = {}
