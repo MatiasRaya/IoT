@@ -26,9 +26,7 @@ pressure = 0
 gas_resistance = 0
 voc = 0
 rssi = 0
-x = 0
-y = 0
-actualization1 = 5
+actualization1 = 2
 actualization2 = 1
 
 # Colors indicator led
@@ -84,15 +82,11 @@ data_sensor = [
     },
     {
         "variable" : "rssi{}".format(mac),
-        "value" : rssi,
-        "metadata" : {
-            "x" : x,
-            "y": y
-        }
+        "value" : rssi
     },
     {
         "variable" : "location{}".format(mac),
-        "value" : "{}".format(mac),
+        "value" : rssi,
         "location" : {
             "lat" : pySensor.get_position().coordinates()[0],
             "lng" : pySensor.get_position().coordinates()[1]
@@ -118,7 +112,6 @@ def sensor_handler(alarm):
     alarm.cancel()
     alarm = Timer.Alarm(sensor_handler, rate['sensor'], periodic=True)
     data_bt()
-    conversor()
     data_sensor[0]["variable"] = 'temperature{}'.format(mac)
     data_sensor[0]["value"] = temperature
     data_sensor[1]["variable"] = 'pressure{}'.format(mac)
@@ -131,10 +124,8 @@ def sensor_handler(alarm):
     data_sensor[4]["value"] = voc
     data_sensor[5]["variable"] = 'rssi{}'.format(mac)
     data_sensor[5]["value"] = rssi
-    data_sensor[5]["metadata"]["x"] = x
-    data_sensor[5]["metadata"]["y"] = y
     data_sensor[6]["variable"] = 'location{}'.format(mac)
-    data_sensor[6]["value"] = "{}".format(mac)
+    data_sensor[6]["value"] = rssi
     data_sensor[6]["location"]["lat"] = pySensor.get_position().coordinates()[0]
     data_sensor[6]["location"]["lng"] = pySensor.get_position().coordinates()[1]
     rate["transmission_rate"] = actualization1
@@ -180,14 +171,6 @@ def data_bt():
         else:
             time.sleep(0.050)
 
-def conversor():
-    global x, y
-    aux1 = data_sensor[6]["location"]["lat"]
-    aux2 = data_sensor[6]["location"]["lng"]
-    vec = math.sqrt(math.pow(aux1,2)+math.pow(aux2,2))
-    x = aux2/vec
-    y = aux1/vec
-
 def stored_data():
     store_data = {}
     store_data = data_sensor
@@ -206,9 +189,13 @@ def get_data(address):
 def send_data():
     global actualization1, actualization2
     try:
-        if (data_sensor[6]["location"]["lat"] is not None) and (rssi > -40) and (mac != 0):
+        print(data_sensor)
+        if (data_sensor[6]["location"]["lat"] is not None) and (rssi > -70) and (mac != 0):
             print("Se envio")
             response = post_data(SERVER_ADDRESS, stored_data())
+            pycom.rgbled(CIAN)
+            time.sleep(1)
+            pycom.rgbled(NO_COLOUR)
     except Exception as e:
         print(e)
         print("POST attempet failed.")
