@@ -47,7 +47,8 @@ pycom.rgbled(NO_COLOUR)
 
 # wifi connection 
 SERVER_ADDRESS = "https://api.tago.io/data"
-headers={'Content-Type':'application/json','Authorization':'531bc5a5-4e7b-433d-9f32-e605ac4e8a15','User-Agent':'LCD'}
+headers={'Content-Type':'application/json','Authorization':'90421b3f-9708-4738-ac31-f8052e4ef5b4','User-Agent':'LCD'}
+# headers={'Content-Type':'application/json','Authorization':'531bc5a5-4e7b-433d-9f32-e605ac4e8a15','User-Agent':'LCD'}
 
 # connections.wifi_connection()
 connections.lte_connection()
