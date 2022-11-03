@@ -29,11 +29,11 @@ time.sleep(5)
 pycom.rgbled(NO_COLOUR)
 
 # WiFi connectation
-SERVER_ADDRESS = "http://192.168.1.127:5000" # LCD
+SERVER_ADDRESS = "http://192.168.1.153:5000" # LCD
 # SERVER_ADDRESS = "https://matiasraya.pythonanywhere.com" # APP PYTHONANYWHERE
 
-# connections.wifi_connection()
-connections.lte_connection()
+connections.wifi_connection()
+# connections.lte_connection()
 pycom.rgbled(YELLOW)
 time.sleep(2)
 pycom.rgbled(NO_COLOUR)
@@ -128,9 +128,10 @@ def send_recive():
         pycom.rgbled(NO_COLOUR)
 
     try:
-        response = post_data(SERVER_ADDRESS + "/data", stored_data())
         if data_sensor['posLat'] is not None:
+            response = post_data(SERVER_ADDRESS + "/data", stored_data())
             iteration += 1
+            print("Enviado")
     except Exception as e:
         print(e)
         print("POST attempet failed.")
