@@ -60,7 +60,8 @@ class Task(db.Model):
         self.posLon = posLon
         self.ubication = ubication
 
-db.create_all()
+with app.app_context():
+    db.create_all()
 
 class TaskSchema(ma.Schema):
     class Meta:
@@ -289,4 +290,4 @@ def delte_table(id):
     return jsonify({'key' : 'value'})
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port=5000,debug=True)
+    app.run(host='0.0.0.0',port=5001,debug=True)
