@@ -54,7 +54,8 @@ class Task(db.Model):
         self.temperature = temperature
         self.pressure = pressure
 
-db.create_all()
+with app.app_context():
+    db.create_all()
 
 class TaskSchema(ma.Schema):
     class Meta:
